@@ -27,6 +27,15 @@ public partial class Bubble : RigidBody2D {
 			bubble.SetNeighbor(this);
 
 			BubbleGame.Game.LinkBubbles(this, bubble);
+
+		} else if (body is VillainBubble villainBubble) {
+			BubbleGame.Game.LinkToVillainBubble(villainBubble, this);
+
+		}
+	}
+
+	void _on_body_shape_entered(int bodyId, Node body, int bodyShape, int areaShape) {
+		if (body is VillainBubble villainBubble) {
 		}
 	}
 

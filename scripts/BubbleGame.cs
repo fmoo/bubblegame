@@ -32,14 +32,30 @@ public partial class BubbleGame : Node2D {
         bubble.QueueFree();
     }
 
-    public void LinkBubbles(Bubble bubble1, Bubble bubble2) {
-        var spring = PinJointTemplate.Instantiate<PinJoint2D>();
-        bubble1.AddChild(spring);
-        spring.NodeA = bubble1.GetPath();
-        spring.NodeB = bubble2.GetPath();
-        spring.GlobalPosition = bubble1.GlobalPosition;
-        spring.GlobalPosition = (bubble1.GlobalPosition + bubble2.GlobalPosition) / 2;
-        spring.GlobalRotation = bubble1.GlobalPosition.AngleToPoint(bubble2.GlobalPosition);
+    public PinJoint2D LinkBubbles(Bubble bubble1, Bubble bubble2) {
+        var joint = PinJointTemplate.Instantiate<PinJoint2D>();
+        bubble1.AddChild(joint);
+        joint.NodeA = bubble1.GetPath();
+        joint.NodeB = bubble2.GetPath();
+        joint.GlobalPosition = bubble1.GlobalPosition;
+        joint.GlobalPosition = (bubble1.GlobalPosition + bubble2.GlobalPosition) / 2;
+        joint.GlobalRotation = bubble1.GlobalPosition.AngleToPoint(bubble2.GlobalPosition);
+        return joint;
+    }
+    public RemoteTransform2D LinkToVillainBubble(VillainBubble bubble1, Bubble bubble2) {
+        GD.Print($"Villain Bubble at {bubble1.GlobalPosition} linked to Bubble at {bubble2.GlobalPosition}");
+        var joint = new RemoteTransform2D();
+        bubble1.AddChild(joint);
+        joint.GlobalPosition = bubble2.GlobalPosition;
+        GD.Print($"Joint set to {joint.GlobalPosition}");
+        joint.GlobalRotation = bubble2.GlobalRotation;
+        joint.UseGlobalCoordinates = true;
+        joint.UpdateRotation = false;
+        joint.UpdateScale = false;
+        bubble2.SetDeferred("freeze", true);
+
+        joint.RemotePath = bubble2.GetPath();
+        return joint;
     }
 
     public Color PickColor() {
