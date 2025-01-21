@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://borggvjowbqn2"]
+
+[ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_axaqe"]
+[ext_resource type="PackedScene" uid="uid://bpnitaatb3oe3" path="res://scenes/pin_joint.tscn" id="2_dakla"]
+[ext_resource type="Script" path="res://scripts/BubbleGun.cs" id="2_t6f7g"]
+[ext_resource type="PackedScene" uid="uid://w1kv4tagcac8" path="res://scenes/bubble.tscn" id="3_gb0c4"]
+
+[sub_resource type="Curve" id="Curve_irqy8"]
+_data = [Vector2(0.889474, 0.56044), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="Gradient" id="Gradient_advis"]
+
+[node name="BubbleGame" type="Node2D" node_paths=PackedStringArray("Springs", "Bubbles")]
+position = Vector2(-1, 1)
+script = ExtResource("1_axaqe")
+bubbleColors = PackedColorArray(9.62615e-08, 0.822991, 1.15514e-06, 1, 0, 1, 1, 1, 1, 0.486104, 0.418607, 1)
+Springs = NodePath("Springs")
+Bubbles = NodePath("Bubbles")
+PinJointTemplate = ExtResource("2_dakla")
+
+[node name="Springs" type="Node2D" parent="."]
+
+[node name="Bubbles" type="Node2D" parent="."]
+
+[node name="Gun" type="Node2D" parent="."]
+position = Vector2(87, 100)
+script = ExtResource("2_t6f7g")
+bubbleScene = ExtResource("3_gb0c4")
+angleLimit = 180.0
+
+[node name="Line2D" type="Line2D" parent="Gun"]
+position = Vector2(1, 0)
+points = PackedVector2Array(0, 0, 0, -16)
+width = 3.0
+width_curve = SubResource("Curve_irqy8")
+gradient = SubResource("Gradient_advis")
+
+[node name="Level" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Level"]
+position = Vector2(-1, 0)
+polygon = PackedVector2Array(175, 0, 175, 180, 94, 180, 93, 171, 166, 171, 166, 7, 6, 7, 6, 170, 80, 170, 79, 180, 1, 180, 1, 0)
