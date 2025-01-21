@@ -7,6 +7,7 @@ public partial class BubbleGame : Node2D {
     [Export] public Texture2D[] bubbleColors;
     [Export] public Node2D Springs;
     [Export] public Node2D Bubbles;
+    public Dictionary<Bubble, HashSet<Node2D>> bubbleLinks = new();
 
     [Export] PackedScene PinJointTemplate;
 
@@ -27,7 +28,18 @@ public partial class BubbleGame : Node2D {
     }
 
     public void DestroyBubble(Bubble bubble) {
-        bubble.QueueFree();
+        bubble.StartDestroy();
+        foreach (var link in bubbleLinks[bubble]) {
+            link.QueueFree();
+        }
+        bubbleLinks.Remove(bubble);
+    }
+
+    public void RegisterLink(Bubble bubble, Node2D join) {
+        if (!bubbleLinks.ContainsKey(bubble)) {
+            bubbleLinks[bubble] = new HashSet<Node2D>();
+        }
+        bubbleLinks[bubble].Add(join);
     }
 
     public PinJoint2D LinkBubbles(Bubble bubble1, Bubble bubble2) {
@@ -38,6 +50,8 @@ public partial class BubbleGame : Node2D {
         joint.GlobalPosition = bubble1.GlobalPosition;
         // joint.GlobalPosition = (bubble1.GlobalPosition + bubble2.GlobalPosition) / 2;
         joint.GlobalRotation = bubble1.GlobalPosition.AngleToPoint(bubble2.GlobalPosition);
+        RegisterLink(bubble1, joint);
+        RegisterLink(bubble2, joint);
         return joint;
     }
     public RemoteTransform2D LinkToVillainBubbleRemoteTransform(VillainBubble villainBubble, Bubble bubble2) {
@@ -59,6 +73,8 @@ public partial class BubbleGame : Node2D {
         bubble2.SetDeferred("freeze", true);
 
         joint.RemotePath = bubble2.GetPath();
+
+        RegisterLink(bubble2, joint);
         return joint;
     }
 
@@ -71,6 +87,8 @@ public partial class BubbleGame : Node2D {
         joint.NodeB = bubble.GetPath();
         joint.GlobalPosition = villainBubble.GlobalPosition;
         joint.GlobalRotation = villainBubble.GlobalPosition.AngleToPoint(bubble.GlobalPosition);
+
+        RegisterLink(bubble, joint);
         return joint;
     }
 
@@ -78,6 +96,15 @@ public partial class BubbleGame : Node2D {
         var index = GD.RandRange(0, bubbleColors.Length - 1);
         GD.Print(index);
         return bubbleColors[index];
+    }
+
+    public void MaybePopBubbles(Bubble bubble) {
+        var bubbles = bubble.WalkSameColorNeighbors();
+        if (bubbles.Count >= 3) {
+            foreach (var b in bubbles) {
+                DestroyBubble(b);
+            }
+        }
     }
 
     public static BubbleGame Game { get; private set; }

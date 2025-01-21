@@ -8,17 +8,34 @@ public partial class Bubble : RigidBody2D {
 	[Export] CollisionShape2D CollisionShape;
 	[Export] public Sprite2D Sprite { get; private set; }
 	HashSet<Bubble> neighbors = new();
-	Dictionary<Color, HashSet<Bubble>> colorNeighbors = new();
+	Dictionary<Texture, HashSet<Bubble>> colorNeighbors = new();
+
+	public HashSet<Bubble> WalkSameColorNeighbors() {
+		var visited = new HashSet<Bubble>();
+		var work = new Queue<Bubble>();
+		work.Enqueue(this);
+		while (work.Count > 0) {
+			var bubble = work.Dequeue();
+			if (visited.Contains(bubble)) continue;
+			visited.Add(bubble);
+			foreach (var neighbor in bubble.neighbors) {
+				if (neighbor.Sprite.Texture == this.Sprite.Texture) {
+					work.Enqueue(neighbor);
+				}
+			}
+		}
+		return visited;
+	}
 
 	public float Radius => ((CircleShape2D)CollisionShape.Shape).Radius;
 
 	public void SetNeighbor(Bubble bubble) {
 		if (neighbors.Contains(bubble)) return;
 		neighbors.Add(bubble);
-		if (!colorNeighbors.ContainsKey(bubble.Modulate)) {
-			colorNeighbors[bubble.Modulate] = new HashSet<Bubble>();
+		if (!colorNeighbors.ContainsKey(bubble.Sprite.Texture)) {
+			colorNeighbors[bubble.Sprite.Texture] = new HashSet<Bubble>();
 		}
-		colorNeighbors[bubble.Modulate].Add(bubble);
+		colorNeighbors[bubble.Sprite.Texture].Add(bubble);
 	}
 
 	void _on_body_entered(Node body) {
@@ -31,6 +48,8 @@ public partial class Bubble : RigidBody2D {
 			bubble.SetNeighbor(this);
 
 			BubbleGame.Game.LinkBubbles(this, bubble);
+
+			BubbleGame.Game.MaybePopBubbles(this);
 
 		} else if (body is VillainBubble villainBubble) {
 			BubbleGame.Game.LinkToVillainBubblePinJoint(villainBubble, this);
@@ -47,5 +66,14 @@ public partial class Bubble : RigidBody2D {
         base._Process(delta);
 		Sprite.GlobalRotation = 0f;
     }
+
+	public void StartDestroy() {
+		// Walk neighbors and remove yourself from their list
+		foreach (var neighbor in neighbors) {
+			neighbor.neighbors.Remove(this);
+			neighbor.colorNeighbors[this.Sprite.Texture].Remove(this);
+		}
+		this.QueueFree();
+	}
 
 }
