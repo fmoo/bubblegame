@@ -3,10 +3,11 @@ using System;
 
 public partial class BubbleGun : Node2D {
     [Export] PackedScene bubbleScene;
-
+    [Export] PathFollow2D pathFollow;
     [Export] float angleLimit = 80;
     [Export] float bubbleSpeed = 200;
     [Export] float rotationSpeed = 2;
+    [Export] float trackSpeed = 20;
     
     public override void _Process(double delta) {
         base._Process(delta);
@@ -16,6 +17,11 @@ public partial class BubbleGun : Node2D {
             RotateGun(-1, delta);
         } else if (Input.IsActionPressed("ui_right")) {
             RotateGun(1, delta);
+        }
+        if (Input.IsActionPressed("track_left")) {
+            pathFollow.ProgressRatio = (pathFollow.ProgressRatio - (float)(delta * trackSpeed) + 1f) % 1f;
+        } else if (Input.IsActionPressed("track_right")) {
+            pathFollow.ProgressRatio = (pathFollow.ProgressRatio + (float)(delta * trackSpeed)) % 1f;
         }
         if (Input.IsActionJustPressed("ui_select")) {
             Shoot();
@@ -36,7 +42,7 @@ public partial class BubbleGun : Node2D {
 
         // Trajectory and position        
         bubble.GlobalPosition = GlobalPosition;
-        bubble.LinearVelocity = new Vector2(0, -1).Rotated(Rotation) * bubbleSpeed;
+        bubble.LinearVelocity = new Vector2(0, -1).Rotated(GlobalRotation) * bubbleSpeed;
     }
 
 }

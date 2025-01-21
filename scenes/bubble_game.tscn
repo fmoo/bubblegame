@@ -102,12 +102,13 @@ curve = SubResource("Curve2D_lbhqn")
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
 position = Vector2(91, 163)
 
-[node name="Gun" type="Node2D" parent="Path2D/PathFollow2D"]
+[node name="Gun" type="Node2D" parent="Path2D/PathFollow2D" node_paths=PackedStringArray("pathFollow")]
 position = Vector2(-0.90168, -1.13235)
 scale = Vector2(1.04651, 1)
 script = ExtResource("2_t6f7g")
 bubbleScene = ExtResource("3_gb0c4")
-angleLimit = 180.0
+pathFollow = NodePath("..")
+trackSpeed = 0.2
 
 [node name="Line2D" type="Line2D" parent="Path2D/PathFollow2D/Gun"]
 position = Vector2(1, 0)
