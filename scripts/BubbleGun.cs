@@ -9,6 +9,7 @@ public partial class BubbleGun : Node2D {
     [Export] float rotationSpeed = 2;
     [Export] float trackSpeed = 20;
     [Export] AnimatedSprite2D animatedSprite;
+    [Export] Sprite2D previewSprite;
 
     public override void _Ready() {
         base._Ready();
@@ -18,6 +19,7 @@ public partial class BubbleGun : Node2D {
 
     public override void _Process(double delta) {
         base._Process(delta);
+        previewSprite.GlobalRotation = 0;
 
         float speedScale = 0f;
 
