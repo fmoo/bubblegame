@@ -1,12 +1,16 @@
-[gd_scene load_steps=18 format=3 uid="uid://borggvjowbqn2"]
+[gd_scene load_steps=22 format=3 uid="uid://borggvjowbqn2"]
 
 [ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_axaqe"]
 [ext_resource type="PackedScene" uid="uid://bpnitaatb3oe3" path="res://scenes/pin_joint.tscn" id="2_dakla"]
 [ext_resource type="Script" path="res://scripts/BubbleGun.cs" id="2_t6f7g"]
+[ext_resource type="Texture2D" uid="uid://dugmk8ouwtnds" path="res://sprites/bubble_blue.png" id="2_yx0xx"]
+[ext_resource type="Texture2D" uid="uid://bom4u37bst1wq" path="res://sprites/bubble_green.png" id="3_dsvbh"]
 [ext_resource type="PackedScene" uid="uid://w1kv4tagcac8" path="res://scenes/bubble.tscn" id="3_gb0c4"]
 [ext_resource type="Script" path="res://scripts/BubbleQueue.cs" id="3_knjol"]
 [ext_resource type="Script" path="res://scripts/VillainBubble.cs" id="3_mo6oh"]
+[ext_resource type="Texture2D" uid="uid://bjlawj0jajb3l" path="res://sprites/bubble_orange.png" id="4_dqnc1"]
 [ext_resource type="PackedScene" uid="uid://b5soh8b80t7ya" path="res://scenes/bubble_sprite.tscn" id="4_otc38"]
+[ext_resource type="Texture2D" uid="uid://c8m34hie1uyjv" path="res://sprites/bubble_pink.png" id="5_eiynx"]
 [ext_resource type="PhysicsMaterial" uid="uid://5gbmiagtsmip" path="res://physics/bouncy.tres" id="6_4ubpa"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7gmt2"]
@@ -29,9 +33,9 @@ normal = Vector2(-1, 0)
 
 [sub_resource type="Curve2D" id="Curve2D_lbhqn"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 91, 163, 0, 0, 0, 0, 94.1395, 163, 0, 0, 0, 0, 104.605, 162, 0, 0, 0, 0, 127.628, 158, 0, 0, 0, 0, 154.837, 144, 0, 0, 0, 0, 169.488, 118, 0, 0, 0, 0, 172.628, 94, 0, 0, 0, 0, 168.442, 56, 0, 0, 0, 0, 151.698, 30, 0, 0, 0, 0, 128.674, 16, 0, 0, 0, 0, 87.8605, 12, 0, 0, 0, 0, 49.1395, 16, 0, 0, 0, 0, 21.9302, 30, 0, 0, 0, 0, 8.32558, 57, 0, 0, 0, 0, 5.18605, 94, 0, 0, 0, 0, 11.4651, 124, 0, 0, 0, 0, 28.2093, 147, 0, 0, 0, 0, 54.3721, 160, 0, 0, 0, 0, 81.5814, 163, 0, 0, 0, 0, 88.9069, 163, 0, 0, 0, 0, 91, 163)
+"points": PackedVector2Array(0, 0, 0, 0, 91, 163, 0, 0, 0, 0, 94.1395, 163, 0, 0, 0, 0, 104.605, 162, 0, 0, 0, 0, 127.628, 158, 0, 0, 0, 0, 144.419, 152, 0, 0, 0, 0, 154.837, 144, 0, 0, 0, 0, 165.349, 132, 0, 0, 0, 0, 169.488, 118, 0, 0, 0, 0, 171.628, 108, 0, 0, 0, 0, 172.628, 94, 0, 0, 0, 0, 171.628, 75, 0, 0, 0, 0, 168.442, 56, 0, 0, 0, 0, 161.163, 41, 0, 0, 0, 0, 151.698, 30, 0, 0, 0, 0, 142.326, 21, 0, 0, 0, 0, 128.674, 16, 0, 0, 0, 0, 110.93, 14, 0, 0, 0, 0, 87.8605, 12, 0, 0, 0, 0, 66.9767, 13, 0, 0, 0, 0, 49.1395, 16, 0, 0, 0, 0, 34.5349, 21, 0, 0, 0, 0, 21.9302, 30, 0, 0, 0, 0, 13.6046, 43, 0, 0, 0, 0, 8.32558, 57, 0, 0, 0, 0, 6.27907, 74, 0, 0, 0, 0, 5.18605, 94, 0, 0, 0, 0, 8.37209, 113, 0, 0, 0, 0, 11.4651, 124, 0, 0, 0, 0, 18.8372, 137, 0, 0, 0, 0, 28.2093, 147, 0, 0, 0, 0, 40.8139, 155, 0, 0, 0, 0, 54.3721, 160, 0, 0, 0, 0, 68.0232, 162, 0, 0, 0, 0, 81.5814, 163, 0, 0, 0, 0, 88.9069, 163, 0, 0, 0, 0, 91, 163)
 }
-point_count = 21
+point_count = 36
 
 [sub_resource type="Curve" id="Curve_irqy8"]
 _data = [Vector2(0.889474, 0.56044), 0.0, 0.0, 0, 0]
@@ -40,10 +44,11 @@ point_count = 1
 [sub_resource type="Gradient" id="Gradient_advis"]
 
 [node name="BubbleGame" type="Node2D" node_paths=PackedStringArray("BubbleQueue", "Springs", "Bubbles")]
+texture_filter = 1
 position = Vector2(-1, 1)
 script = ExtResource("1_axaqe")
 BubbleQueue = NodePath("BubbleQueue")
-bubbleColors = PackedColorArray(9.62615e-08, 0.822991, 1.15514e-06, 1, 0, 1, 1, 1, 1, 0.486104, 0.418607, 1)
+bubbleColors = Array[Texture2D]([ExtResource("2_yx0xx"), ExtResource("3_dsvbh"), ExtResource("4_dqnc1"), ExtResource("5_eiynx")])
 Springs = NodePath("Springs")
 Bubbles = NodePath("Bubbles")
 PinJointTemplate = ExtResource("2_dakla")
@@ -112,7 +117,7 @@ position = Vector2(176, 0)
 shape = SubResource("WorldBoundaryShape2D_ishrt")
 
 [node name="Path2D" type="Path2D" parent="."]
-position = Vector2(4.04444, 0)
+position = Vector2(3, 0)
 scale = Vector2(0.955556, 1)
 curve = SubResource("Curve2D_lbhqn")
 

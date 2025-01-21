@@ -4,8 +4,7 @@ using System.Collections.Generic;
 
 public partial class BubbleGame : Node2D {
     [Export] public BubbleQueue BubbleQueue { get; private set; }
-    [Export] public Color[] bubbleColors;
-    public Color CurrentColor;
+    [Export] public Texture2D[] bubbleColors;
     [Export] public Node2D Springs;
     [Export] public Node2D Bubbles;
 
@@ -21,7 +20,6 @@ public partial class BubbleGame : Node2D {
         var window = GetWindow();
         window.Size *= 2;
 
-        CurrentColor = bubbleColors[0];
     }
 
     public void RegisterBubble(Bubble bubble) {
@@ -76,7 +74,7 @@ public partial class BubbleGame : Node2D {
         return joint;
     }
 
-    public Color PickColor() {
+    public Texture2D PickColor() {
         var index = GD.RandRange(0, bubbleColors.Length - 1);
         GD.Print(index);
         return bubbleColors[index];

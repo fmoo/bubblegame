@@ -6,6 +6,7 @@ using System.Diagnostics;
 
 public partial class Bubble : RigidBody2D {
 	[Export] CollisionShape2D CollisionShape;
+	[Export] public Sprite2D Sprite { get; private set; }
 	HashSet<Bubble> neighbors = new();
 	Dictionary<Color, HashSet<Bubble>> colorNeighbors = new();
 
@@ -41,5 +42,10 @@ public partial class Bubble : RigidBody2D {
 		if (body is VillainBubble villainBubble) {
 		}
 	}
+
+    public override void _Process(double delta) {
+        base._Process(delta);
+		Sprite.GlobalRotation = 0f;
+    }
 
 }

@@ -1,14 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://w1kv4tagcac8"]
+[gd_scene load_steps=6 format=3 uid="uid://w1kv4tagcac8"]
 
 [ext_resource type="Script" path="res://scripts/Bubble.cs" id="1_r8n85"]
 [ext_resource type="PackedScene" uid="uid://b5soh8b80t7ya" path="res://scenes/bubble_sprite.tscn" id="2_tdhhq"]
+[ext_resource type="Texture2D" uid="uid://dugmk8ouwtnds" path="res://sprites/bubble_blue.png" id="3_2djxa"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_yxj5e"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7envl"]
 radius = 7.0
 
-[node name="Bubble" type="RigidBody2D" node_paths=PackedStringArray("CollisionShape")]
+[node name="Bubble" type="RigidBody2D" node_paths=PackedStringArray("CollisionShape", "Sprite")]
 position = Vector2(1, 0)
 physics_material_override = SubResource("PhysicsMaterial_yxj5e")
 can_sleep = false
@@ -18,8 +19,10 @@ contact_monitor = true
 max_contacts_reported = 7
 script = ExtResource("1_r8n85")
 CollisionShape = NodePath("CollisionShape2D")
+Sprite = NodePath("BubbleSprite")
 
 [node name="BubbleSprite" parent="." instance=ExtResource("2_tdhhq")]
+texture = ExtResource("3_2djxa")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_7envl")
