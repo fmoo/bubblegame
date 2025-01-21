@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://borggvjowbqn2"]
+[gd_scene load_steps=26 format=3 uid="uid://borggvjowbqn2"]
 
 [ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_axaqe"]
 [ext_resource type="PackedScene" uid="uid://bpnitaatb3oe3" path="res://scenes/pin_joint.tscn" id="2_dakla"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://b5soh8b80t7ya" path="res://scenes/bubble_sprite.tscn" id="4_otc38"]
 [ext_resource type="Texture2D" uid="uid://c8m34hie1uyjv" path="res://sprites/bubble_pink.png" id="5_eiynx"]
 [ext_resource type="PhysicsMaterial" uid="uid://5gbmiagtsmip" path="res://physics/bouncy.tres" id="6_4ubpa"]
+[ext_resource type="Texture2D" uid="uid://8e06rc2smdp8" path="res://sprites/gun.png" id="13_l8d0c"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7gmt2"]
 rough = true
@@ -37,11 +38,41 @@ _data = {
 }
 point_count = 36
 
-[sub_resource type="Curve" id="Curve_irqy8"]
-_data = [Vector2(0.889474, 0.56044), 0.0, 0.0, 0, 0]
-point_count = 1
+[sub_resource type="AtlasTexture" id="AtlasTexture_b0upr"]
+atlas = ExtResource("13_l8d0c")
+region = Rect2(0, 0, 64, 64)
 
-[sub_resource type="Gradient" id="Gradient_advis"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_3guec"]
+atlas = ExtResource("13_l8d0c")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q705d"]
+atlas = ExtResource("13_l8d0c")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqoip"]
+atlas = ExtResource("13_l8d0c")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l5ofx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0upr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3guec")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q705d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqoip")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
 
 [node name="BubbleGame" type="Node2D" node_paths=PackedStringArray("BubbleQueue", "Springs", "Bubbles")]
 texture_filter = 1
@@ -124,17 +155,17 @@ curve = SubResource("Curve2D_lbhqn")
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
 position = Vector2(91, 163)
 
-[node name="Gun" type="Node2D" parent="Path2D/PathFollow2D" node_paths=PackedStringArray("pathFollow")]
+[node name="Gun" type="Node2D" parent="Path2D/PathFollow2D" node_paths=PackedStringArray("pathFollow", "animatedSprite")]
 position = Vector2(-0.90168, -1.13235)
 scale = Vector2(1.04651, 1)
 script = ExtResource("2_t6f7g")
 bubbleScene = ExtResource("3_gb0c4")
 pathFollow = NodePath("..")
 trackSpeed = 0.2
+animatedSprite = NodePath("AnimatedSprite2D")
 
-[node name="Line2D" type="Line2D" parent="Path2D/PathFollow2D/Gun"]
-position = Vector2(1, 0)
-points = PackedVector2Array(0, 0, 0, -16)
-width = 3.0
-width_curve = SubResource("Curve_irqy8")
-gradient = SubResource("Gradient_advis")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Path2D/PathFollow2D/Gun"]
+scale = Vector2(1, 1)
+sprite_frames = SubResource("SpriteFrames_l5ofx")
+frame_progress = 0.795362
+speed_scale = 0.0
