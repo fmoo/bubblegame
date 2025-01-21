@@ -5,8 +5,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 
 public partial class Bubble : RigidBody2D {
+	[Export] CollisionShape2D CollisionShape;
 	HashSet<Bubble> neighbors = new();
 	Dictionary<Color, HashSet<Bubble>> colorNeighbors = new();
+
+	public float Radius => ((CircleShape2D)CollisionShape.Shape).Radius;
 
 	public void SetNeighbor(Bubble bubble) {
 		if (neighbors.Contains(bubble)) return;
@@ -29,7 +32,7 @@ public partial class Bubble : RigidBody2D {
 			BubbleGame.Game.LinkBubbles(this, bubble);
 
 		} else if (body is VillainBubble villainBubble) {
-			BubbleGame.Game.LinkToVillainBubble(villainBubble, this);
+			BubbleGame.Game.LinkToVillainBubblePinJoint(villainBubble, this);
 
 		}
 	}

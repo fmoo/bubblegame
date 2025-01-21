@@ -38,16 +38,22 @@ public partial class BubbleGame : Node2D {
         joint.NodeA = bubble1.GetPath();
         joint.NodeB = bubble2.GetPath();
         joint.GlobalPosition = bubble1.GlobalPosition;
-        joint.GlobalPosition = (bubble1.GlobalPosition + bubble2.GlobalPosition) / 2;
+        // joint.GlobalPosition = (bubble1.GlobalPosition + bubble2.GlobalPosition) / 2;
         joint.GlobalRotation = bubble1.GlobalPosition.AngleToPoint(bubble2.GlobalPosition);
         return joint;
     }
-    public RemoteTransform2D LinkToVillainBubble(VillainBubble bubble1, Bubble bubble2) {
-        GD.Print($"Villain Bubble at {bubble1.GlobalPosition} linked to Bubble at {bubble2.GlobalPosition}");
+    public RemoteTransform2D LinkToVillainBubbleRemoteTransform(VillainBubble villainBubble, Bubble bubble2) {
+        GD.Print($"Villain Bubble at {villainBubble.GlobalPosition} linked to Bubble at {bubble2.GlobalPosition}");
+
+        // Get the point of intersection by moving from bubble2 towards bubble1 by bubble2.Radius
+        var direction = (villainBubble.GlobalPosition - bubble2.GlobalPosition).Normalized();
+        var intersection = bubble2.GlobalPosition + direction * bubble2.Radius;
+
+        // Create the sync point for the bubble at the intersectionPoint,
+        // making it a child of the villainBubble.
         var joint = new RemoteTransform2D();
-        bubble1.AddChild(joint);
+        villainBubble.AddChild(joint);
         joint.GlobalPosition = bubble2.GlobalPosition;
-        GD.Print($"Joint set to {joint.GlobalPosition}");
         joint.GlobalRotation = bubble2.GlobalRotation;
         joint.UseGlobalCoordinates = true;
         joint.UpdateRotation = false;
@@ -55,6 +61,18 @@ public partial class BubbleGame : Node2D {
         bubble2.SetDeferred("freeze", true);
 
         joint.RemotePath = bubble2.GetPath();
+        return joint;
+    }
+
+    public PinJoint2D LinkToVillainBubblePinJoint(VillainBubble villainBubble, Bubble bubble) {
+        GD.Print($"Villain Bubble at {villainBubble.GlobalPosition} linked to Bubble at {bubble.GlobalPosition}");
+
+        var joint = PinJointTemplate.Instantiate<PinJoint2D>();
+        villainBubble.AddChild(joint);
+        joint.NodeA = villainBubble.GetPath();
+        joint.NodeB = bubble.GetPath();
+        joint.GlobalPosition = villainBubble.GlobalPosition;
+        joint.GlobalRotation = villainBubble.GlobalPosition.AngleToPoint(bubble.GlobalPosition);
         return joint;
     }
 

@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/BubbleQueue.cs" id="3_knjol"]
 [ext_resource type="Script" path="res://scripts/VillainBubble.cs" id="3_mo6oh"]
 [ext_resource type="PackedScene" uid="uid://b5soh8b80t7ya" path="res://scenes/bubble_sprite.tscn" id="4_otc38"]
+[ext_resource type="PhysicsMaterial" uid="uid://5gbmiagtsmip" path="res://physics/bouncy.tres" id="6_4ubpa"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7gmt2"]
 rough = true
@@ -15,22 +16,16 @@ absorbent = true
 [sub_resource type="CircleShape2D" id="CircleShape2D_gnq0l"]
 radius = 7.0
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_joh81"]
-friction = 0.0
-bounce = 1.0
-
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_bow63"]
 normal = Vector2(1, 0)
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ishrt"]
-normal = Vector2(-1, 0)
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7eori"]
-rough = true
-absorbent = true
-
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_mg2jt"]
 normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_c6phh"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ishrt"]
+normal = Vector2(-1, 0)
 
 [sub_resource type="Curve2D" id="Curve2D_lbhqn"]
 _data = {
@@ -98,22 +93,23 @@ polygon = PackedVector2Array(175, 0, 175, 180, 94, 180, 93, 171, 166, 171, 166, 
 
 [node name="BouncyWalls" type="StaticBody2D" parent="Level2"]
 position = Vector2(0, 94)
-physics_material_override = SubResource("PhysicsMaterial_joh81")
+physics_material_override = ExtResource("6_4ubpa")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level2/BouncyWalls"]
 position = Vector2(2, 0)
 shape = SubResource("WorldBoundaryShape2D_bow63")
 
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Level2/BouncyWalls"]
+position = Vector2(88, -94)
+shape = SubResource("WorldBoundaryShape2D_mg2jt")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Level2/BouncyWalls"]
+position = Vector2(88, 84)
+shape = SubResource("WorldBoundaryShape2D_c6phh")
+
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Level2/BouncyWalls"]
 position = Vector2(176, 0)
 shape = SubResource("WorldBoundaryShape2D_ishrt")
-
-[node name="StickyWall" type="StaticBody2D" parent="Level2"]
-physics_material_override = SubResource("PhysicsMaterial_7eori")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Level2/StickyWall"]
-position = Vector2(88, 0)
-shape = SubResource("WorldBoundaryShape2D_mg2jt")
 
 [node name="Path2D" type="Path2D" parent="."]
 position = Vector2(4.04444, 0)
