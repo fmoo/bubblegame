@@ -1,9 +1,34 @@
-[gd_scene load_steps=7 format=3 uid="uid://borggvjowbqn2"]
+[gd_scene load_steps=15 format=3 uid="uid://borggvjowbqn2"]
 
 [ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_axaqe"]
 [ext_resource type="PackedScene" uid="uid://bpnitaatb3oe3" path="res://scenes/pin_joint.tscn" id="2_dakla"]
 [ext_resource type="Script" path="res://scripts/BubbleGun.cs" id="2_t6f7g"]
 [ext_resource type="PackedScene" uid="uid://w1kv4tagcac8" path="res://scenes/bubble.tscn" id="3_gb0c4"]
+[ext_resource type="Script" path="res://scripts/BubbleQueue.cs" id="3_knjol"]
+[ext_resource type="PackedScene" uid="uid://b5soh8b80t7ya" path="res://scenes/bubble_sprite.tscn" id="4_otc38"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_joh81"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_bow63"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ishrt"]
+normal = Vector2(-1, 0)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7eori"]
+rough = true
+absorbent = true
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_mg2jt"]
+normal = Vector2(0, 1)
+
+[sub_resource type="Curve2D" id="Curve2D_lbhqn"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 91, 163, 0, 0, 0, 0, 94.1395, 163, 0, 0, 0, 0, 104.605, 162, 0, 0, 0, 0, 127.628, 158, 0, 0, 0, 0, 154.837, 144, 0, 0, 0, 0, 169.488, 118, 0, 0, 0, 0, 172.628, 94, 0, 0, 0, 0, 168.442, 56, 0, 0, 0, 0, 151.698, 30, 0, 0, 0, 0, 128.674, 16, 0, 0, 0, 0, 87.8605, 12, 0, 0, 0, 0, 49.1395, 16, 0, 0, 0, 0, 21.9302, 30, 0, 0, 0, 0, 8.32558, 57, 0, 0, 0, 0, 5.18605, 94, 0, 0, 0, 0, 11.4651, 124, 0, 0, 0, 0, 28.2093, 147, 0, 0, 0, 0, 54.3721, 160, 0, 0, 0, 0, 81.5814, 163, 0, 0, 0, 0, 88.9069, 163, 0, 0, 0, 0, 91, 163)
+}
+point_count = 21
 
 [sub_resource type="Curve" id="Curve_irqy8"]
 _data = [Vector2(0.889474, 0.56044), 0.0, 0.0, 0, 0]
@@ -11,33 +36,82 @@ point_count = 1
 
 [sub_resource type="Gradient" id="Gradient_advis"]
 
-[node name="BubbleGame" type="Node2D" node_paths=PackedStringArray("Springs", "Bubbles")]
+[node name="BubbleGame" type="Node2D" node_paths=PackedStringArray("BubbleQueue", "Springs", "Bubbles")]
 position = Vector2(-1, 1)
 script = ExtResource("1_axaqe")
+BubbleQueue = NodePath("BubbleQueue")
 bubbleColors = PackedColorArray(9.62615e-08, 0.822991, 1.15514e-06, 1, 0, 1, 1, 1, 1, 0.486104, 0.418607, 1)
 Springs = NodePath("Springs")
 Bubbles = NodePath("Bubbles")
 PinJointTemplate = ExtResource("2_dakla")
 
+[node name="BubbleQueue" type="Node2D" parent="." node_paths=PackedStringArray("bubbleRenders")]
+position = Vector2(190, 19)
+script = ExtResource("3_knjol")
+bubbleRenders = [NodePath("BubbleSprite"), NodePath("BubbleSprite2"), NodePath("BubbleSprite3")]
+
+[node name="BubbleSprite" parent="BubbleQueue" instance=ExtResource("4_otc38")]
+position = Vector2(3, 136)
+
+[node name="BubbleSprite2" parent="BubbleQueue" instance=ExtResource("4_otc38")]
+position = Vector2(22, 115)
+
+[node name="BubbleSprite3" parent="BubbleQueue" instance=ExtResource("4_otc38")]
+position = Vector2(3, 99)
+
 [node name="Springs" type="Node2D" parent="."]
 
 [node name="Bubbles" type="Node2D" parent="."]
 
-[node name="Gun" type="Node2D" parent="."]
-position = Vector2(87, 100)
+[node name="Level2" type="Node2D" parent="."]
+
+[node name="Walls" type="StaticBody2D" parent="Level2"]
+visible = false
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Level2/Walls"]
+visible = false
+position = Vector2(-1, 0)
+polygon = PackedVector2Array(175, 0, 175, 180, 94, 180, 93, 171, 166, 171, 166, 7, 6, 7, 6, 170, 80, 170, 79, 180, 1, 180, 1, 0)
+
+[node name="BouncyWalls" type="StaticBody2D" parent="Level2"]
+position = Vector2(0, 94)
+physics_material_override = SubResource("PhysicsMaterial_joh81")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level2/BouncyWalls"]
+position = Vector2(2, 0)
+shape = SubResource("WorldBoundaryShape2D_bow63")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Level2/BouncyWalls"]
+position = Vector2(176, 0)
+shape = SubResource("WorldBoundaryShape2D_ishrt")
+
+[node name="StickyWall" type="StaticBody2D" parent="Level2"]
+physics_material_override = SubResource("PhysicsMaterial_7eori")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level2/StickyWall"]
+position = Vector2(88, 0)
+shape = SubResource("WorldBoundaryShape2D_mg2jt")
+
+[node name="Path2D" type="Path2D" parent="."]
+position = Vector2(4.04444, 0)
+scale = Vector2(0.955556, 1)
+curve = SubResource("Curve2D_lbhqn")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(91, 163)
+
+[node name="Gun" type="Node2D" parent="Path2D/PathFollow2D"]
+position = Vector2(-0.90168, -1.13235)
+scale = Vector2(1.04651, 1)
 script = ExtResource("2_t6f7g")
 bubbleScene = ExtResource("3_gb0c4")
 angleLimit = 180.0
 
-[node name="Line2D" type="Line2D" parent="Gun"]
+[node name="Line2D" type="Line2D" parent="Path2D/PathFollow2D/Gun"]
 position = Vector2(1, 0)
 points = PackedVector2Array(0, 0, 0, -16)
 width = 3.0
 width_curve = SubResource("Curve_irqy8")
 gradient = SubResource("Gradient_advis")
-
-[node name="Level" type="StaticBody2D" parent="."]
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Level"]
-position = Vector2(-1, 0)
-polygon = PackedVector2Array(175, 0, 175, 180, 94, 180, 93, 171, 166, 171, 166, 7, 6, 7, 6, 170, 80, 170, 79, 180, 1, 180, 1, 0)

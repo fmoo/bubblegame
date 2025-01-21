@@ -3,18 +3,13 @@ using System;
 using System.Collections.Generic;
 
 public partial class BubbleGame : Node2D {
-    [Export] Color[] bubbleColors;
+    [Export] public BubbleQueue BubbleQueue { get; private set; }
+    [Export] public Color[] bubbleColors;
     public Color CurrentColor;
     [Export] public Node2D Springs;
     [Export] public Node2D Bubbles;
 
     [Export] PackedScene PinJointTemplate;
-
-    public void NextColor() {
-        var index = Array.IndexOf(bubbleColors, CurrentColor);
-        index = (index + 1) % bubbleColors.Length;
-        CurrentColor = bubbleColors[index];
-    }
 
     BubbleGame() {
         Game = this;
@@ -45,6 +40,12 @@ public partial class BubbleGame : Node2D {
         spring.GlobalPosition = bubble1.GlobalPosition;
         spring.GlobalPosition = (bubble1.GlobalPosition + bubble2.GlobalPosition) / 2;
         spring.GlobalRotation = bubble1.GlobalPosition.AngleToPoint(bubble2.GlobalPosition);
+    }
+
+    public Color PickColor() {
+        var index = GD.RandRange(0, bubbleColors.Length - 1);
+        GD.Print(index);
+        return bubbleColors[index];
     }
 
     public static BubbleGame Game { get; private set; }
