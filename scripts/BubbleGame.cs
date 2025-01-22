@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public partial class BubbleGame : Node2D {
     [Export] public BubbleQueue BubbleQueue { get; private set; }
@@ -8,6 +9,7 @@ public partial class BubbleGame : Node2D {
     [Export] public Node2D Springs;
     [Export] public Node2D Bubbles;
     public Dictionary<Bubble, HashSet<Node2D>> bubbleLinks = new();
+    public Dictionary<Node2D, HashSet<Bubble>> springLinks = new();
 
     [Export] PackedScene PinJointTemplate;
 
@@ -28,11 +30,18 @@ public partial class BubbleGame : Node2D {
     }
 
     public void DestroyBubble(Bubble bubble) {
-        bubble.StartDestroy();
-        foreach (var link in bubbleLinks[bubble]) {
-            link.QueueFree();
+        if (bubbleLinks.ContainsKey(bubble)) {
+            foreach (var link in bubbleLinks[bubble]) {
+                var otherNode = springLinks[link].Except(new[] { bubble }).FirstOrDefault();
+                springLinks.Remove(link);
+                if (otherNode != null) {
+                    bubbleLinks[otherNode].Remove(link);
+                }
+                link.QueueFree();
+            }
+            bubbleLinks.Remove(bubble);
         }
-        bubbleLinks.Remove(bubble);
+        bubble.StartDestroy();
     }
 
     public void RegisterLink(Bubble bubble, Node2D join) {
@@ -40,6 +49,10 @@ public partial class BubbleGame : Node2D {
             bubbleLinks[bubble] = new HashSet<Node2D>();
         }
         bubbleLinks[bubble].Add(join);
+        if (!springLinks.ContainsKey(join)) {
+            springLinks[join] = new HashSet<Bubble>();
+        }
+        springLinks[join].Add(bubble);
     }
 
     public PinJoint2D LinkBubbles(Bubble bubble1, Bubble bubble2) {
