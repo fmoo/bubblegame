@@ -13,23 +13,25 @@ public partial class Bubble : RigidBody2D {
 	public bool HasVillainAnchor = false;
 
 	public IEnumerable<Bubble> Neighbors => neighbors;
-	public bool IsAnchored { get {
-		if (HasVillainAnchor) return true;
-		// breadth walk neighbors to check if any are anchored
-		var visited = new HashSet<Bubble>();
-		var work = new Queue<Bubble>();
-		work.Enqueue(this);
-		while (work.Count > 0) {
-			var bubble = work.Dequeue();
-			if (visited.Contains(bubble)) continue;
-			visited.Add(bubble);
-			if (bubble.HasVillainAnchor) return true;
-			foreach (var neighbor in bubble.neighbors) {
-				work.Enqueue(neighbor);
+	public bool IsAnchored {
+		get {
+			if (HasVillainAnchor) return true;
+			// breadth walk neighbors to check if any are anchored
+			var visited = new HashSet<Bubble>();
+			var work = new Queue<Bubble>();
+			work.Enqueue(this);
+			while (work.Count > 0) {
+				var bubble = work.Dequeue();
+				if (visited.Contains(bubble)) continue;
+				visited.Add(bubble);
+				if (bubble.HasVillainAnchor) return true;
+				foreach (var neighbor in bubble.neighbors) {
+					work.Enqueue(neighbor);
+				}
 			}
+			return false;
 		}
-		return false;
-	} }
+	}
 
 	const float PopFallForce = 50f;
 	public void ChainMoveTowards(Vector2 target) {
@@ -76,7 +78,7 @@ public partial class Bubble : RigidBody2D {
 	}
 
 	void _on_body_entered(Node body) {
-		if (body is Bubble bubble)  {
+		if (body is Bubble bubble) {
 			bubble.LinearVelocity = Vector2.Zero;
 			this.LinearVelocity = Vector2.Zero;
 
@@ -99,10 +101,14 @@ public partial class Bubble : RigidBody2D {
 		}
 	}
 
-    public override void _Process(double delta) {
-        base._Process(delta);
+	public override void _Process(double delta) {
+		base._Process(delta);
 		Sprite.GlobalRotation = 0f;
-    }
+	}
+	public override void _PhysicsProcess(double delta) {
+		base._PhysicsProcess(delta);
+		Sprite.GlobalRotation = 0f;
+	}
 
 	public void StartDestroy() {
 		// Walk neighbors and remove yourself from their list

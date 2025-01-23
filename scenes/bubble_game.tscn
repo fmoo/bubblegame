@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://c8m34hie1uyjv" path="res://sprites/bubble_pink.png" id="5_eiynx"]
 [ext_resource type="PhysicsMaterial" uid="uid://5gbmiagtsmip" path="res://physics/bouncy.tres" id="6_4ubpa"]
 [ext_resource type="Script" path="res://scripts/DebugMode.cs" id="7_7wqd8"]
-[ext_resource type="Texture2D" uid="uid://6wrm76sjban7" path="res://sprites/mockup.png" id="7_fkq84"]
+[ext_resource type="Texture2D" uid="uid://be53u2bn2bl10" path="res://sprites/mockup_track.png" id="7_uw36n"]
 [ext_resource type="Texture2D" uid="uid://8e06rc2smdp8" path="res://sprites/gun.png" id="13_l8d0c"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7gmt2"]
@@ -88,14 +88,14 @@ VillainBubble = NodePath("VillainBubble")
 Player = NodePath("Path2D/PathFollow2D/Gun")
 PinJointTemplate = ExtResource("2_dakla")
 
+[node name="Mock" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(1, -1)
+texture = ExtResource("7_uw36n")
+centered = false
+
 [node name="DebugMode" type="Node" parent="."]
 script = ExtResource("7_7wqd8")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(1, 1, 1, 0.109804)
-position = Vector2(1, -1)
-texture = ExtResource("7_fkq84")
-centered = false
 
 [node name="VillainBubble" type="RigidBody2D" parent="." node_paths=PackedStringArray("CollisionShape")]
 position = Vector2(247, 144)
@@ -168,13 +168,14 @@ animatedSprite = NodePath("AnimatedSprite2D")
 previewSprite = NodePath("BubbleSprite")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Path2D/PathFollow2D/Gun"]
+position = Vector2(0, -24)
 sprite_frames = SubResource("SpriteFrames_l5ofx")
 frame_progress = 0.795362
 speed_scale = 0.0
 
 [node name="BubbleSprite" parent="Path2D/PathFollow2D/Gun" instance=ExtResource("4_otc38")]
 z_index = -1
-position = Vector2(0, 7.132)
+position = Vector2(0, -2)
 texture = ExtResource("3_dsvbh")
 
 [connection signal="OnShoot" from="Path2D/PathFollow2D/Gun" to="." method="_on_shoot_event"]
