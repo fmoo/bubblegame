@@ -51,9 +51,6 @@ public partial class BubbleGun : Node2D {
             speedScale -= 1f;
         }
         animatedBody.SpeedScale = speedScale;
-        if (Input.IsActionJustPressed("ui_select")) {
-            Shoot();
-        }
     }
 
     bool RotateGun(int direction, double delta) {
@@ -63,7 +60,7 @@ public partial class BubbleGun : Node2D {
         return oldRotation != Rotation;
     }
 
-    void Shoot() {
+    public void Shoot() {
         Bubble bubble = bubbleScene.Instantiate<Bubble>();
         BubbleGame.Game.RegisterBubble(bubble);
 

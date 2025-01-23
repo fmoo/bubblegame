@@ -1,9 +1,7 @@
 using Godot;
 using System;
 
-public partial class DebugMode : Node {
-    [Export] bool Enabled = false;
-
+public partial class DebugMode : ControlSchemeBase {
     public override void _Ready() {
         base._Ready();
         if (!EngineDebugger.IsActive()) {
