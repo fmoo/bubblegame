@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://borggvjowbqn2"]
+[gd_scene load_steps=40 format=3 uid="uid://borggvjowbqn2"]
 
 [ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_axaqe"]
 [ext_resource type="PackedScene" uid="uid://bpnitaatb3oe3" path="res://scenes/pin_joint.tscn" id="2_dakla"]
@@ -25,6 +25,8 @@
 [ext_resource type="AudioStream" uid="uid://biib8kk4q7p7q" path="res://sfx/gameover.wav" id="11_4mftm"]
 [ext_resource type="Texture2D" uid="uid://8e06rc2smdp8" path="res://sprites/gun.png" id="13_l8d0c"]
 [ext_resource type="Texture2D" uid="uid://bxpexe12qf7nr" path="res://sprites/gun_barrel.png" id="16_0qeqh"]
+[ext_resource type="Script" path="res://scripts/input/MouseControls.cs" id="17_8g50q"]
+[ext_resource type="Texture2D" uid="uid://dqedr4oxf7pei" path="res://sprites/down-arrow.png" id="18_7y84i"]
 
 [sub_resource type="Curve2D" id="Curve2D_lbhqn"]
 _data = {
@@ -96,7 +98,7 @@ bubbleColors = Array[Texture2D]([ExtResource("2_yx0xx"), ExtResource("3_dsvbh"),
 Springs = NodePath("Springs")
 Bubbles = NodePath("Bubbles")
 VillainBubble = NodePath("VillainBubble")
-Player = NodePath("Path2D/PathFollow2D/Gun")
+Player = NodePath("Path2D/GunFollow2D/Gun")
 PinJointTemplate = ExtResource("2_dakla")
 
 [node name="Audio" type="Node" parent="." node_paths=PackedStringArray("_Shoot", "_Pop", "_Grow", "_Shrink", "_GameOver")]
@@ -137,6 +139,10 @@ script = ExtResource("9_nhaw1")
 visible = false
 script = ExtResource("10_sqvxt")
 
+[node name="MouseControls" type="Node2D" parent="ControlSchemes" node_paths=PackedStringArray("moveTargetPath")]
+script = ExtResource("17_8g50q")
+moveTargetPath = NodePath("../../Path2D/MouseAim2D")
+
 [node name="Mock" type="Sprite2D" parent="."]
 z_index = -2
 texture = ExtResource("7_uw36n")
@@ -145,10 +151,18 @@ centered = false
 [node name="Path2D" type="Path2D" parent="."]
 curve = SubResource("Curve2D_lbhqn")
 
-[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+[node name="MouseAim2D" type="PathFollow2D" parent="Path2D"]
 position = Vector2(244, 283)
 
-[node name="Gun" type="Node2D" parent="Path2D/PathFollow2D" node_paths=PackedStringArray("pathFollow", "animatedBody", "turretSprite", "bubblePreviewSprite")]
+[node name="Sprite2D" type="Sprite2D" parent="Path2D/MouseAim2D"]
+modulate = Color(1, 1, 1, 0.552941)
+position = Vector2(0, -23)
+texture = ExtResource("18_7y84i")
+
+[node name="GunFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(244, 283)
+
+[node name="Gun" type="Node2D" parent="Path2D/GunFollow2D" node_paths=PackedStringArray("pathFollow", "animatedBody", "turretSprite", "bubblePreviewSprite")]
 script = ExtResource("2_t6f7g")
 bubbleScene = ExtResource("3_gb0c4")
 pathFollow = NodePath("..")
@@ -157,19 +171,19 @@ animatedBody = NodePath("Body")
 turretSprite = NodePath("Turret")
 bubblePreviewSprite = NodePath("Body/BubbleSprite")
 
-[node name="Body" type="AnimatedSprite2D" parent="Path2D/PathFollow2D/Gun"]
+[node name="Body" type="AnimatedSprite2D" parent="Path2D/GunFollow2D/Gun"]
 position = Vector2(0, -15)
 sprite_frames = SubResource("SpriteFrames_l5ofx")
 frame_progress = 0.795362
 speed_scale = 0.0
 offset = Vector2(0, -9)
 
-[node name="BubbleSprite" parent="Path2D/PathFollow2D/Gun/Body" instance=ExtResource("4_otc38")]
+[node name="BubbleSprite" parent="Path2D/GunFollow2D/Gun/Body" instance=ExtResource("4_otc38")]
 z_index = -1
 position = Vector2(0, 9)
 texture = ExtResource("3_dsvbh")
 
-[node name="Turret" type="Sprite2D" parent="Path2D/PathFollow2D/Gun"]
+[node name="Turret" type="Sprite2D" parent="Path2D/GunFollow2D/Gun"]
 position = Vector2(0, -15)
 texture = ExtResource("16_0qeqh")
 offset = Vector2(1, -9)
@@ -192,7 +206,7 @@ position = Vector2(3.69549e-06, 2.32458e-06)
 [node name="BubbleQueue" type="Node2D" parent="." node_paths=PackedStringArray("bubbleRenders")]
 position = Vector2(190, 19)
 script = ExtResource("3_knjol")
-bubbleRenders = [NodePath("../Path2D/PathFollow2D/Gun/Body/BubbleSprite"), NodePath("BubbleSprite2"), NodePath("BubbleSprite3")]
+bubbleRenders = [NodePath("../Path2D/GunFollow2D/Gun/Body/BubbleSprite"), NodePath("BubbleSprite2"), NodePath("BubbleSprite3")]
 
 [node name="BubbleSprite2" parent="BubbleQueue" instance=ExtResource("4_otc38")]
 position = Vector2(173, 245)
@@ -226,4 +240,4 @@ shape = SubResource("WorldBoundaryShape2D_c6phh")
 position = Vector2(512, 49)
 shape = SubResource("WorldBoundaryShape2D_ishrt")
 
-[connection signal="OnShoot" from="Path2D/PathFollow2D/Gun" to="." method="_on_shoot_event"]
+[connection signal="OnShoot" from="Path2D/GunFollow2D/Gun" to="." method="_on_shoot_event"]

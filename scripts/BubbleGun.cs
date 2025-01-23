@@ -75,6 +75,11 @@ public partial class BubbleGun : Node2D {
         EmitSignal(SignalName.OnShoot);
     }
 
+    public void SetTrackDestination(Vector2 InputDirection) {
+        var TargetRatio = -InputDirection.AngleTo(Vector2.Up) / Mathf.Tau;
+        // TODO: Implement this
+    }
+
     public void SetTrackAngle(Vector2 InputDirection) {
         pathFollow.ProgressRatio = -InputDirection.AngleTo(Vector2.Up) / Mathf.Tau;
     }
