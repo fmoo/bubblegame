@@ -11,8 +11,6 @@ public partial class BubbleGame : Node2D {
     [Export] public VillainBubble VillainBubble { get; private set; }
     [Export] BubbleGun Player;
     [Export] public bool DebugMode { get; private set; } = false;
-    public Dictionary<Bubble, HashSet<Node2D>> bubbleLinks = new();
-    public Dictionary<Node2D, HashSet<Bubble>> springLinks = new();
 
     [Export] PackedScene PinJointTemplate;
 
@@ -29,41 +27,21 @@ public partial class BubbleGame : Node2D {
     }
 
     public void DestroyBubble(Bubble bubble) {
-        if (bubbleLinks.ContainsKey(bubble)) {
-            foreach (var link in bubbleLinks[bubble]) {
-                var otherNode = springLinks[link].Except(new[] { bubble }).FirstOrDefault();
-                springLinks.Remove(link);
-                if (otherNode != null) {
-                    bubbleLinks[otherNode].Remove(link);
-                }
-                link.QueueFree();
-            }
-            bubbleLinks.Remove(bubble);
-        }
         bubble.StartDestroy();
     }
 
     public void RegisterLink(Bubble bubble, Node2D join) {
-        if (!bubbleLinks.ContainsKey(bubble)) {
-            bubbleLinks[bubble] = new HashSet<Node2D>();
-        }
-        bubbleLinks[bubble].Add(join);
-        if (!springLinks.ContainsKey(join)) {
-            springLinks[join] = new HashSet<Bubble>();
-        }
-        springLinks[join].Add(bubble);
     }
 
     public PinJoint2D LinkBubbles(Bubble bubble1, Bubble bubble2) {
         var joint = PinJointTemplate.Instantiate<PinJoint2D>();
-        Springs.AddChild(joint);
+        bubble1.AddChild(joint);
+        // Springs.AddChild(joint);
         joint.NodeA = bubble1.GetPath();
         joint.NodeB = bubble2.GetPath();
         joint.GlobalPosition = bubble1.GlobalPosition;
         // joint.GlobalPosition = (bubble1.GlobalPosition + bubble2.GlobalPosition) / 2;
         joint.GlobalRotation = bubble1.GlobalPosition.AngleToPoint(bubble2.GlobalPosition);
-        RegisterLink(bubble1, joint);
-        RegisterLink(bubble2, joint);
         return joint;
     }
     public RemoteTransform2D LinkToVillainBubbleRemoteTransform(VillainBubble villainBubble, Bubble bubble2) {
@@ -112,10 +90,9 @@ public partial class BubbleGame : Node2D {
 
     public void MaybePopBubbles(Bubble bubble) {
         var bubbles = bubble.WalkSameColorNeighbors();
-        if (bubbles.Count >= 3) {
-            foreach (var b in bubbles) {
-                DestroyBubble(b);
-            }
+        if (bubbles.Count < 3) return;
+        foreach (var b in bubbles) {
+            DestroyBubble(b);
         }
     }
 
@@ -131,8 +108,6 @@ public partial class BubbleGame : Node2D {
         foreach (var spring in Springs.GetChildren()) {
             spring.QueueFree();
         }
-        bubbleLinks.Clear();
-        springLinks.Clear();
         VillainBubble.Reset();
         Player.Reset();
         BubbleQueue.Reset();

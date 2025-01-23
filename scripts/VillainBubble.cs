@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class VillainBubble : RigidBody2D {
 	[Export] CollisionShape2D CollisionShape;
@@ -11,21 +12,58 @@ public partial class VillainBubble : RigidBody2D {
 	public CircleShape2D CircleShape => (CircleShape2D)CollisionShape.Shape;
 	
 	public void Grow() {
+		// Temporarily re-enable collisions on the joints
+		foreach (var joint in GetJoints()) {
+			joint.QueueFree();
+		}
+
 		CollisionShape.Scale = new Vector2(CollisionShape.Scale.X + SizeChangeIncrement, CollisionShape.Scale.Y + SizeChangeIncrement);
 		if (CollisionShape.Scale.X >= GameOverScale) {
 			BubbleGame.Game.GameOver();
 		}
 	}
 
+	const float PopFallForce = 50f;
 	public void Shrink() {
 		if (CollisionShape.Scale.X <= MinimumScale) {
 			return;
 		}
+
+		foreach (var bubbleNode in BubbleGame.Game.Bubbles.GetChildren()) {
+			if (bubbleNode is Bubble bubble) {
+				bubble.LinearVelocity = (GlobalPosition - bubble.GlobalPosition).Normalized() * PopFallForce / 2;
+			}
+		}
+
+		foreach (var joint in GetJoints()) {
+			// Make all bubbles move towards the vollain node
+			var bubbleNode = joint.GetNode(joint.NodeB);
+			if (bubbleNode is Bubble bubble && bubble != null) {
+				bubble.LinearVelocity = (GlobalPosition - bubble.GlobalPosition).Normalized() * PopFallForce;
+			}
+			joint.QueueFree();
+		}
+
+
+
 		CollisionShape.Scale = new Vector2(CollisionShape.Scale.X - SizeChangeIncrement, CollisionShape.Scale.Y - SizeChangeIncrement);
 	}
 
+	public IEnumerable<PinJoint2D> GetJoints() {
+		foreach (Node child in GetChildren()) {
+			if (child is PinJoint2D joint) {
+				yield return joint;
+			}
+		}
+	}
 
 	public void Reset() {
 		CollisionShape.Scale = new Vector2(DefaultScale, DefaultScale);
+		// Delete all children that are Joints
+		foreach (Node child in GetChildren()) {
+			if (child is PinJoint2D joint) {
+				joint.QueueFree();
+			}
+		}
 	}
 }
