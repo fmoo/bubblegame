@@ -8,11 +8,11 @@ public partial class BubbleGame : Node2D {
     [Export] public Texture2D[] bubbleColors;
     [Export] public Node2D Springs;
     [Export] public Node2D Bubbles;
-    [Export] VillainBubble  VillainBubble;
+    [Export] public VillainBubble VillainBubble { get; private set; }
     [Export] BubbleGun Player;
+    [Export] public bool DebugMode { get; private set; } = false;
     public Dictionary<Bubble, HashSet<Node2D>> bubbleLinks = new();
     public Dictionary<Node2D, HashSet<Bubble>> springLinks = new();
-    
 
     [Export] PackedScene PinJointTemplate;
 
@@ -56,7 +56,7 @@ public partial class BubbleGame : Node2D {
 
     public PinJoint2D LinkBubbles(Bubble bubble1, Bubble bubble2) {
         var joint = PinJointTemplate.Instantiate<PinJoint2D>();
-        bubble1.AddChild(joint);
+        Springs.AddChild(joint);
         joint.NodeA = bubble1.GetPath();
         joint.NodeB = bubble2.GetPath();
         joint.GlobalPosition = bubble1.GlobalPosition;
@@ -119,6 +119,11 @@ public partial class BubbleGame : Node2D {
         }
     }
 
+    public void GameOver() {
+        GD.Print("Game Over");
+        Reset();
+    }
+
     public void Reset() {
         foreach (var bubble in Bubbles.GetChildren()) {
             bubble.QueueFree();
@@ -130,6 +135,7 @@ public partial class BubbleGame : Node2D {
         springLinks.Clear();
         VillainBubble.Reset();
         Player.Reset();
+        BubbleQueue.Reset();
     }
 
     public static BubbleGame Game { get; private set; }

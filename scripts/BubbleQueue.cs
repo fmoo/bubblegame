@@ -6,13 +6,7 @@ public partial class BubbleQueue : Node2D {
     List<Texture2D> colorQueue = new();
     public override void _Ready() {
         base._Ready();
-
-        // Fill colorQueue with random colors from Game.bubbleColors
-        for (int i = 0; i < bubbleRenders.Length; i++) {
-            var color = BubbleGame.Game.PickColor();
-            colorQueue.Add(color);
-        }
-        RefreshRender();
+        Reset();
     }
 
     public Texture2D DequeueColor() {
@@ -29,5 +23,12 @@ public partial class BubbleQueue : Node2D {
         }
     }
 
-
+    public void Reset() {
+        colorQueue.Clear();
+        for (int i = 0; i < bubbleRenders.Length; i++) {
+            var color = BubbleGame.Game.PickColor();
+            colorQueue.Add(color);
+        }
+        RefreshRender();
+    }
 }

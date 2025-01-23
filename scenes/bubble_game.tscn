@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://borggvjowbqn2"]
+[gd_scene load_steps=28 format=3 uid="uid://borggvjowbqn2"]
 
 [ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_axaqe"]
 [ext_resource type="PackedScene" uid="uid://bpnitaatb3oe3" path="res://scenes/pin_joint.tscn" id="2_dakla"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://b5soh8b80t7ya" path="res://scenes/bubble_sprite.tscn" id="4_otc38"]
 [ext_resource type="Texture2D" uid="uid://c8m34hie1uyjv" path="res://sprites/bubble_pink.png" id="5_eiynx"]
 [ext_resource type="PhysicsMaterial" uid="uid://5gbmiagtsmip" path="res://physics/bouncy.tres" id="6_4ubpa"]
+[ext_resource type="Script" path="res://scripts/DebugMode.cs" id="7_7wqd8"]
 [ext_resource type="Texture2D" uid="uid://6wrm76sjban7" path="res://sprites/mockup.png" id="7_fkq84"]
 [ext_resource type="Texture2D" uid="uid://8e06rc2smdp8" path="res://sprites/gun.png" id="13_l8d0c"]
 
@@ -75,7 +76,7 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="BubbleGame" type="Node2D" node_paths=PackedStringArray("BubbleQueue", "Springs", "Bubbles")]
+[node name="BubbleGame" type="Node2D" node_paths=PackedStringArray("BubbleQueue", "Springs", "Bubbles", "VillainBubble", "Player")]
 texture_filter = 1
 position = Vector2(-1, 1)
 script = ExtResource("1_axaqe")
@@ -83,7 +84,12 @@ BubbleQueue = NodePath("BubbleQueue")
 bubbleColors = Array[Texture2D]([ExtResource("2_yx0xx"), ExtResource("3_dsvbh"), ExtResource("4_dqnc1"), ExtResource("5_eiynx")])
 Springs = NodePath("Springs")
 Bubbles = NodePath("Bubbles")
+VillainBubble = NodePath("VillainBubble")
+Player = NodePath("Path2D/PathFollow2D/Gun")
 PinJointTemplate = ExtResource("2_dakla")
+
+[node name="DebugMode" type="Node" parent="."]
+script = ExtResource("7_7wqd8")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.109804)
@@ -100,7 +106,7 @@ CollisionShape = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VillainBubble"]
 position = Vector2(1.19209e-07, -2.38419e-07)
-scale = Vector2(2.095, 2.095)
+scale = Vector2(2, 2)
 shape = SubResource("CircleShape2D_gnq0l")
 
 [node name="BubbleSprite" parent="VillainBubble/CollisionShape2D" instance=ExtResource("4_otc38")]
