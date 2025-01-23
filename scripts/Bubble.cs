@@ -111,6 +111,7 @@ public partial class Bubble : RigidBody2D {
 	}
 
 	public void StartDestroy() {
+		BubbleGame.Game.Audio.Pop();
 		// Walk neighbors and remove yourself from their list
 		foreach (var neighbor in neighbors) {
 			neighbor.neighbors.Remove(this);

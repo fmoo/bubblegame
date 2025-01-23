@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://borggvjowbqn2"]
+[gd_scene load_steps=38 format=3 uid="uid://borggvjowbqn2"]
 
 [ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_axaqe"]
 [ext_resource type="PackedScene" uid="uid://bpnitaatb3oe3" path="res://scenes/pin_joint.tscn" id="2_dakla"]
@@ -13,10 +13,16 @@
 [ext_resource type="Texture2D" uid="uid://c8m34hie1uyjv" path="res://sprites/bubble_pink.png" id="5_eiynx"]
 [ext_resource type="PhysicsMaterial" uid="uid://5gbmiagtsmip" path="res://physics/bouncy.tres" id="6_4ubpa"]
 [ext_resource type="Script" path="res://scripts/input/DebugMode.cs" id="7_7wqd8"]
+[ext_resource type="AudioStream" uid="uid://cb4ipcqc0bnok" path="res://sfx/shoot.wav" id="7_onkte"]
 [ext_resource type="Texture2D" uid="uid://be53u2bn2bl10" path="res://sprites/mockup_track.png" id="7_uw36n"]
+[ext_resource type="Script" path="res://scripts/Audio.cs" id="7_wso5g"]
 [ext_resource type="Script" path="res://scripts/input/InitialControlScheme.cs" id="8_5o3ur"]
+[ext_resource type="AudioStream" uid="uid://couc3qpkfeh3c" path="res://sfx/pop.wav" id="8_j1bko"]
+[ext_resource type="AudioStream" uid="uid://cdq000tbps6w5" path="res://sfx/grow.wav" id="9_gumm6"]
 [ext_resource type="Script" path="res://scripts/input/SimpleShoot.cs" id="9_nhaw1"]
+[ext_resource type="AudioStream" uid="uid://b7xmnqupx3g6t" path="res://sfx/shrink.wav" id="10_qkbjv"]
 [ext_resource type="Script" path="res://scripts/input/TwinstickInstantControls.cs" id="10_sqvxt"]
+[ext_resource type="AudioStream" uid="uid://biib8kk4q7p7q" path="res://sfx/gameover.wav" id="11_4mftm"]
 [ext_resource type="Texture2D" uid="uid://8e06rc2smdp8" path="res://sprites/gun.png" id="13_l8d0c"]
 [ext_resource type="Texture2D" uid="uid://bxpexe12qf7nr" path="res://sprites/gun_barrel.png" id="16_0qeqh"]
 
@@ -80,10 +86,11 @@ normal = Vector2(0, 1)
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ishrt"]
 normal = Vector2(-1, 0)
 
-[node name="BubbleGame" type="Node2D" node_paths=PackedStringArray("BubbleQueue", "Springs", "Bubbles", "VillainBubble", "Player")]
+[node name="BubbleGame" type="Node2D" node_paths=PackedStringArray("Audio", "BubbleQueue", "Springs", "Bubbles", "VillainBubble", "Player")]
 texture_filter = 1
 position = Vector2(-1, 1)
 script = ExtResource("1_axaqe")
+Audio = NodePath("Audio")
 BubbleQueue = NodePath("BubbleQueue")
 bubbleColors = Array[Texture2D]([ExtResource("2_yx0xx"), ExtResource("3_dsvbh"), ExtResource("4_dqnc1"), ExtResource("5_eiynx")])
 Springs = NodePath("Springs")
@@ -91,6 +98,29 @@ Bubbles = NodePath("Bubbles")
 VillainBubble = NodePath("VillainBubble")
 Player = NodePath("Path2D/PathFollow2D/Gun")
 PinJointTemplate = ExtResource("2_dakla")
+
+[node name="Audio" type="Node" parent="." node_paths=PackedStringArray("_Shoot", "_Pop", "_Grow", "_Shrink", "_GameOver")]
+script = ExtResource("7_wso5g")
+_Shoot = NodePath("Shoot")
+_Pop = NodePath("Pop")
+_Grow = NodePath("Grow")
+_Shrink = NodePath("Shrink")
+_GameOver = NodePath("GameOver")
+
+[node name="Shoot" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("7_onkte")
+
+[node name="Pop" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("8_j1bko")
+
+[node name="Grow" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("9_gumm6")
+
+[node name="Shrink" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("10_qkbjv")
+
+[node name="GameOver" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("11_4mftm")
 
 [node name="DebugMode" type="Node2D" parent="."]
 script = ExtResource("7_7wqd8")

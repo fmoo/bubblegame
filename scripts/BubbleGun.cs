@@ -61,6 +61,7 @@ public partial class BubbleGun : Node2D {
     }
 
     public void Shoot() {
+        BubbleGame.Game.Audio.Shoot();
         Bubble bubble = bubbleScene.Instantiate<Bubble>();
         BubbleGame.Game.RegisterBubble(bubble);
 

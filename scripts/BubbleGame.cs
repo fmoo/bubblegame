@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 public partial class BubbleGame : Node2D {
+    [Export] public Audio Audio { get; private set; }
     [Export] public BubbleQueue BubbleQueue { get; private set; }
     [Export] public Texture2D[] bubbleColors;
     [Export] public Node2D Springs;
@@ -133,6 +134,7 @@ public partial class BubbleGame : Node2D {
     }
 
     public void GameOver() {
+        Audio.GameOver();
         GD.Print("Game Over");
         Reset();
     }
