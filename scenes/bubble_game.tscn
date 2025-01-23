@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://borggvjowbqn2"]
+[gd_scene load_steps=29 format=3 uid="uid://borggvjowbqn2"]
 
 [ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_axaqe"]
 [ext_resource type="PackedScene" uid="uid://bpnitaatb3oe3" path="res://scenes/pin_joint.tscn" id="2_dakla"]
@@ -15,30 +15,13 @@
 [ext_resource type="Script" path="res://scripts/DebugMode.cs" id="7_7wqd8"]
 [ext_resource type="Texture2D" uid="uid://be53u2bn2bl10" path="res://sprites/mockup_track.png" id="7_uw36n"]
 [ext_resource type="Texture2D" uid="uid://8e06rc2smdp8" path="res://sprites/gun.png" id="13_l8d0c"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7gmt2"]
-rough = true
-absorbent = true
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_gnq0l"]
-radius = 7.0
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_bow63"]
-normal = Vector2(1, 0)
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_mg2jt"]
-normal = Vector2(0, 1)
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_c6phh"]
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ishrt"]
-normal = Vector2(-1, 0)
+[ext_resource type="Texture2D" uid="uid://bxpexe12qf7nr" path="res://sprites/gun_barrel.png" id="16_0qeqh"]
 
 [sub_resource type="Curve2D" id="Curve2D_lbhqn"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 150.698, 285, 0, 0, 0, 0, 151.744, 285, 0, 0, 0, 0, 166.395, 283, 0, 0, 0, 0, 181.046, 281, 0, 0, 0, 0, 209.302, 273, 0, 0, 0, 0, 235.465, 258, 0, 0, 0, 0, 255.349, 243, 0, 0, 0, 0, 274.186, 220, 0, 0, 0, 0, 287.791, 195, 0, 0, 0, 0, 294.07, 170, 0, 0, 0, 0, 298.256, 145, 0, 0, 0, 0, 298.256, 144, 0, 0, 0, 0, 298.256, 143, 0, 0, 0, 0, 294.07, 115, 0, 0, 0, 0, 285.698, 88, 0, 0, 0, 0, 275.232, 69, 0, 0, 0, 0, 258.488, 49, 0, 0, 0, 0, 238.605, 32, 0, 0, 0, 0, 215.581, 18, 0, 0, 0, 0, 184.186, 8, 0, 0, 0, 0, 152.791, 4, 0, 0, 0, 0, 151.744, 4, 0, 0, 0, 0, 150.698, 4, 0, 0, 0, 0, 116.163, 8, 0, 0, 0, 0, 82.6744, 19, 0, 0, 0, 0, 60.6977, 34, 0, 0, 0, 0, 37.6744, 55, 0, 0, 0, 0, 25.1163, 71, 0, 0, 0, 0, 12.5581, 94, 0, 0, 0, 0, 6.27907, 119, 0, 0, 0, 0, 4.18604, 143, 0, 0, 0, 0, 4.18604, 144, 0, 0, 0, 0, 4.18604, 145, 0, 0, 0, 0, 7.32558, 173, 0, 0, 0, 0, 16.7442, 202, 0, 0, 0, 0, 31.3953, 226, 0, 0, 0, 0, 50.2325, 247, 0, 0, 0, 0, 72.2093, 263, 0, 0, 0, 0, 96.279, 275, 0, 0, 0, 0, 121.395, 282, 0, 0, 0, 0, 149.651, 285, 0, 0, 0, 0, 150.698, 285)
+"points": PackedVector2Array(0, 0, 0, 0, 244, 283, 0, 0, 0, 0, 245, 283, 0, 0, 0, 0, 274, 280, 0, 0, 0, 0, 301, 271, 0, 0, 0, 0, 324, 257, 0, 0, 0, 0, 343, 240, 0, 0, 0, 0, 358, 223, 0, 0, 0, 0, 372, 201, 0, 0, 0, 0, 380, 174, 0, 0, 0, 0, 383, 146, 0, 0, 0, 0, 383, 145, 0, 0, 0, 0, 383, 144, 0, 0, 0, 0, 380, 116, 0, 0, 0, 0, 372, 89, 0, 0, 0, 0, 359, 68, 0, 0, 0, 0, 344, 51, 0, 0, 0, 0, 324, 33, 0, 0, 0, 0, 301, 19, 0, 0, 0, 0, 274, 10, 0, 0, 0, 0, 245, 5, 0, 0, 0, 0, 244, 5, 0, 0, 0, 0, 243, 5, 0, 0, 0, 0, 214, 10, 0, 0, 0, 0, 187, 19, 0, 0, 0, 0, 164, 33, 0, 0, 0, 0, 144, 51, 0, 0, 0, 0, 130, 67, 0, 0, 0, 0, 116, 89, 0, 0, 0, 0, 108, 116, 0, 0, 0, 0, 105, 144, 0, 0, 0, 0, 105, 145, 0, 0, 0, 0, 105, 146, 0, 0, 0, 0, 108, 174, 0, 0, 0, 0, 116, 201, 0, 0, 0, 0, 129, 222, 0, 0, 0, 0, 144, 239, 0, 0, 0, 0, 164, 257, 0, 0, 0, 0, 187, 271, 0, 0, 0, 0, 214, 280, 0, 0, 0, 0, 243, 283, 0, 0, 0, 0, 244, 283)
 }
-point_count = 42
+point_count = 41
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b0upr"]
 atlas = ExtResource("13_l8d0c")
@@ -76,6 +59,24 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7gmt2"]
+rough = true
+absorbent = true
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gnq0l"]
+radius = 7.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_bow63"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_mg2jt"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_c6phh"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ishrt"]
+normal = Vector2(-1, 0)
+
 [node name="BubbleGame" type="Node2D" node_paths=PackedStringArray("BubbleQueue", "Springs", "Bubbles", "VillainBubble", "Player")]
 texture_filter = 1
 position = Vector2(-1, 1)
@@ -90,9 +91,40 @@ PinJointTemplate = ExtResource("2_dakla")
 
 [node name="Mock" type="Sprite2D" parent="."]
 z_index = -2
-position = Vector2(1, -1)
 texture = ExtResource("7_uw36n")
 centered = false
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_lbhqn")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(244, 283)
+
+[node name="Gun" type="Node2D" parent="Path2D/PathFollow2D" node_paths=PackedStringArray("pathFollow", "animatedBody", "turretSprite", "bubblePreviewSprite")]
+script = ExtResource("2_t6f7g")
+bubbleScene = ExtResource("3_gb0c4")
+pathFollow = NodePath("..")
+trackSpeed = 0.2
+animatedBody = NodePath("Body")
+turretSprite = NodePath("Turret")
+bubblePreviewSprite = NodePath("Body/BubbleSprite")
+
+[node name="Body" type="AnimatedSprite2D" parent="Path2D/PathFollow2D/Gun"]
+position = Vector2(0, -15)
+sprite_frames = SubResource("SpriteFrames_l5ofx")
+frame_progress = 0.795362
+speed_scale = 0.0
+offset = Vector2(0, -9)
+
+[node name="BubbleSprite" parent="Path2D/PathFollow2D/Gun/Body" instance=ExtResource("4_otc38")]
+z_index = -1
+position = Vector2(0, 9)
+texture = ExtResource("3_dsvbh")
+
+[node name="Turret" type="Sprite2D" parent="Path2D/PathFollow2D/Gun"]
+position = Vector2(0, -15)
+texture = ExtResource("16_0qeqh")
+offset = Vector2(1, -9)
 
 [node name="DebugMode" type="Node" parent="."]
 script = ExtResource("7_7wqd8")
@@ -115,7 +147,7 @@ position = Vector2(3.69549e-06, 2.32458e-06)
 [node name="BubbleQueue" type="Node2D" parent="." node_paths=PackedStringArray("bubbleRenders")]
 position = Vector2(190, 19)
 script = ExtResource("3_knjol")
-bubbleRenders = [NodePath("../Path2D/PathFollow2D/Gun/BubbleSprite"), NodePath("BubbleSprite2"), NodePath("BubbleSprite3")]
+bubbleRenders = [NodePath("../Path2D/PathFollow2D/Gun/Body/BubbleSprite"), NodePath("BubbleSprite2"), NodePath("BubbleSprite3")]
 
 [node name="BubbleSprite2" parent="BubbleQueue" instance=ExtResource("4_otc38")]
 position = Vector2(173, 245)
@@ -148,34 +180,5 @@ shape = SubResource("WorldBoundaryShape2D_c6phh")
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Level2/BouncyWalls"]
 position = Vector2(512, 49)
 shape = SubResource("WorldBoundaryShape2D_ishrt")
-
-[node name="Path2D" type="Path2D" parent="."]
-position = Vector2(101, -1)
-scale = Vector2(0.955556, 1)
-curve = SubResource("Curve2D_lbhqn")
-
-[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
-position = Vector2(150.698, 285)
-
-[node name="Gun" type="Node2D" parent="Path2D/PathFollow2D" node_paths=PackedStringArray("pathFollow", "animatedSprite", "previewSprite")]
-position = Vector2(-0.90168, -1.13235)
-scale = Vector2(1.04651, 1)
-script = ExtResource("2_t6f7g")
-bubbleScene = ExtResource("3_gb0c4")
-pathFollow = NodePath("..")
-trackSpeed = 0.2
-animatedSprite = NodePath("AnimatedSprite2D")
-previewSprite = NodePath("BubbleSprite")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Path2D/PathFollow2D/Gun"]
-position = Vector2(0, -24)
-sprite_frames = SubResource("SpriteFrames_l5ofx")
-frame_progress = 0.795362
-speed_scale = 0.0
-
-[node name="BubbleSprite" parent="Path2D/PathFollow2D/Gun" instance=ExtResource("4_otc38")]
-z_index = -1
-position = Vector2(0, -2)
-texture = ExtResource("3_dsvbh")
 
 [connection signal="OnShoot" from="Path2D/PathFollow2D/Gun" to="." method="_on_shoot_event"]

@@ -8,19 +8,25 @@ public partial class BubbleGun : Node2D {
     [Export] float bubbleSpeed = 200;
     [Export] float rotationSpeed = 2;
     [Export] float trackSpeed = 20;
-    [Export] AnimatedSprite2D animatedSprite;
-    [Export] Sprite2D previewSprite;
+    [Export] AnimatedSprite2D animatedBody;
+    [Export] Sprite2D turretSprite;
+    [Export] Sprite2D bubblePreviewSprite;
     [Signal] public delegate void OnShootEventHandler();
 
     public override void _Ready() {
         base._Ready();
-        animatedSprite.SpeedScale = 0f;
-        animatedSprite.Play();
+        animatedBody.SpeedScale = 0f;
+        animatedBody.Play();
+    }
+
+    public override void _PhysicsProcess(double delta) {
+        base._PhysicsProcess(delta);
+        bubblePreviewSprite.GlobalRotation = 0;
     }
 
     public override void _Process(double delta) {
         base._Process(delta);
-        previewSprite.GlobalRotation = 0;
+        bubblePreviewSprite.GlobalRotation = 0;
 
         float speedScale = 0f;
 
@@ -41,16 +47,16 @@ public partial class BubbleGun : Node2D {
             pathFollow.ProgressRatio = (pathFollow.ProgressRatio + (float)(delta * trackSpeed)) % 1f;
             speedScale -= 1f;
         }
-        animatedSprite.SpeedScale = speedScale;
+        animatedBody.SpeedScale = speedScale;
         if (Input.IsActionJustPressed("ui_select")) {
             Shoot();
         }
     }
 
     bool RotateGun(int direction, double delta) {
-        var oldRotation = Rotation;
-        Rotation += direction * (float)delta * rotationSpeed;
-        Rotation = Mathf.Clamp(Rotation, -Mathf.DegToRad(angleLimit), Mathf.DegToRad(angleLimit));
+        var oldRotation = turretSprite.Rotation;
+        turretSprite.Rotation += direction * (float)delta * rotationSpeed;
+        turretSprite.Rotation = Mathf.Clamp(turretSprite.Rotation, -Mathf.DegToRad(angleLimit), Mathf.DegToRad(angleLimit));
         return oldRotation != Rotation;
     }
 
@@ -62,15 +68,15 @@ public partial class BubbleGun : Node2D {
         bubble.Sprite.Texture = BubbleGame.Game.BubbleQueue.DequeueColor();
 
         // Trajectory and position        
-        bubble.GlobalPosition = GlobalPosition;
-        bubble.LinearVelocity = new Vector2(0, -1).Rotated(GlobalRotation) * bubbleSpeed;
+        bubble.GlobalPosition = turretSprite.GlobalPosition;
+        bubble.LinearVelocity = new Vector2(0, -1).Rotated(turretSprite.GlobalRotation) * bubbleSpeed;
 
         EmitSignal(SignalName.OnShoot);
     }
 
     public void Reset() {
-        Rotation = 0;
         pathFollow.ProgressRatio = 0f;
+        turretSprite.Rotation = 0f;
     }
 
 }
