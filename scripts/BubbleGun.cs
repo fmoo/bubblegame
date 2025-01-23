@@ -10,6 +10,7 @@ public partial class BubbleGun : Node2D {
     [Export] float trackSpeed = 20;
     [Export] AnimatedSprite2D animatedSprite;
     [Export] Sprite2D previewSprite;
+    [Signal] public delegate void OnShootEventHandler();
 
     public override void _Ready() {
         base._Ready();
@@ -63,6 +64,8 @@ public partial class BubbleGun : Node2D {
         // Trajectory and position        
         bubble.GlobalPosition = GlobalPosition;
         bubble.LinearVelocity = new Vector2(0, -1).Rotated(GlobalRotation) * bubbleSpeed;
+
+        EmitSignal(SignalName.OnShoot);
     }
 
     public void Reset() {

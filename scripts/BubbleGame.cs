@@ -114,6 +114,7 @@ public partial class BubbleGame : Node2D {
     }
 
     public void Reset() {
+        numShots = 0;
         foreach (var bubble in Bubbles.GetChildren()) {
             bubble.QueueFree();
         }
@@ -123,6 +124,15 @@ public partial class BubbleGame : Node2D {
         VillainBubble.Reset();
         Player.Reset();
         BubbleQueue.Reset();
+    }
+
+    int numShots = 0;
+    public void _on_shoot_event() {
+        numShots++;
+        if (numShots == 5) {
+            numShots = 0;
+            VillainBubble.Grow();
+        }
     }
 
     public static BubbleGame Game { get; private set; }
