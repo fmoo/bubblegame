@@ -13,6 +13,9 @@ public partial class BubbleGun : Node2D {
     [Export] Sprite2D bubblePreviewSprite;
     [Signal] public delegate void OnShootEventHandler();
 
+    public int Strafe = 0;
+    public int TurnTurret = 0;
+
     public override void _Ready() {
         base._Ready();
         animatedBody.SpeedScale = 0f;
@@ -31,19 +34,19 @@ public partial class BubbleGun : Node2D {
         float speedScale = 0f;
 
         // If left/right arrow keys are pressed, rotate the gun
-        if (Input.IsActionPressed("ui_left")) {
+        if (TurnTurret < 0) {
             if (RotateGun(-1, delta)) {
                 speedScale -= 0.6f;
             }
-        } else if (Input.IsActionPressed("ui_right")) {
+        } else if (TurnTurret > 0) {
             if (RotateGun(1, delta)) {
                 speedScale += 0.6f;
             }
         }
-        if (Input.IsActionPressed("track_left")) {
+        if (Strafe < 0) {
             pathFollow.ProgressRatio = (pathFollow.ProgressRatio - (float)(delta * trackSpeed) + 1f) % 1f;
             speedScale += 1f;
-        } else if (Input.IsActionPressed("track_right")) {
+        } else if (Strafe > 0) {
             pathFollow.ProgressRatio = (pathFollow.ProgressRatio + (float)(delta * trackSpeed)) % 1f;
             speedScale -= 1f;
         }

@@ -9,7 +9,7 @@ public partial class BubbleGame : Node2D {
     [Export] public Node2D Springs;
     [Export] public Node2D Bubbles;
     [Export] public VillainBubble VillainBubble { get; private set; }
-    [Export] BubbleGun Player;
+    [Export] public BubbleGun Player { get; private set; }
     [Export] public bool DebugMode { get; private set; } = false;
 
     [Export] PackedScene PinJointTemplate;

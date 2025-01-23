@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://borggvjowbqn2"]
+[gd_scene load_steps=30 format=3 uid="uid://borggvjowbqn2"]
 
 [ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_axaqe"]
 [ext_resource type="PackedScene" uid="uid://bpnitaatb3oe3" path="res://scenes/pin_joint.tscn" id="2_dakla"]
@@ -12,8 +12,9 @@
 [ext_resource type="PackedScene" uid="uid://b5soh8b80t7ya" path="res://scenes/bubble_sprite.tscn" id="4_otc38"]
 [ext_resource type="Texture2D" uid="uid://c8m34hie1uyjv" path="res://sprites/bubble_pink.png" id="5_eiynx"]
 [ext_resource type="PhysicsMaterial" uid="uid://5gbmiagtsmip" path="res://physics/bouncy.tres" id="6_4ubpa"]
-[ext_resource type="Script" path="res://scripts/DebugMode.cs" id="7_7wqd8"]
+[ext_resource type="Script" path="res://scripts/input/DebugMode.cs" id="7_7wqd8"]
 [ext_resource type="Texture2D" uid="uid://be53u2bn2bl10" path="res://sprites/mockup_track.png" id="7_uw36n"]
+[ext_resource type="Script" path="res://scripts/input/InitialControlScheme.cs" id="8_5o3ur"]
 [ext_resource type="Texture2D" uid="uid://8e06rc2smdp8" path="res://sprites/gun.png" id="13_l8d0c"]
 [ext_resource type="Texture2D" uid="uid://bxpexe12qf7nr" path="res://sprites/gun_barrel.png" id="16_0qeqh"]
 
@@ -89,6 +90,14 @@ VillainBubble = NodePath("VillainBubble")
 Player = NodePath("Path2D/PathFollow2D/Gun")
 PinJointTemplate = ExtResource("2_dakla")
 
+[node name="DebugMode" type="Node" parent="."]
+script = ExtResource("7_7wqd8")
+
+[node name="ControlSchemes" type="Node2D" parent="."]
+
+[node name="InitialControlScheme" type="Node2D" parent="ControlSchemes"]
+script = ExtResource("8_5o3ur")
+
 [node name="Mock" type="Sprite2D" parent="."]
 z_index = -2
 texture = ExtResource("7_uw36n")
@@ -125,9 +134,6 @@ texture = ExtResource("3_dsvbh")
 position = Vector2(0, -15)
 texture = ExtResource("16_0qeqh")
 offset = Vector2(1, -9)
-
-[node name="DebugMode" type="Node" parent="."]
-script = ExtResource("7_7wqd8")
 
 [node name="VillainBubble" type="RigidBody2D" parent="." node_paths=PackedStringArray("CollisionShape")]
 position = Vector2(247, 144)
