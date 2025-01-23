@@ -74,6 +74,15 @@ public partial class BubbleGun : Node2D {
         EmitSignal(SignalName.OnShoot);
     }
 
+    public void SetTrackAngle(Vector2 InputDirection) {
+        pathFollow.ProgressRatio = -InputDirection.AngleTo(Vector2.Up) / Mathf.Tau;
+    }
+
+    public void SetTurretAngle(Vector2 InputDirection) {
+        turretSprite.GlobalRotation = InputDirection.AngleTo(Vector2.Down);
+        turretSprite.Rotation = Mathf.Clamp(turretSprite.Rotation, -Mathf.DegToRad(angleLimit), Mathf.DegToRad(angleLimit));
+    }
+
     public void Reset() {
         pathFollow.ProgressRatio = 0f;
         turretSprite.Rotation = 0f;

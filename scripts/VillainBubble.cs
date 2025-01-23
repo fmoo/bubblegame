@@ -37,9 +37,13 @@ public partial class VillainBubble : RigidBody2D {
 
 		foreach (var joint in GetJoints()) {
 			// Make all bubbles move towards the vollain node
-			var bubbleNode = joint.GetNode(joint.NodeB);
-			if (bubbleNode is Bubble bubble && bubble != null) {
-				bubble.LinearVelocity = (GlobalPosition - bubble.GlobalPosition).Normalized() * PopFallForce;
+			try {
+				var bubbleNode = joint.GetNode(joint.NodeB);
+				if (bubbleNode is Bubble bubble && bubble != null) {
+					bubble.LinearVelocity = (GlobalPosition - bubble.GlobalPosition).Normalized() * PopFallForce;
+				}
+			} catch (Exception e) {
+				GD.PrintErr(e);
 			}
 			joint.QueueFree();
 		}

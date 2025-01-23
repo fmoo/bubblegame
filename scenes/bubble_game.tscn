@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://borggvjowbqn2"]
+[gd_scene load_steps=32 format=3 uid="uid://borggvjowbqn2"]
 
 [ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_axaqe"]
 [ext_resource type="PackedScene" uid="uid://bpnitaatb3oe3" path="res://scenes/pin_joint.tscn" id="2_dakla"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://be53u2bn2bl10" path="res://sprites/mockup_track.png" id="7_uw36n"]
 [ext_resource type="Script" path="res://scripts/input/InitialControlScheme.cs" id="8_5o3ur"]
 [ext_resource type="Script" path="res://scripts/input/SimpleShoot.cs" id="9_nhaw1"]
+[ext_resource type="Script" path="res://scripts/input/TwinstickInstantControls.cs" id="10_sqvxt"]
 [ext_resource type="Texture2D" uid="uid://8e06rc2smdp8" path="res://sprites/gun.png" id="13_l8d0c"]
 [ext_resource type="Texture2D" uid="uid://bxpexe12qf7nr" path="res://sprites/gun_barrel.png" id="16_0qeqh"]
 
@@ -101,6 +102,10 @@ script = ExtResource("8_5o3ur")
 
 [node name="SimpleShoot" type="Node2D" parent="ControlSchemes"]
 script = ExtResource("9_nhaw1")
+
+[node name="TwinstickInstant" type="Node2D" parent="ControlSchemes"]
+visible = false
+script = ExtResource("10_sqvxt")
 
 [node name="Mock" type="Sprite2D" parent="."]
 z_index = -2
