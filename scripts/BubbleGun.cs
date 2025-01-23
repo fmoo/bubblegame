@@ -65,4 +65,9 @@ public partial class BubbleGun : Node2D {
         bubble.LinearVelocity = new Vector2(0, -1).Rotated(GlobalRotation) * bubbleSpeed;
     }
 
+    public void Reset() {
+        Rotation = 0;
+        pathFollow.ProgressRatio = 0f;
+    }
+
 }

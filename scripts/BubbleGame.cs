@@ -8,8 +8,11 @@ public partial class BubbleGame : Node2D {
     [Export] public Texture2D[] bubbleColors;
     [Export] public Node2D Springs;
     [Export] public Node2D Bubbles;
+    [Export] VillainBubble  VillainBubble;
+    [Export] BubbleGun Player;
     public Dictionary<Bubble, HashSet<Node2D>> bubbleLinks = new();
     public Dictionary<Node2D, HashSet<Bubble>> springLinks = new();
+    
 
     [Export] PackedScene PinJointTemplate;
 
@@ -19,10 +22,6 @@ public partial class BubbleGame : Node2D {
 
     public override void _Ready() {
         base._Ready();
-        // Set screen scale to 2x
-        var window = GetWindow();
-        window.Size *= 2;
-
     }
 
     public void RegisterBubble(Bubble bubble) {
@@ -118,6 +117,19 @@ public partial class BubbleGame : Node2D {
                 DestroyBubble(b);
             }
         }
+    }
+
+    public void Reset() {
+        foreach (var bubble in Bubbles.GetChildren()) {
+            bubble.QueueFree();
+        }
+        foreach (var spring in Springs.GetChildren()) {
+            spring.QueueFree();
+        }
+        bubbleLinks.Clear();
+        springLinks.Clear();
+        VillainBubble.Reset();
+        Player.Reset();
     }
 
     public static BubbleGame Game { get; private set; }

@@ -6,4 +6,8 @@ public partial class VillainBubble : RigidBody2D {
 
 	public CircleShape2D CircleShape => (CircleShape2D)CollisionShape.Shape;
 
+
+	public void Reset() {
+		// TODO: Reset the scale/size, once growing that's implemented.
+	}
 }
