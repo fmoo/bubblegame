@@ -26,7 +26,18 @@ public partial class BubbleGame : Node2D {
         Bubbles.AddChild(bubble);
     }
 
+    int poppedBubbles = 0;
+    const int SHRINK_BUBBLE_COUNT = 4;
     public void DestroyBubble(Bubble bubble) {
+        GD.Print($"Destroying bubble {bubble}");
+        if (bubble != null && !bubble.IsQueuedForDeletion()) {
+            poppedBubbles++;
+            while (poppedBubbles >= SHRINK_BUBBLE_COUNT) {
+                poppedBubbles -= SHRINK_BUBBLE_COUNT;
+                VillainBubble.Shrink();
+                incrementBadDuration *= 0.99f;
+            }
+        }
         bubble.StartDestroy();
     }
 
@@ -108,12 +119,27 @@ public partial class BubbleGame : Node2D {
         }
     }
 
+    float timeElapsed = 0;
+    const float DEFAULT_INCREMENT_BAD_DURATION = 6f;
+    float incrementBadDuration = DEFAULT_INCREMENT_BAD_DURATION;
+    public override void _Process(double delta) {
+        base._Process(delta);
+        timeElapsed += (float)delta;
+        if (timeElapsed > incrementBadDuration) {
+            GD.Print("TICK!");
+            timeElapsed -= incrementBadDuration;
+            _on_shoot_event();
+        }
+    }
+
     public void GameOver() {
         GD.Print("Game Over");
         Reset();
     }
 
     public void Reset() {
+        timeElapsed = 0;
+        incrementBadDuration = DEFAULT_INCREMENT_BAD_DURATION;
         numShots = 0;
         foreach (var bubble in Bubbles.GetChildren()) {
             bubble.QueueFree();
