@@ -6,17 +6,15 @@ public partial class MouseControls : ControlSchemeBase {
 
     public override void _Input(InputEvent @event) {
         base._Input(@event);
-        // if (@event is InputEventMouseButton mouseButton) {
-        //     if (mouseButton.ButtonIndex == (int)ButtonList.Left && mouseButton.Pressed) {
-        //         if (BubbleGame.Game.GameOver) {
-        //             BubbleGame.Game.Restart();
-        //         } else {
-        //             BubbleGame.Game.VillainBubble.Grow();
-        //         }
-        //     } else if (mouseButton.ButtonIndex == (int)ButtonList.Right && mouseButton.Pressed) {
-        //         BubbleGame.Game.VillainBubble.Shrink();
-        //     }
-        // }
+    }
+
+
+    public override void _Process(double delta) {
+        base._Process(delta);
+
+        var InputDirection = GetLocalMousePosition();
+        moveTargetPath.ProgressRatio = (InputDirection.AngleTo(Vector2.Up) - Mathf.Pi) / Mathf.Tau;
+
     }
 
 }

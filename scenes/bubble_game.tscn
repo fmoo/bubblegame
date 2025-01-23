@@ -140,6 +140,7 @@ visible = false
 script = ExtResource("10_sqvxt")
 
 [node name="MouseControls" type="Node2D" parent="ControlSchemes" node_paths=PackedStringArray("moveTargetPath")]
+position = Vector2(247, 144)
 script = ExtResource("17_8g50q")
 moveTargetPath = NodePath("../../Path2D/MouseAim2D")
 
