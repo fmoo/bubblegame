@@ -3,12 +3,49 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Linq;
 
 public partial class Bubble : RigidBody2D {
 	[Export] CollisionShape2D CollisionShape;
 	[Export] public Sprite2D Sprite { get; private set; }
-	HashSet<Bubble> neighbors = new();
+	public HashSet<Bubble> neighbors = new();
 	Dictionary<Texture, HashSet<Bubble>> colorNeighbors = new();
+	public bool HasVillainAnchor = false;
+
+	public IEnumerable<Bubble> Neighbors => neighbors;
+	public bool IsAnchored { get {
+		if (HasVillainAnchor) return true;
+		// breadth walk neighbors to check if any are anchored
+		var visited = new HashSet<Bubble>();
+		var work = new Queue<Bubble>();
+		work.Enqueue(this);
+		while (work.Count > 0) {
+			var bubble = work.Dequeue();
+			if (visited.Contains(bubble)) continue;
+			visited.Add(bubble);
+			if (bubble.HasVillainAnchor) return true;
+			foreach (var neighbor in bubble.neighbors) {
+				work.Enqueue(neighbor);
+			}
+		}
+		return false;
+	} }
+
+	const float PopFallForce = 50f;
+	public void ChainMoveTowards(Vector2 target) {
+		var visited = new HashSet<Bubble>();
+		var work = new Queue<Bubble>();
+		work.Enqueue(this);
+		while (work.Count > 0) {
+			var bubble = work.Dequeue();
+			if (visited.Contains(bubble)) continue;
+			visited.Add(bubble);
+			bubble.LinearVelocity = (target - bubble.GlobalPosition).Normalized() * PopFallForce;
+			foreach (var neighbor in bubble.neighbors) {
+				work.Enqueue(neighbor);
+			}
+		}
+	}
 
 	public HashSet<Bubble> WalkSameColorNeighbors() {
 		var visited = new HashSet<Bubble>();

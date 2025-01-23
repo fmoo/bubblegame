@@ -70,6 +70,7 @@ public partial class BubbleGame : Node2D {
 
     public PinJoint2D LinkToVillainBubblePinJoint(VillainBubble villainBubble, Bubble bubble) {
         GD.Print($"Villain Bubble at {villainBubble.GlobalPosition} linked to Bubble at {bubble.GlobalPosition}");
+        bubble.HasVillainAnchor = true;
 
         var joint = PinJointTemplate.Instantiate<PinJoint2D>();
         villainBubble.AddChild(joint);
@@ -89,10 +90,21 @@ public partial class BubbleGame : Node2D {
     }
 
     public void MaybePopBubbles(Bubble bubble) {
-        var bubbles = bubble.WalkSameColorNeighbors();
-        if (bubbles.Count < 3) return;
-        foreach (var b in bubbles) {
-            DestroyBubble(b);
+        var maybePop = bubble.WalkSameColorNeighbors();
+        if (maybePop.Count < 3) return;
+        HashSet<Bubble> maybeFall = new();
+        foreach (var p in maybePop) {
+            foreach (var f in p.Neighbors) {
+                if (!maybePop.Contains(f)) {
+                    maybeFall.Add(f);
+                }
+            }
+            DestroyBubble(p);
+        }
+
+        foreach (var f in maybeFall) {
+            if (f.IsAnchored) continue;
+            f.ChainMoveTowards(VillainBubble.GlobalPosition);
         }
     }
 
