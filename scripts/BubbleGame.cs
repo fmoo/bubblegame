@@ -13,6 +13,9 @@ public partial class BubbleGame : Node2D {
     [Export] public BubbleGun Player { get; private set; }
     [Export] public bool DebugMode { get; private set; } = false;
     [Export] bool TimerTicks { get; set; } = true;
+    [Export] int MinMatchSize { get; set; } = 3;
+    [Export] int ShrinkBubblePops { get; set; } = 4;
+    [Export] int GrowBubbleShots { get; set; } = 5;
 
     [Export] PackedScene PinJointTemplate;
 
@@ -37,13 +40,12 @@ public partial class BubbleGame : Node2D {
     }
 
     int poppedBubbles = 0;
-    const int SHRINK_BUBBLE_COUNT = 4;
     public void DestroyBubble(Bubble bubble) {
         GD.Print($"Destroying bubble {bubble}");
         if (bubble != null && !bubble.IsQueuedForDeletion()) {
             poppedBubbles++;
-            while (poppedBubbles >= SHRINK_BUBBLE_COUNT) {
-                poppedBubbles -= SHRINK_BUBBLE_COUNT;
+            while (poppedBubbles >= ShrinkBubblePops) {
+                poppedBubbles -= ShrinkBubblePops;
                 VillainBubble.Shrink();
                 incrementBadDuration *= 0.99f;
             }
@@ -117,11 +119,11 @@ public partial class BubbleGame : Node2D {
         if (bubble.IsQueuedForDeletion()) return;
 
         var maybePop = bubble.WalkSameColorNeighbors();
-        if (maybePop.Count < 3) return;
+        if (maybePop.Count < MinMatchSize) return;
 
         var pointsGained = 100;
         // 10x the points for every extra bubble popped simultaneously
-        pointsGained *= (int)Math.Pow(10, maybePop.Count - 3);
+        pointsGained *= (int)Math.Pow(10, maybePop.Count - MinMatchSize);
         // Scale points based on the current VillainBubbleMultiplier
         GD.Print($"Gaining Points: Base={pointsGained}  SizeMul={VillainBubble.ScoreMultiplier}  ChainMul={currentChain}  SpeedMul={DifficultyMultiplier}");
         pointsGained = (int)(pointsGained * VillainBubble.ScoreMultiplier * currentChain * DifficultyMultiplier);
@@ -191,7 +193,7 @@ public partial class BubbleGame : Node2D {
     int numShots = 0;
     public void _on_shoot_event() {
         numShots++;
-        if (numShots == 5) {
+        if (numShots == GrowBubbleShots) {
             numShots = 0;
             VillainBubble.Grow();
         }
