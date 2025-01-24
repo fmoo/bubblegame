@@ -47,7 +47,7 @@ public partial class VillainBubble : RigidBody2D {
 					bubble.LinearVelocity = (GlobalPosition - bubble.GlobalPosition).Normalized() * PopFallForce;
 				}
 			} catch (Exception e) {
-				GD.PrintErr(e);
+				// GD.PrintErr(e);
 			}
 			joint.QueueFree();
 		}

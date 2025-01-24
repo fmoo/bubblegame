@@ -58,8 +58,12 @@ public partial class Bubble : RigidBody2D {
 			if (visited.Contains(bubble)) continue;
 			visited.Add(bubble);
 			foreach (var neighbor in bubble.neighbors) {
-				if (neighbor.Sprite.Texture == this.Sprite.Texture) {
-					work.Enqueue(neighbor);
+				try {
+					if (neighbor.Sprite.Texture == this.Sprite.Texture) {
+						work.Enqueue(neighbor);
+					}
+				} catch (Exception e) {
+					// GD.PrintErr(e);
 				}
 			}
 		}
