@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="BubbleConfig" load_steps=3 format=3 uid="uid://bks3wa5u2ewtj"]
+
+[ext_resource type="Texture2D" uid="uid://bjlawj0jajb3l" path="res://sprites/bubble_orange.png" id="1_reqht"]
+[ext_resource type="Script" path="res://scripts/BubbleConfig.cs" id="2_nwq6j"]
+
+[resource]
+script = ExtResource("2_nwq6j")
+BubbleColor = Color(1, 0.47451, 0.188235, 1)
+PlayerBubbleTexture = ExtResource("1_reqht")
