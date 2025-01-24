@@ -15,11 +15,11 @@ public partial class InitialControlScheme : ControlSchemeBase {
         }
 
         if (Input.IsActionPressed("track_left")) {
-            BubbleGame.Game.Player.Strafe = -1;
+            BubbleGame.Game.Player.SetStrafe(-1);
         } else if (Input.IsActionPressed("track_right")) {
-            BubbleGame.Game.Player.Strafe = 1;
+            BubbleGame.Game.Player.SetStrafe(1);
         } else {
-            BubbleGame.Game.Player.Strafe = 0;
+            BubbleGame.Game.Player.SetStrafe(0);
         }
     }
 }

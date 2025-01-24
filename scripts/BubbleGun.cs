@@ -13,7 +13,7 @@ public partial class BubbleGun : Node2D {
     [Export] Sprite2D bubblePreviewSprite;
     [Signal] public delegate void OnShootEventHandler();
 
-    public int Strafe = 0;
+    public int Strafe { get; private set; } = 0;
     public int TurnTurret = 0;
 
     public override void _Ready() {
@@ -28,7 +28,7 @@ public partial class BubbleGun : Node2D {
     }
 
     int GetStrafe() {
-        if (ActiveMoveTarget.Visible) {
+        if (ActiveMoveTarget.IsVisibleInTree()) {
             GD.Print($"ActiveMoveTarget.ProgressRatio: {ActiveMoveTarget.ProgressRatio}  pathFollow.ProgressRatio: {pathFollow.ProgressRatio}");
             var TargetRatio = ActiveMoveTarget.ProgressRatio;
             var CurrentRatio = pathFollow.ProgressRatio;
@@ -38,12 +38,10 @@ public partial class BubbleGun : Node2D {
                 return 0;
             }
             if (diff < 0.5f) {
-                Strafe = 1;
+                return 1;
             } else {
-                Strafe = -1;
+                return -1;
             }
-        } else {
-            Strafe = 0;
         }
         return Strafe;
     }
@@ -107,9 +105,15 @@ public partial class BubbleGun : Node2D {
 
     public void TurretLookAt(Vector2 GlobalMousePosition) {
         var RelativeTarget = turretSprite.GlobalPosition - GlobalMousePosition;
-        GD.Print($"GlobalMousePosition: {GlobalMousePosition} Turret Position: {turretSprite.GlobalPosition}  RelativeTarget: {RelativeTarget}");
         turretSprite.GlobalRotation = RelativeTarget.Angle() - Mathf.Pi / 2;
         turretSprite.Rotation = Mathf.Clamp(turretSprite.Rotation, -Mathf.DegToRad(angleLimit), Mathf.DegToRad(angleLimit));
+    }
+
+    public void SetStrafe(int strafeValue) {
+        Strafe = strafeValue;
+        if (strafeValue != 0) {
+            ActiveMoveTarget.Visible = false;
+        }
     }
 
     public void SetTrackAngle(Vector2 InputDirection) {
@@ -122,6 +126,7 @@ public partial class BubbleGun : Node2D {
     }
 
     public void Reset() {
+        ActiveMoveTarget.Visible = false;
         pathFollow.ProgressRatio = 0f;
         turretSprite.Rotation = 0f;
     }
