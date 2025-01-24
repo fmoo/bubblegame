@@ -15,6 +15,14 @@ public partial class BubbleGame : Node2D {
 
     [Export] PackedScene PinJointTemplate;
 
+    public int Score { get; private set; } = 0;
+    [Signal] public delegate void ScoreChangedEventHandler(int score);
+    public int GainPoints(int points) {
+        Score += points;
+        EmitSignal(SignalName.ScoreChanged, Score);
+        return Score;
+    }
+
     BubbleGame() {
         Game = this;
     }
@@ -101,9 +109,22 @@ public partial class BubbleGame : Node2D {
         return bubbleColors[index];
     }
 
+    float chainTimer = 0f;
+    int currentChain = 1;
+
     public void MaybePopBubbles(Bubble bubble) {
         var maybePop = bubble.WalkSameColorNeighbors();
         if (maybePop.Count < 3) return;
+
+        var pointsGained = 100;
+        // 10x the points for every extra bubble popped simultaneously
+        pointsGained *= (int)Math.Pow(10, maybePop.Count - 3);
+        // Scale points based on the current VillainBubbleMultiplier
+        pointsGained = (int)(pointsGained * VillainBubble.ScoreMultiplier * currentChain * DifficultyMultiplier);
+        GainPoints(pointsGained);
+        currentChain *= 2;
+        chainTimer = 1f;
+
         HashSet<Bubble> maybeFall = new();
         foreach (var p in maybePop) {
             foreach (var f in p.Neighbors) {
@@ -123,6 +144,9 @@ public partial class BubbleGame : Node2D {
     float timeElapsed = 0;
     const float DEFAULT_INCREMENT_BAD_DURATION = 6f;
     float incrementBadDuration = DEFAULT_INCREMENT_BAD_DURATION;
+    // Calculate DifficultyMultplier based on how low incrementBadDuration has gotten
+    // float DifficultyMultiplier => Mathf.Clamp(1f - incrementBadDuration / DEFAULT_INCREMENT_BAD_DURATION, 0.1f, 1f);
+    float DifficultyMultiplier => 1f;
     public override void _Process(double delta) {
         base._Process(delta);
         timeElapsed += (float)delta;
@@ -130,6 +154,10 @@ public partial class BubbleGame : Node2D {
             GD.Print("TICK!");
             timeElapsed -= incrementBadDuration;
             _on_shoot_event();
+        }
+        chainTimer = (float)Mathf.MoveToward(chainTimer, 0f, delta);
+        if (chainTimer <= 0) {
+            currentChain = 1;
         }
     }
 
@@ -152,6 +180,8 @@ public partial class BubbleGame : Node2D {
         VillainBubble.Reset();
         Player.Reset();
         BubbleQueue.Reset();
+        Score = 0;
+        EmitSignal(SignalName.ScoreChanged, Score);
     }
 
     int numShots = 0;

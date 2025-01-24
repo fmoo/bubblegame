@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://borggvjowbqn2"]
+[gd_scene load_steps=42 format=3 uid="uid://borggvjowbqn2"]
 
 [ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_axaqe"]
 [ext_resource type="PackedScene" uid="uid://bpnitaatb3oe3" path="res://scenes/pin_joint.tscn" id="2_dakla"]
@@ -14,10 +14,12 @@
 [ext_resource type="PhysicsMaterial" uid="uid://5gbmiagtsmip" path="res://physics/bouncy.tres" id="6_4ubpa"]
 [ext_resource type="Script" path="res://scripts/input/DebugMode.cs" id="7_7wqd8"]
 [ext_resource type="AudioStream" uid="uid://cb4ipcqc0bnok" path="res://sfx/shoot.wav" id="7_onkte"]
+[ext_resource type="FontFile" uid="uid://dyla0pc30r4c" path="res://fonts/ChevyRay - Bubble Time.ttf" id="7_q464a"]
 [ext_resource type="Texture2D" uid="uid://be53u2bn2bl10" path="res://sprites/mockup_track.png" id="7_uw36n"]
 [ext_resource type="Script" path="res://scripts/Audio.cs" id="7_wso5g"]
 [ext_resource type="Script" path="res://scripts/input/InitialControlScheme.cs" id="8_5o3ur"]
 [ext_resource type="AudioStream" uid="uid://couc3qpkfeh3c" path="res://sfx/pop.wav" id="8_j1bko"]
+[ext_resource type="Script" path="res://scripts/RenderScore.cs" id="8_n7kaq"]
 [ext_resource type="AudioStream" uid="uid://cdq000tbps6w5" path="res://sfx/grow.wav" id="9_gumm6"]
 [ext_resource type="Script" path="res://scripts/input/SimpleShoot.cs" id="9_nhaw1"]
 [ext_resource type="AudioStream" uid="uid://b7xmnqupx3g6t" path="res://sfx/shrink.wav" id="10_qkbjv"]
@@ -100,6 +102,25 @@ Bubbles = NodePath("Bubbles")
 VillainBubble = NodePath("VillainBubble")
 Player = NodePath("Path2D/GunFollow2D/Gun")
 PinJointTemplate = ExtResource("2_dakla")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer"]
+texture_filter = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme_override_fonts/normal_font = ExtResource("7_q464a")
+theme_override_font_sizes/normal_font_size = 21
+bbcode_enabled = true
+text = "00000000"
+fit_content = true
+autowrap_mode = 0
+script = ExtResource("8_n7kaq")
 
 [node name="Audio" type="Node" parent="." node_paths=PackedStringArray("_Shoot", "_Pop", "_Grow", "_Shrink", "_GameOver")]
 script = ExtResource("7_wso5g")
