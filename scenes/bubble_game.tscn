@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://borggvjowbqn2"]
+[gd_scene load_steps=45 format=3 uid="uid://borggvjowbqn2"]
 
 [ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_axaqe"]
 [ext_resource type="PackedScene" uid="uid://bpnitaatb3oe3" path="res://scenes/pin_joint.tscn" id="2_dakla"]
@@ -31,6 +31,7 @@
 [ext_resource type="Texture2D" uid="uid://dqedr4oxf7pei" path="res://sprites/down-arrow.png" id="18_7y84i"]
 [ext_resource type="Texture2D" uid="uid://dv7m7b346fvki" path="res://sprites/inner_bubble.png" id="28_mcajo"]
 [ext_resource type="Texture2D" uid="uid://xa38v1b4olde" path="res://sprites/inner_bubble_highlight.png" id="29_8m3lp"]
+[ext_resource type="Script" path="res://scripts/ScaleTweenFollower.cs" id="29_udvti"]
 
 [sub_resource type="Curve2D" id="Curve2D_lbhqn"]
 _data = {
@@ -228,17 +229,18 @@ freeze = true
 script = ExtResource("3_mo6oh")
 CollisionShape = NodePath("CollisionShape2D")
 
+[node name="BubbleSprite" type="Sprite2D" parent="VillainBubble" node_paths=PackedStringArray("Follow")]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("28_mcajo")
+script = ExtResource("29_udvti")
+Follow = NodePath("../CollisionShape2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="VillainBubble/BubbleSprite"]
+texture = ExtResource("29_8m3lp")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VillainBubble"]
 position = Vector2(1.19209e-07, -2.38419e-07)
 shape = SubResource("CircleShape2D_gnq0l")
-
-[node name="BubbleSprite" type="Sprite2D" parent="VillainBubble/CollisionShape2D"]
-position = Vector2(3.69549e-06, 2.32458e-06)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("28_mcajo")
-
-[node name="Sprite2D" type="Sprite2D" parent="VillainBubble/CollisionShape2D/BubbleSprite"]
-texture = ExtResource("29_8m3lp")
 
 [node name="BubbleQueue" type="Node2D" parent="." node_paths=PackedStringArray("bubbleRenders")]
 position = Vector2(190, 19)
