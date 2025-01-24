@@ -29,7 +29,6 @@ public partial class BubbleGun : Node2D {
 
     int GetStrafe() {
         if (ActiveMoveTarget.IsVisibleInTree()) {
-            GD.Print($"ActiveMoveTarget.ProgressRatio: {ActiveMoveTarget.ProgressRatio}  pathFollow.ProgressRatio: {pathFollow.ProgressRatio}");
             var TargetRatio = ActiveMoveTarget.ProgressRatio;
             var CurrentRatio = pathFollow.ProgressRatio;
             var diff = (TargetRatio - CurrentRatio + 1f) % 1f;

@@ -9,10 +9,10 @@ public partial class VillainBubble : RigidBody2D {
 	[Export] float GameOverScale = 12f;
 	[Export] float SizeChangeIncrement = 0.8f;
 
-    public float ScoreMultiplier => CollisionShape.Scale.X / DefaultScale;
+	public float ScoreMultiplier => CollisionShape.Scale.X / DefaultScale;
 
 	public CircleShape2D CircleShape => (CircleShape2D)CollisionShape.Shape;
-	
+
 	public void Grow() {
 		// Temporarily re-enable collisions on the joints
 		foreach (var joint in GetJoints()) {

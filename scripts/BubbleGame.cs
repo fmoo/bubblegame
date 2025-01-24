@@ -113,6 +113,8 @@ public partial class BubbleGame : Node2D {
     int currentChain = 1;
 
     public void MaybePopBubbles(Bubble bubble) {
+        if (bubble.IsQueuedForDeletion()) return;
+
         var maybePop = bubble.WalkSameColorNeighbors();
         if (maybePop.Count < 3) return;
 
@@ -120,6 +122,7 @@ public partial class BubbleGame : Node2D {
         // 10x the points for every extra bubble popped simultaneously
         pointsGained *= (int)Math.Pow(10, maybePop.Count - 3);
         // Scale points based on the current VillainBubbleMultiplier
+        GD.Print($"Gaining Points: Base={pointsGained}  SizeMul={VillainBubble.ScoreMultiplier}  ChainMul={currentChain}  SpeedMul={DifficultyMultiplier}");
         pointsGained = (int)(pointsGained * VillainBubble.ScoreMultiplier * currentChain * DifficultyMultiplier);
         GainPoints(pointsGained);
         currentChain *= 2;
@@ -144,9 +147,8 @@ public partial class BubbleGame : Node2D {
     float timeElapsed = 0;
     const float DEFAULT_INCREMENT_BAD_DURATION = 6f;
     float incrementBadDuration = DEFAULT_INCREMENT_BAD_DURATION;
-    // Calculate DifficultyMultplier based on how low incrementBadDuration has gotten
-    // float DifficultyMultiplier => Mathf.Clamp(1f - incrementBadDuration / DEFAULT_INCREMENT_BAD_DURATION, 0.1f, 1f);
-    float DifficultyMultiplier => 1f;
+    float DifficultyMultiplier => Mathf.Pow(2, (DEFAULT_INCREMENT_BAD_DURATION / incrementBadDuration) - 1);
+    // float DifficultyMultiplier => 1f;
     public override void _Process(double delta) {
         base._Process(delta);
         timeElapsed += (float)delta;
