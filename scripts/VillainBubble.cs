@@ -4,12 +4,11 @@ using System.Collections.Generic;
 
 public partial class VillainBubble : RigidBody2D {
 	[Export] CollisionShape2D CollisionShape;
-	[Export] float DefaultScale = 2.0f;
-	[Export] float MinimumScale = 2.0f;
-	[Export] float GameOverScale = 12f;
-	[Export] float SizeChangeIncrement = 0.8f;
+	const float MINIMUM_SCALE = 1.0f;
+	const float SIZE_CHANGE_INCREMENT = 0.5f;
+	const float GAME_OVER_SCALE = 6.5f;
 
-	public float ScoreMultiplier => CollisionShape.Scale.X / DefaultScale;
+	public float ScoreMultiplier => CollisionShape.Scale.X / MINIMUM_SCALE;
 
 	public CircleShape2D CircleShape => (CircleShape2D)CollisionShape.Shape;
 
@@ -19,8 +18,8 @@ public partial class VillainBubble : RigidBody2D {
 			joint.QueueFree();
 		}
 
-		CollisionShape.Scale = new Vector2(CollisionShape.Scale.X + SizeChangeIncrement, CollisionShape.Scale.Y + SizeChangeIncrement);
-		if (CollisionShape.Scale.X >= GameOverScale) {
+		CollisionShape.Scale = new Vector2(CollisionShape.Scale.X + SIZE_CHANGE_INCREMENT, CollisionShape.Scale.Y + SIZE_CHANGE_INCREMENT);
+		if (CollisionShape.Scale.X >= GAME_OVER_SCALE) {
 			BubbleGame.Game.GameOver();
 		} else {
 			BubbleGame.Game.Audio.Grow();
@@ -29,7 +28,7 @@ public partial class VillainBubble : RigidBody2D {
 
 	const float PopFallForce = 50f;
 	public void Shrink() {
-		if (CollisionShape.Scale.X <= MinimumScale) {
+		if (CollisionShape.Scale.X <= MINIMUM_SCALE) {
 			return;
 		}
 
@@ -52,7 +51,7 @@ public partial class VillainBubble : RigidBody2D {
 			joint.QueueFree();
 		}
 
-		CollisionShape.Scale = new Vector2(CollisionShape.Scale.X - SizeChangeIncrement, CollisionShape.Scale.Y - SizeChangeIncrement);
+		CollisionShape.Scale = new Vector2(CollisionShape.Scale.X - SIZE_CHANGE_INCREMENT, CollisionShape.Scale.Y - SIZE_CHANGE_INCREMENT);
 		BubbleGame.Game.Audio.Shrink();
 	}
 
@@ -65,7 +64,7 @@ public partial class VillainBubble : RigidBody2D {
 	}
 
 	public void Reset() {
-		CollisionShape.Scale = new Vector2(DefaultScale, DefaultScale);
+		CollisionShape.Scale = new Vector2(MINIMUM_SCALE, MINIMUM_SCALE);
 		// Delete all children that are Joints
 		foreach (Node child in GetChildren()) {
 			if (child is PinJoint2D joint) {
