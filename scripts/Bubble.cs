@@ -114,13 +114,16 @@ public partial class Bubble : RigidBody2D {
 		Sprite.GlobalRotation = 0f;
 	}
 
-	public void StartDestroy() {
+	public async void StartDestroy() {
 		BubbleGame.Game.Audio.Pop();
 		// Walk neighbors and remove yourself from their list
 		foreach (var neighbor in neighbors) {
 			neighbor.neighbors.Remove(this);
 			neighbor.colorNeighbors[this.Sprite.Texture].Remove(this);
 		}
+		AnimationPlayer player = (AnimationPlayer)Sprite.GetNode("AnimationPlayer");
+		player.Play("blue_pop");
+		await ToSignal(GetTree().CreateTimer(1), "timeout");
 		this.QueueFree();
 	}
 
