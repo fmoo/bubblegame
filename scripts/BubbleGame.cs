@@ -12,6 +12,7 @@ public partial class BubbleGame : Node2D {
     [Export] public VillainBubble VillainBubble { get; private set; }
     [Export] public BubbleGun Player { get; private set; }
     [Export] public bool DebugMode { get; private set; } = false;
+    [Export] bool TimerTicks { get; set; } = true;
 
     [Export] PackedScene PinJointTemplate;
 
@@ -151,11 +152,12 @@ public partial class BubbleGame : Node2D {
     // float DifficultyMultiplier => 1f;
     public override void _Process(double delta) {
         base._Process(delta);
-        timeElapsed += (float)delta;
-        if (timeElapsed > incrementBadDuration) {
-            GD.Print("TICK!");
-            timeElapsed -= incrementBadDuration;
-            _on_shoot_event();
+        if (TimerTicks) {
+            timeElapsed += (float)delta;
+            if (timeElapsed > incrementBadDuration) {
+                timeElapsed -= incrementBadDuration;
+                _on_shoot_event();
+            }
         }
         chainTimer = (float)Mathf.MoveToward(chainTimer, 0f, delta);
         if (chainTimer <= 0) {
