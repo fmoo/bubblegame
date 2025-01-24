@@ -27,6 +27,28 @@ public partial class BubbleGun : Node2D {
         bubblePreviewSprite.GlobalRotation = 0;
     }
 
+    int GetStrafe() {
+        if (ActiveMoveTarget.Visible) {
+            GD.Print($"ActiveMoveTarget.ProgressRatio: {ActiveMoveTarget.ProgressRatio}  pathFollow.ProgressRatio: {pathFollow.ProgressRatio}");
+            var TargetRatio = ActiveMoveTarget.ProgressRatio;
+            var CurrentRatio = pathFollow.ProgressRatio;
+            var diff = (TargetRatio - CurrentRatio + 1f) % 1f;
+            if (Mathf.Abs(diff) < 0.005f) {
+                ActiveMoveTarget.Visible = false;
+                return 0;
+            }
+            if (diff < 0.5f) {
+                Strafe = 1;
+            } else {
+                Strafe = -1;
+            }
+        } else {
+            Strafe = 0;
+        }
+        return Strafe;
+    }
+
+
     public override void _Process(double delta) {
         base._Process(delta);
         bubblePreviewSprite.GlobalRotation = 0;
@@ -43,10 +65,11 @@ public partial class BubbleGun : Node2D {
                 speedScale += 0.6f;
             }
         }
-        if (Strafe < 0) {
+        var strafe = GetStrafe();
+        if (strafe < 0) {
             pathFollow.ProgressRatio = (pathFollow.ProgressRatio - (float)(delta * trackSpeed) + 1f) % 1f;
             speedScale += 1f;
-        } else if (Strafe > 0) {
+        } else if (strafe > 0) {
             pathFollow.ProgressRatio = (pathFollow.ProgressRatio + (float)(delta * trackSpeed)) % 1f;
             speedScale -= 1f;
         }
@@ -75,9 +98,16 @@ public partial class BubbleGun : Node2D {
         EmitSignal(SignalName.OnShoot);
     }
 
+    [Export] PathFollow2D ActiveMoveTarget;
     public void SetTrackDestination(Vector2 InputDirection) {
-        var TargetRatio = -InputDirection.AngleTo(Vector2.Up) / Mathf.Tau;
-        // TODO: Implement this
+        var TargetRatio = (InputDirection.AngleTo(Vector2.Up) - Mathf.Pi) / Mathf.Tau + 1f;
+        ActiveMoveTarget.ProgressRatio = TargetRatio;
+        ActiveMoveTarget.Visible = true;
+    }
+
+    public void TurretLookAt(Vector2 GlobalMousePosition) {
+        var RelativeTarget = GlobalMousePosition - turretSprite.GlobalPosition;
+        GD.Print($"GlobalMousePosition: {GlobalMousePosition} Turret Position: {turretSprite.GlobalPosition}  RelativeTarget: {RelativeTarget}");
     }
 
     public void SetTrackAngle(Vector2 InputDirection) {

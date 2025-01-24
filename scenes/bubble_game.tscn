@@ -160,10 +160,18 @@ modulate = Color(1, 1, 1, 0.552941)
 position = Vector2(0, -23)
 texture = ExtResource("18_7y84i")
 
+[node name="MouseAimMoving2D" type="PathFollow2D" parent="Path2D"]
+visible = false
+position = Vector2(244, 283)
+
+[node name="Sprite2D" type="Sprite2D" parent="Path2D/MouseAimMoving2D"]
+position = Vector2(0, -23)
+texture = ExtResource("18_7y84i")
+
 [node name="GunFollow2D" type="PathFollow2D" parent="Path2D"]
 position = Vector2(244, 283)
 
-[node name="Gun" type="Node2D" parent="Path2D/GunFollow2D" node_paths=PackedStringArray("pathFollow", "animatedBody", "turretSprite", "bubblePreviewSprite")]
+[node name="Gun" type="Node2D" parent="Path2D/GunFollow2D" node_paths=PackedStringArray("pathFollow", "animatedBody", "turretSprite", "bubblePreviewSprite", "ActiveMoveTarget")]
 script = ExtResource("2_t6f7g")
 bubbleScene = ExtResource("3_gb0c4")
 pathFollow = NodePath("..")
@@ -171,6 +179,7 @@ trackSpeed = 0.2
 animatedBody = NodePath("Body")
 turretSprite = NodePath("Turret")
 bubblePreviewSprite = NodePath("Body/BubbleSprite")
+ActiveMoveTarget = NodePath("../../MouseAimMoving2D")
 
 [node name="Body" type="AnimatedSprite2D" parent="Path2D/GunFollow2D/Gun"]
 position = Vector2(0, -15)
