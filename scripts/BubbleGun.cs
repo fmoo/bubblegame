@@ -106,8 +106,10 @@ public partial class BubbleGun : Node2D {
     }
 
     public void TurretLookAt(Vector2 GlobalMousePosition) {
-        var RelativeTarget = GlobalMousePosition - turretSprite.GlobalPosition;
+        var RelativeTarget = turretSprite.GlobalPosition - GlobalMousePosition;
         GD.Print($"GlobalMousePosition: {GlobalMousePosition} Turret Position: {turretSprite.GlobalPosition}  RelativeTarget: {RelativeTarget}");
+        turretSprite.GlobalRotation = RelativeTarget.Angle() - Mathf.Pi / 2;
+        turretSprite.Rotation = Mathf.Clamp(turretSprite.Rotation, -Mathf.DegToRad(angleLimit), Mathf.DegToRad(angleLimit));
     }
 
     public void SetTrackAngle(Vector2 InputDirection) {
