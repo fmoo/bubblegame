@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="BGMConfig" load_steps=3 format=3 uid="uid://dswf8ccxm7gbu"]
+
+[ext_resource type="AudioStream" uid="uid://44u6q4gp53nf" path="res://bgm/scifi/Robo Runner.ogg" id="1_oc6pu"]
+[ext_resource type="Script" path="res://scripts/resources/BGMConfig.cs" id="2_tbpq4"]
+
+[resource]
+script = ExtResource("2_tbpq4")
+AudioStream = ExtResource("1_oc6pu")
+Title = "Robo Runner"
+Composer = "Bert Cole"
+Link = "https://bit-by-bit-sound.itch.io/"
+FadeAfter = 106.06

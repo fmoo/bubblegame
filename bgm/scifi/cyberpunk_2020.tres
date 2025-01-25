@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="BGMConfig" load_steps=3 format=3 uid="uid://dh6tlvmfiu5g1"]
+
+[ext_resource type="Script" path="res://scripts/resources/BGMConfig.cs" id="1_gxsit"]
+[ext_resource type="AudioStream" uid="uid://ci7ovx1yc2x5w" path="res://bgm/scifi/Cyberpunk 2020.ogg" id="1_vk11p"]
+
+[resource]
+script = ExtResource("1_gxsit")
+AudioStream = ExtResource("1_vk11p")
+Title = "Cyberpunk 2020"
+Composer = "Bert Cole"
+Link = "https://bit-by-bit-sound.itch.io/"
+FadeAfter = 103.0
