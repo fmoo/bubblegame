@@ -2,14 +2,23 @@ using Godot;
 using System;
 
 public partial class InitialControlScheme : ControlSchemeBase {
-    
+    [Export] MouseControls MouseControls = null;
+
+    void MaybeDisableMouseAim() {
+        if (MouseControls != null) {
+            MouseControls.DisableMouseAim = true;
+        }
+    }
+
     public override void _Process(double delta) {
         base._Process(delta);
 
         if (Input.IsActionPressed("ui_left")) {
             BubbleGame.Game.Player.TurnTurret = -1;
+            MaybeDisableMouseAim();
         } else if (Input.IsActionPressed("ui_right")) {
             BubbleGame.Game.Player.TurnTurret = 1;
+            MaybeDisableMouseAim();
         } else {
             BubbleGame.Game.Player.TurnTurret = 0;
         }

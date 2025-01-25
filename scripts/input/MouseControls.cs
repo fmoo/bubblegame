@@ -6,6 +6,8 @@ public partial class MouseControls : ControlSchemeBase {
 
     bool moveMouseDown = false;
 
+    public bool DisableMouseAim = false;
+
     public override void _Input(InputEvent @event) {
         base._Input(@event);
         if (!IsVisibleInTree()) return;
@@ -23,6 +25,10 @@ public partial class MouseControls : ControlSchemeBase {
                 moveMouseDown = false;
             }
         }
+        // If mouse moves, re-enable mouse aim
+        if (@event is InputEventMouseMotion) {
+            DisableMouseAim = false;
+        }
     }
 
 
@@ -30,10 +36,12 @@ public partial class MouseControls : ControlSchemeBase {
         base._Process(delta);
 
         var InputDirection = GetLocalMousePosition();
-        moveTargetPath.ProgressRatio = (InputDirection.AngleTo(Vector2.Up) - Mathf.Pi) / Mathf.Tau;
+        if (!DisableMouseAim) {
+            moveTargetPath.ProgressRatio = (InputDirection.AngleTo(Vector2.Up) - Mathf.Pi) / Mathf.Tau;
+            BubbleGame.Game.Player.TurretLookAt(GetGlobalMousePosition());
+        }
 
-        BubbleGame.Game.Player.TurretLookAt(GetGlobalMousePosition());
-
+        // If the player is holding the button down, update the targeting to reflect
         if (moveMouseDown) {
             BubbleGame.Game.Player.SetTrackDestination(InputDirection);
         }
