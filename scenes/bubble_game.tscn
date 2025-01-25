@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://borggvjowbqn2"]
+[gd_scene load_steps=48 format=3 uid="uid://borggvjowbqn2"]
 
 [ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_axaqe"]
 [ext_resource type="PackedScene" uid="uid://bpnitaatb3oe3" path="res://scenes/pin_joint.tscn" id="2_dakla"]
@@ -29,9 +29,25 @@
 [ext_resource type="Texture2D" uid="uid://bxpexe12qf7nr" path="res://sprites/gun_barrel.png" id="16_0qeqh"]
 [ext_resource type="Script" path="res://scripts/input/MouseControls.cs" id="17_8g50q"]
 [ext_resource type="Texture2D" uid="uid://dqedr4oxf7pei" path="res://sprites/down-arrow.png" id="18_7y84i"]
+[ext_resource type="Shader" path="res://shaders/background.gdshader" id="20_vleso"]
+[ext_resource type="Texture2D" uid="uid://b6bc8bmh3lltv" path="res://sprites/bg.png" id="21_elrbj"]
 [ext_resource type="Texture2D" uid="uid://dv7m7b346fvki" path="res://sprites/inner_bubble.png" id="28_mcajo"]
 [ext_resource type="Texture2D" uid="uid://xa38v1b4olde" path="res://sprites/inner_bubble_highlight.png" id="29_8m3lp"]
 [ext_resource type="Script" path="res://scripts/ScaleTweenFollower.cs" id="29_udvti"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4libq"]
+shader = ExtResource("20_vleso")
+shader_parameter/spin_rotation_speed = 2.0
+shader_parameter/move_speed = 7.0
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/colour_1 = Color(0.890196, 0.698039, 1, 1)
+shader_parameter/colour_2 = Color(0, 0.42, 0.706, 1)
+shader_parameter/colour_3 = Color(0.118582, 0.118581, 0.118581, 1)
+shader_parameter/contrast = 3.5
+shader_parameter/lighting = 0.4
+shader_parameter/spin_amount = 0.25
+shader_parameter/pixel_filter = 200.0
+shader_parameter/is_rotating = false
 
 [sub_resource type="Curve2D" id="Curve2D_lbhqn"]
 _data = {
@@ -95,7 +111,7 @@ normal = Vector2(-1, 0)
 
 [node name="BubbleGame" type="Node2D" node_paths=PackedStringArray("Audio", "BubbleQueue", "Springs", "Bubbles", "VillainBubble", "Player")]
 texture_filter = 1
-position = Vector2(-1, 1)
+position = Vector2(0, 1)
 script = ExtResource("1_axaqe")
 Audio = NodePath("Audio")
 BubbleQueue = NodePath("BubbleQueue")
@@ -107,20 +123,23 @@ Player = NodePath("Path2D/GunFollow2D/Gun")
 PinJointTemplate = ExtResource("2_dakla")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 0
 follow_viewport_enabled = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer"]
+modulate = Color(0, 0, 0, 1)
 texture_filter = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -40.0
-offset_bottom = 40.0
+offset_left = -94.0
+offset_top = 14.0
+offset_bottom = 54.0
 grow_horizontal = 0
 theme_override_fonts/normal_font = ExtResource("7_q464a")
 theme_override_font_sizes/normal_font_size = 21
 bbcode_enabled = true
-text = "00000000"
+text = "0000000"
 fit_content = true
 autowrap_mode = 0
 script = ExtResource("8_n7kaq")
@@ -167,6 +186,17 @@ script = ExtResource("10_sqvxt")
 position = Vector2(247, 144)
 script = ExtResource("17_8g50q")
 moveTargetPath = NodePath("../../Path2D/MouseAim2D")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -3
+material = SubResource("ShaderMaterial_4libq")
+offset_right = 512.0
+offset_bottom = 288.0
+
+[node name="BG" type="Sprite2D" parent="."]
+z_index = -1
+texture = ExtResource("21_elrbj")
+centered = false
 
 [node name="Mock" type="Sprite2D" parent="."]
 z_index = -2
