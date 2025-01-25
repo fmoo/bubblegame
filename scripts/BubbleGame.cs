@@ -12,6 +12,7 @@ public partial class BubbleGame : Node2D {
     [Export] public VillainBubble VillainBubble { get; private set; }
     [Export] public BubbleGun Player { get; private set; }
     [Export] public bool DebugMode { get; private set; } = false;
+
     [Export] bool TimerTicks { get; set; } = true;
     [Export] int MinMatchSize { get; set; } = 3;
     [Export] int ShrinkBubblePops { get; set; } = 4;
@@ -128,7 +129,7 @@ public partial class BubbleGame : Node2D {
         GD.Print($"Gaining Points: Base={pointsGained}  SizeMul={VillainBubble.ScoreMultiplier}  ChainMul={currentChain}  SpeedMul={DifficultyMultiplier}");
         pointsGained = (int)(pointsGained * VillainBubble.ScoreMultiplier * currentChain * DifficultyMultiplier);
         GainPoints(pointsGained);
-        currentChain *= 2;
+        currentChain = Mathf.Clamp(currentChain + 1, 1, 8);
         chainTimer = 1f;
 
         HashSet<Bubble> maybeFall = new();
@@ -147,6 +148,13 @@ public partial class BubbleGame : Node2D {
         }
     }
 
+    public void DebugTestFall() {
+        foreach (var bubble in Bubbles.GetChildren().Cast<Bubble>()) {
+            if (bubble.IsAnchored) continue;
+            bubble.ChainMoveTowards(VillainBubble.GlobalPosition);
+        }
+    }
+
     float timeElapsed = 0;
     const float DEFAULT_INCREMENT_BAD_DURATION = 6f;
     float incrementBadDuration = DEFAULT_INCREMENT_BAD_DURATION;
@@ -154,6 +162,10 @@ public partial class BubbleGame : Node2D {
     // float DifficultyMultiplier => 1f;
     public override void _Process(double delta) {
         base._Process(delta);
+        if (Input.IsActionJustReleased("debug_physics")) {
+            DebugTestFall();
+        }
+
         if (TimerTicks) {
             timeElapsed += (float)delta;
             if (timeElapsed > incrementBadDuration) {

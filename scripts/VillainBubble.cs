@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 public partial class VillainBubble : RigidBody2D {
 	[Export] CollisionShape2D CollisionShape;
@@ -26,7 +27,7 @@ public partial class VillainBubble : RigidBody2D {
 		}
 	}
 
-	const float PopFallForce = 50f;
+	const float PopFallForce = 25f;
 	public void Shrink() {
 		if (CollisionShape.Scale.X <= MINIMUM_SCALE) {
 			return;
@@ -34,7 +35,8 @@ public partial class VillainBubble : RigidBody2D {
 
 		foreach (var bubbleNode in BubbleGame.Game.Bubbles.GetChildren()) {
 			if (bubbleNode is Bubble bubble) {
-				bubble.LinearVelocity = (GlobalPosition - bubble.GlobalPosition).Normalized() * PopFallForce / 2;
+				var gravityMultiplier = bubble.IsAnchored ? 1f : 8f;
+				bubble.LinearVelocity = (GlobalPosition - bubble.GlobalPosition).Normalized() * PopFallForce * gravityMultiplier;
 			}
 		}
 

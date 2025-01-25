@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://b5soh8b80t7ya"]
+[gd_scene load_steps=8 format=3 uid="uid://b5soh8b80t7ya"]
 
 [ext_resource type="Texture2D" uid="uid://dugmk8ouwtnds" path="res://sprites/bubble_blue.png" id="1_0evjc"]
+[ext_resource type="Script" path="res://scripts/BubbleSprite.cs" id="2_7c3sj"]
 
 [sub_resource type="Animation" id="Animation_aa6hx"]
 length = 0.001
@@ -18,7 +19,8 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_eow0r"]
-resource_name = "blue_default"
+resource_name = "default"
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -33,7 +35,7 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_p1mfw"]
-resource_name = "blue_pop"
+resource_name = "pop"
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -48,16 +50,35 @@ tracks/0/keys = {
 "values": [1, 2, 3, 4, 5, 6, 7, 8, 9, 8]
 }
 
+[sub_resource type="Animation" id="Animation_hvokj"]
+resource_name = "blink"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [14, 0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_yxqy3"]
 _data = {
 "RESET": SubResource("Animation_aa6hx"),
-"blue_default": SubResource("Animation_eow0r"),
-"blue_pop": SubResource("Animation_p1mfw")
+"blink": SubResource("Animation_hvokj"),
+"default": SubResource("Animation_eow0r"),
+"pop": SubResource("Animation_p1mfw")
 }
 
-[node name="BubbleSprite" type="Sprite2D"]
+[node name="BubbleSprite" type="Sprite2D" node_paths=PackedStringArray("AnimationPlayer")]
 texture = ExtResource("1_0evjc")
 hframes = 15
+script = ExtResource("2_7c3sj")
+AnimationPlayer = NodePath("AnimationPlayer")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

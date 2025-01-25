@@ -7,7 +7,7 @@ using System.Linq;
 
 public partial class Bubble : RigidBody2D {
 	[Export] CollisionShape2D CollisionShape;
-	[Export] public Sprite2D Sprite { get; private set; }
+	[Export] public BubbleSprite Sprite { get; private set; }
 	public HashSet<Bubble> neighbors = new();
 	Dictionary<Texture, HashSet<Bubble>> colorNeighbors = new();
 	public bool HasVillainAnchor = false;
@@ -33,7 +33,7 @@ public partial class Bubble : RigidBody2D {
 		}
 	}
 
-	const float PopFallForce = 50f;
+	const float PopFallForce = 100f;
 	public void ChainMoveTowards(Vector2 target) {
 		var visited = new HashSet<Bubble>();
 		var work = new Queue<Bubble>();
@@ -114,7 +114,7 @@ public partial class Bubble : RigidBody2D {
 		Sprite.GlobalRotation = 0f;
 	}
 
-	public async void StartDestroy() {
+	public void StartDestroy() {
 		// Disable collisions and set velocity to 0
 		CollisionLayer = 0;
 		CollisionMask = 0;
@@ -126,10 +126,12 @@ public partial class Bubble : RigidBody2D {
 			neighbor.neighbors.Remove(this);
 			neighbor.colorNeighbors[this.Sprite.Texture].Remove(this);
 		}
-		AnimationPlayer player = (AnimationPlayer)Sprite.GetNode("AnimationPlayer");
-		player.Play("blue_pop");
-		await ToSignal(GetTree().CreateTimer(1), "timeout");
-		this.QueueFree();
+		Sprite.PlayAnimation("pop");
+
+		var tween = GetTree().CreateTween();
+		tween.TweenCallback(Callable.From(() => {
+			this.QueueFree();
+		})).SetDelay(1f);
 	}
 
 }
