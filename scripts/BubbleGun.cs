@@ -86,7 +86,7 @@ public partial class BubbleGun : Node2D {
         BubbleGame.Game.RegisterBubble(bubble);
 
         // Set the color
-        bubble.Sprite.Texture = BubbleGame.Game.BubbleQueue.DequeueColor();
+        bubble.SetConfig(BubbleGame.Game.BubbleQueue.DequeueColor());
 
         // Trajectory and position        
         bubble.GlobalPosition = turretSprite.GlobalPosition;

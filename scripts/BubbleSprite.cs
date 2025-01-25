@@ -28,4 +28,8 @@ public partial class BubbleSprite : Sprite2D {
 		if (animation == "pop") blinkTimer = 999;
 		AnimationPlayer.Play(animation);
 	}
+
+	public void SetConfig(BubbleConfig config) {
+		Texture = config.PlayerBubbleTexture;
+	}
 }

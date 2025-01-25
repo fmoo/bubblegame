@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="GameplayConfig" load_steps=6 format=3 uid="uid://dpm2joux2uabo"]
+
+[ext_resource type="Script" path="res://scripts/resources/GameplayConfig.cs" id="1_0ons5"]
+[ext_resource type="Resource" uid="uid://dbmhicl4dmeeq" path="res://bubbles/blue.tres" id="1_160dr"]
+[ext_resource type="Resource" uid="uid://cxckdb2pvda1h" path="res://bubbles/green.tres" id="2_d4kya"]
+[ext_resource type="Resource" uid="uid://bks3wa5u2ewtj" path="res://bubbles/orange.tres" id="3_3j0t2"]
+[ext_resource type="Resource" uid="uid://cvxxf245aptcj" path="res://bubbles/pink.tres" id="4_717mi"]
+
+[resource]
+script = ExtResource("1_0ons5")
+Name = "Normal 4"
+Description = "A basic match-4 type bubble game"
+Bubbles = Array[Object]([ExtResource("1_160dr"), ExtResource("2_d4kya"), ExtResource("3_3j0t2"), ExtResource("4_717mi")])
+TimerTicks = true
+MinMatchSize = 4
+ShrinkBubblePops = 5
+GrowBubbleShots = 6

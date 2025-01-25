@@ -2,14 +2,14 @@ using System.Collections.Generic;
 using Godot;
 
 public partial class BubbleQueue : Node2D {
-    [Export] public Sprite2D[] bubbleRenders;
-    List<Texture2D> colorQueue = new();
+    [Export] public BubbleSprite[] bubbleRenders;
+    List<BubbleConfig> colorQueue = new();
     public override void _Ready() {
         base._Ready();
         Reset();
     }
 
-    public Texture2D DequeueColor() {
+    public BubbleConfig DequeueColor() {
         var result = colorQueue[0];
         colorQueue.RemoveAt(0);
         colorQueue.Add(BubbleGame.Game.PickColor());
@@ -19,7 +19,7 @@ public partial class BubbleQueue : Node2D {
 
     void RefreshRender() {
         for (int i = 0; i < bubbleRenders.Length; i++) {
-            bubbleRenders[i].Texture = colorQueue[i];
+            bubbleRenders[i].SetConfig(colorQueue[i]);
         }
     }
 

@@ -6,17 +6,12 @@ using System.Linq;
 public partial class BubbleGame : Node2D {
     [Export] public Audio Audio { get; private set; }
     [Export] public BubbleQueue BubbleQueue { get; private set; }
-    [Export] public Texture2D[] bubbleColors;
+    [Export] public GameplayConfig GameplayConfig { get; private set; }
     [Export] public Node2D Springs;
     [Export] public Node2D Bubbles;
     [Export] public VillainBubble VillainBubble { get; private set; }
     [Export] public BubbleGun Player { get; private set; }
     [Export] public bool DebugMode { get; private set; } = false;
-
-    [Export] bool TimerTicks { get; set; } = true;
-    [Export] int MinMatchSize { get; set; } = 3;
-    [Export] int ShrinkBubblePops { get; set; } = 4;
-    [Export] int GrowBubbleShots { get; set; } = 5;
 
     [Export] PackedScene PinJointTemplate;
     [Export] PackedScene VillainPinJointTemplate;
@@ -46,8 +41,8 @@ public partial class BubbleGame : Node2D {
         GD.Print($"Destroying bubble {bubble}");
         if (bubble != null && !bubble.IsQueuedForDeletion()) {
             poppedBubbles++;
-            while (poppedBubbles >= ShrinkBubblePops) {
-                poppedBubbles -= ShrinkBubblePops;
+            while (poppedBubbles >= GameplayConfig.ShrinkBubblePops) {
+                poppedBubbles -= GameplayConfig.ShrinkBubblePops;
                 VillainBubble.Shrink();
                 incrementBadDuration *= 0.99f;
             }
@@ -108,10 +103,10 @@ public partial class BubbleGame : Node2D {
         return joint;
     }
 
-    public Texture2D PickColor() {
-        var index = GD.RandRange(0, bubbleColors.Length - 1);
+    public BubbleConfig PickColor() {
+        var index = GD.RandRange(0, GameplayConfig.Bubbles.Length - 1);
         GD.Print(index);
-        return bubbleColors[index];
+        return GameplayConfig.Bubbles[index];
     }
 
     float chainTimer = 0f;
@@ -121,11 +116,11 @@ public partial class BubbleGame : Node2D {
         if (bubble.IsQueuedForDeletion()) return;
 
         var maybePop = bubble.WalkSameColorNeighbors();
-        if (maybePop.Count < MinMatchSize) return;
+        if (maybePop.Count < GameplayConfig.MinMatchSize) return;
 
         var pointsGained = 50;
         // 10x the points for every extra bubble popped simultaneously
-        pointsGained *= (int)Math.Pow(10, maybePop.Count - MinMatchSize);
+        pointsGained *= (int)Math.Pow(10, maybePop.Count - GameplayConfig.MinMatchSize);
         // Scale points based on the current VillainBubbleMultiplier
         GD.Print($"Gaining Points: Base={pointsGained}  SizeMul={VillainBubble.ScoreMultiplier}  ChainMul={currentChain}  SpeedMul={DifficultyMultiplier}");
         pointsGained = (int)(pointsGained * VillainBubble.ScoreMultiplier * currentChain * DifficultyMultiplier);
@@ -164,10 +159,10 @@ public partial class BubbleGame : Node2D {
     public override void _Process(double delta) {
         base._Process(delta);
         if (Input.IsActionJustReleased("debug_physics")) {
-            DebugTestFall();
+            VillainBubble.SetConfig(PickColor());
         }
 
-        if (TimerTicks) {
+        if (GameplayConfig.TimerTicks) {
             timeElapsed += (float)delta;
             if (timeElapsed > incrementBadDuration) {
                 timeElapsed -= incrementBadDuration;
@@ -206,7 +201,7 @@ public partial class BubbleGame : Node2D {
     int numShots = 0;
     public void _on_shoot_event() {
         numShots++;
-        if (numShots == GrowBubbleShots) {
+        if (numShots >= GameplayConfig.GrowBubbleShots) {
             numShots = 0;
             VillainBubble.Grow();
         }

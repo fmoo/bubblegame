@@ -5,6 +5,7 @@ using System.ComponentModel;
 
 public partial class VillainBubble : RigidBody2D {
 	[Export] CollisionShape2D CollisionShape;
+	[Export] Sprite2D Sprite;
 	const float MINIMUM_SCALE = 1.0f;
 	const float SIZE_CHANGE_INCREMENT = 0.5f;
 	const float GAME_OVER_SCALE = 6.5f;
@@ -73,5 +74,9 @@ public partial class VillainBubble : RigidBody2D {
 				joint.QueueFree();
 			}
 		}
+	}
+
+	public void SetConfig(BubbleConfig config) {
+		Sprite.Modulate = config.BubbleColor;
 	}
 }
