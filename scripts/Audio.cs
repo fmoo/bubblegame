@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 
 public partial class Audio : Node {
+    [Export] public BGM BGM { get; private set; }
+
     public void Shoot() {
         MaybePlay(_Shoot);
     }
