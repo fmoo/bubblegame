@@ -19,6 +19,7 @@ public partial class BubbleGame : Node2D {
     [Export] int GrowBubbleShots { get; set; } = 5;
 
     [Export] PackedScene PinJointTemplate;
+    [Export] PackedScene VillainPinJointTemplate;
 
     public int Score { get; private set; } = 0;
     [Signal] public delegate void ScoreChangedEventHandler(int score);
@@ -122,7 +123,7 @@ public partial class BubbleGame : Node2D {
         var maybePop = bubble.WalkSameColorNeighbors();
         if (maybePop.Count < MinMatchSize) return;
 
-        var pointsGained = 100;
+        var pointsGained = 50;
         // 10x the points for every extra bubble popped simultaneously
         pointsGained *= (int)Math.Pow(10, maybePop.Count - MinMatchSize);
         // Scale points based on the current VillainBubbleMultiplier

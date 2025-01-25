@@ -118,6 +118,7 @@ public partial class Bubble : RigidBody2D {
 		// Disable collisions and set velocity to 0
 		CollisionLayer = 0;
 		CollisionMask = 0;
+		CollisionShape = null;
 		LinearVelocity = Vector2.Zero;
 
 		BubbleGame.Game.Audio.Pop();
@@ -126,12 +127,13 @@ public partial class Bubble : RigidBody2D {
 			neighbor.neighbors.Remove(this);
 			neighbor.colorNeighbors[this.Sprite.Texture].Remove(this);
 		}
-		Sprite.PlayAnimation("pop");
+		QueueFree();
+		// Sprite.PlayAnimation("pop");
 
-		var tween = GetTree().CreateTween();
-		tween.TweenCallback(Callable.From(() => {
-			this.QueueFree();
-		})).SetDelay(1f);
+		// var tween = GetTree().CreateTween();
+		// tween.TweenCallback(Callable.From(() => {
+		// 	this.QueueFree();
+		// })).SetDelay(1f);
 	}
 
 }

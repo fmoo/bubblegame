@@ -1,0 +1,6 @@
+[gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://dwoc4ua2n5c6v"]
+
+[ext_resource type="FontFile" uid="uid://bwnxcwtehd73q" path="res://fonts/maple.ttf" id="1_udkve"]
+
+[resource]
+base_font = ExtResource("1_udkve")

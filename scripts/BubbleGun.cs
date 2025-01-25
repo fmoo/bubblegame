@@ -7,7 +7,7 @@ public partial class BubbleGun : Node2D {
     [Export] float angleLimit = 80;
     [Export] float bubbleSpeed = 200;
     [Export] float rotationSpeed = 2;
-    [Export] float trackSpeed = 20;
+    [Export] float trackSpeed = 25;
     [Export] AnimatedSprite2D animatedBody;
     [Export] Sprite2D turretSprite;
     [Export] Sprite2D bubblePreviewSprite;

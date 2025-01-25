@@ -1,6 +1,5 @@
-[gd_scene format=3 uid="uid://bpnitaatb3oe3"]
+[gd_scene format=3 uid="uid://dqaenifftll1r"]
 
 [node name="PinJoint" type="PinJoint2D"]
 position = Vector2(-1, 0)
 bias = 0.9
-softness = 1.0
