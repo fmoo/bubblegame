@@ -115,6 +115,10 @@ public partial class Bubble : RigidBody2D {
 	}
 
 	public async void StartDestroy() {
+		// Disable collisions
+		CollisionLayer = 0;
+		CollisionMask = 0;
+
 		BubbleGame.Game.Audio.Pop();
 		// Walk neighbors and remove yourself from their list
 		foreach (var neighbor in neighbors) {
