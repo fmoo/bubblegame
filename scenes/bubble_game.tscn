@@ -132,6 +132,7 @@ ShrinkBubblePops = 5
 GrowBubbleShots = 6
 PinJointTemplate = ExtResource("2_dakla")
 VillainPinJointTemplate = ExtResource("7_5koiv")
+BubbleSprite = ExtResource("4_otc38")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 0

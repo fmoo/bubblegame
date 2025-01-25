@@ -96,7 +96,7 @@ public partial class Bubble : RigidBody2D {
 
 		} else if (body is VillainBubble villainBubble) {
 			BubbleGame.Game.LinkToVillainBubblePinJoint(villainBubble, this);
-
+			
 		}
 	}
 
@@ -128,6 +128,7 @@ public partial class Bubble : RigidBody2D {
 			neighbor.colorNeighbors[this.Sprite.Texture].Remove(this);
 		}
 		QueueFree();
+		BubbleGame.Game.SpawnBubblePop(GlobalPosition, Sprite.Texture);
 		// Sprite.PlayAnimation("pop");
 
 		// var tween = GetTree().CreateTween();
