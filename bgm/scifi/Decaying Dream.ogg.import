@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cgvn7olbgxse0"
+path="res://.godot/imported/Decaying Dream.ogg-1bb08758eb7674fc136e7f3879453548.oggvorbisstr"
+
+[deps]
+
+source_file="res://bgm/scifi/Decaying Dream.ogg"
+dest_files=["res://.godot/imported/Decaying Dream.ogg-1bb08758eb7674fc136e7f3879453548.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

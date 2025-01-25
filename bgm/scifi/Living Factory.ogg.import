@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://d0ssmrxdecohm"
+path="res://.godot/imported/Living Factory.ogg-2fded9643c27717b29a88899471f6582.oggvorbisstr"
+
+[deps]
+
+source_file="res://bgm/scifi/Living Factory.ogg"
+dest_files=["res://.godot/imported/Living Factory.ogg-2fded9643c27717b29a88899471f6582.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

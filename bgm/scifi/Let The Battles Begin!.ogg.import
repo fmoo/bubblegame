@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://f2sfplv3w1oa"
+path="res://.godot/imported/Let The Battles Begin!.ogg-fb0263edf4b1c34e86682cff0b4258cc.oggvorbisstr"
+
+[deps]
+
+source_file="res://bgm/scifi/Let The Battles Begin!.ogg"
+dest_files=["res://.godot/imported/Let The Battles Begin!.ogg-fb0263edf4b1c34e86682cff0b4258cc.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

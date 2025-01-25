@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://44u6q4gp53nf"
+path="res://.godot/imported/Robo Runner.ogg-e345595dee16c103846f6f42be828b31.oggvorbisstr"
+
+[deps]
+
+source_file="res://bgm/scifi/Robo Runner.ogg"
+dest_files=["res://.godot/imported/Robo Runner.ogg-e345595dee16c103846f6f42be828b31.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=135.0
+beat_count=0
+bar_beats=4

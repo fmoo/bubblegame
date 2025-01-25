@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://de27f5sq3cqe1"
+path="res://.godot/imported/Alien Planet.ogg-806b3fefce25462385ba6b9a33414a03.oggvorbisstr"
+
+[deps]
+
+source_file="res://bgm/scifi/Alien Planet.ogg"
+dest_files=["res://.godot/imported/Alien Planet.ogg-806b3fefce25462385ba6b9a33414a03.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

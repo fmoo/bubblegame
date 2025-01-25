@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c7pdavwel8bg7"
+path="res://.godot/imported/Growth Analysis.ogg-e016afd833b6157987243632f0e7c85b.oggvorbisstr"
+
+[deps]
+
+source_file="res://bgm/scifi/Growth Analysis.ogg"
+dest_files=["res://.godot/imported/Growth Analysis.ogg-e016afd833b6157987243632f0e7c85b.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

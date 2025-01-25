@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ci7ovx1yc2x5w"
+path="res://.godot/imported/Cyberpunk 2020.ogg-6f5116db337a5b1a2aba3cc52354807a.oggvorbisstr"
+
+[deps]
+
+source_file="res://bgm/scifi/Cyberpunk 2020.ogg"
+dest_files=["res://.godot/imported/Cyberpunk 2020.ogg-6f5116db337a5b1a2aba3cc52354807a.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

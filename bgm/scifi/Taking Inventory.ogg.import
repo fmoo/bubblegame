@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://kk2godp2mcnt"
+path="res://.godot/imported/Taking Inventory.ogg-442d9500e3a569d9c22177d35d64413b.oggvorbisstr"
+
+[deps]
+
+source_file="res://bgm/scifi/Taking Inventory.ogg"
+dest_files=["res://.godot/imported/Taking Inventory.ogg-442d9500e3a569d9c22177d35d64413b.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

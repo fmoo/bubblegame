@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bndv5bot8w5ar"
+path="res://.godot/imported/Big Personality.ogg-b1822a70aec0f580835e273155639683.oggvorbisstr"
+
+[deps]
+
+source_file="res://bgm/scifi/Big Personality.ogg"
+dest_files=["res://.godot/imported/Big Personality.ogg-b1822a70aec0f580835e273155639683.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

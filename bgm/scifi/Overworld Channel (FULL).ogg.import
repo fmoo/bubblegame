@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dty2uv2vedecv"
+path="res://.godot/imported/Overworld Channel (FULL).ogg-8116c50e1254a3312b32f83b0514f21c.oggvorbisstr"
+
+[deps]
+
+source_file="res://bgm/scifi/Overworld Channel (FULL).ogg"
+dest_files=["res://.godot/imported/Overworld Channel (FULL).ogg-8116c50e1254a3312b32f83b0514f21c.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=16.696
+bpm=115.0
+beat_count=0
+bar_beats=4

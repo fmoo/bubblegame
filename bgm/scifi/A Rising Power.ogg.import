@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://7h42gxrcvjjw"
+path="res://.godot/imported/A Rising Power.ogg-7c407175e31daa5b69b5ebce239c5c5f.oggvorbisstr"
+
+[deps]
+
+source_file="res://bgm/scifi/A Rising Power.ogg"
+dest_files=["res://.godot/imported/A Rising Power.ogg-7c407175e31daa5b69b5ebce239c5c5f.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0.0
+beat_count=0
+bar_beats=4
