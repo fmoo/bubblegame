@@ -77,6 +77,7 @@ public partial class VillainBubble : RigidBody2D {
 	}
 
 	public void SetConfig(BubbleConfig config) {
-		Sprite.Modulate = config.BubbleColor;
+		var tween = GetTree().CreateTween();
+		tween.TweenProperty(Sprite, "modulate", config.BubbleColor, 0.15f);
 	}
 }
