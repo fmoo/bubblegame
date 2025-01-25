@@ -67,6 +67,8 @@ public partial class VillainBubble : RigidBody2D {
 	}
 
 	public void Reset() {
+		var tween = SetConfig(null);
+		tween.CustomStep(999f);
 		CollisionShape.Scale = new Vector2(MINIMUM_SCALE, MINIMUM_SCALE);
 		// Delete all children that are Joints
 		foreach (Node child in GetChildren()) {
@@ -76,8 +78,13 @@ public partial class VillainBubble : RigidBody2D {
 		}
 	}
 
-	public void SetConfig(BubbleConfig config) {
+	public BubbleConfig Config { get; private set; }
+	public Tween SetConfig(BubbleConfig config) {
 		var tween = GetTree().CreateTween();
-		tween.TweenProperty(Sprite, "modulate", config.BubbleColor, 0.15f);
+		var bubbleColor = config != null ? config.BubbleColor : new Color(1, 1, 1);
+
+		tween.TweenProperty(Sprite, "modulate", bubbleColor, 0.15f);
+		Config = config;
+		return tween;
 	}
 }

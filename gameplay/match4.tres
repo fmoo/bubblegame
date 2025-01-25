@@ -11,6 +11,7 @@ script = ExtResource("1_0ons5")
 Name = "Normal 4"
 Description = "A basic match-4 type bubble game"
 Bubbles = Array[Object]([ExtResource("1_160dr"), ExtResource("2_d4kya"), ExtResource("3_3j0t2"), ExtResource("4_717mi")])
+VillainBubbleColorChanges = false
 TimerTicks = true
 MinMatchSize = 4
 ShrinkBubblePops = 5

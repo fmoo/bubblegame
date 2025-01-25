@@ -137,7 +137,9 @@ public partial class Bubble : RigidBody2D {
 		// })).SetDelay(1f);
 	}
 
+	public BubbleConfig Config { get; private set; }
 	public void SetConfig(BubbleConfig config) {
+		Config = config;
 		Sprite.SetConfig(config);
 	}
 }

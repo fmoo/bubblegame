@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="GameplayConfig" load_steps=6 format=3 uid="uid://dtwrtyd22uptc"]
+
+[ext_resource type="Resource" uid="uid://dbmhicl4dmeeq" path="res://bubbles/blue.tres" id="1_ea1na"]
+[ext_resource type="Resource" uid="uid://cxckdb2pvda1h" path="res://bubbles/green.tres" id="2_x4dkr"]
+[ext_resource type="Resource" uid="uid://bks3wa5u2ewtj" path="res://bubbles/orange.tres" id="3_ai7k4"]
+[ext_resource type="Resource" uid="uid://cvxxf245aptcj" path="res://bubbles/pink.tres" id="4_7g6r3"]
+[ext_resource type="Script" path="res://scripts/resources/GameplayConfig.cs" id="5_ltlgo"]
+
+[resource]
+script = ExtResource("5_ltlgo")
+Name = "Match 3 Villain"
+Description = "Match three colors + the villain bubble color to shrink the stage"
+Bubbles = [ExtResource("1_ea1na"), ExtResource("2_x4dkr"), ExtResource("3_ai7k4"), ExtResource("4_7g6r3")]
+VillainBubbleColorChanges = true
+TimerTicks = true
+MinMatchSize = 3
+ShrinkBubblePops = 3
+GrowBubbleShots = 5

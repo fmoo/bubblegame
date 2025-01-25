@@ -30,6 +30,7 @@ public partial class BubbleGame : Node2D {
 
     public override void _Ready() {
         base._Ready();
+        MaybePickNewVillainBubbleColor();
     }
 
     public void RegisterBubble(Bubble bubble) {
@@ -38,16 +39,33 @@ public partial class BubbleGame : Node2D {
 
     int poppedBubbles = 0;
     public void DestroyBubble(Bubble bubble) {
-        GD.Print($"Destroying bubble {bubble}");
-        if (bubble != null && !bubble.IsQueuedForDeletion()) {
+        bool canShrink = true;
+        if (GameplayConfig.VillainBubbleColorChanges && bubble.Config != VillainBubble.Config) {
+            canShrink = false;
+        }
+
+        if (bubble != null && !bubble.IsQueuedForDeletion() && canShrink) {
             poppedBubbles++;
             while (poppedBubbles >= GameplayConfig.ShrinkBubblePops) {
                 poppedBubbles -= GameplayConfig.ShrinkBubblePops;
                 VillainBubble.Shrink();
                 incrementBadDuration *= 0.99f;
+                MaybePickNewVillainBubbleColor();
             }
         }
+        GD.Print($"Destroying bubble {bubble}");
         bubble.StartDestroy();
+    }
+
+    void MaybePickNewVillainBubbleColor() {
+        // Pick a new color for the villain bubble
+        if (!GameplayConfig.VillainBubbleColorChanges) return;
+        var currentColor = VillainBubble.Config;
+        var newColor = PickColor();
+        while (newColor == currentColor) {
+            newColor = PickColor();
+        }
+        VillainBubble.SetConfig(newColor);
     }
 
     public void RegisterLink(Bubble bubble, Node2D join) {
@@ -192,6 +210,7 @@ public partial class BubbleGame : Node2D {
             spring.QueueFree();
         }
         VillainBubble.Reset();
+        MaybePickNewVillainBubbleColor();
         Player.Reset();
         BubbleQueue.Reset();
         Score = 0;
