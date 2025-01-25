@@ -164,18 +164,23 @@ _GameOver = NodePath("GameOver")
 
 [node name="Shoot" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("7_onkte")
+bus = &"SFX"
 
 [node name="Pop" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("8_j1bko")
+bus = &"SFX"
 
 [node name="Grow" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("9_gumm6")
+bus = &"SFX"
 
 [node name="Shrink" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("10_qkbjv")
+bus = &"SFX"
 
 [node name="GameOver" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("11_4mftm")
+bus = &"SFX"
 
 [node name="ControlSchemes" type="Node2D" parent="."]
 
