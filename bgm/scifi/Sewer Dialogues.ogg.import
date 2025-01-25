@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b3wsr26dfvale"
+path="res://.godot/imported/Sewer Dialogues.ogg-fcaab6ac98226b23f209703f6df12278.oggvorbisstr"
+
+[deps]
+
+source_file="res://bgm/scifi/Sewer Dialogues.ogg"
+dest_files=["res://.godot/imported/Sewer Dialogues.ogg-fcaab6ac98226b23f209703f6df12278.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
