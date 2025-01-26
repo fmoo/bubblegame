@@ -27,6 +27,7 @@ public partial class BGM : AudioStreamPlayer {
 	const float MIN_DB = -80f;
 
 	public BGMConfig PlayRandom() {
+		var fadeOutTime = Stream != null ? FADE_OUT_TIME : 0;
 		isChangingTracks = true;
 		var config = BGMConfigs[GD.RandRange(0, BGMConfigs.Length - 1)];
 		while (Stream == config.AudioStream) {
@@ -36,7 +37,7 @@ public partial class BGM : AudioStreamPlayer {
 		GD.Print($"Playing {config.Title} by {config.Composer}");
 		var tween = GetTree().CreateTween();
 		// Fade out the current track
-		tween.TweenProperty(this, "volume_db", MIN_DB, FADE_OUT_TIME);
+		tween.TweenProperty(this, "volume_db", MIN_DB, fadeOutTime);
 		tween.TweenCallback(Callable.From(() => {
 			Stream = config.AudioStream;
 			VolumeDb = 0;
