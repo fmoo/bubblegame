@@ -14,6 +14,8 @@ public partial class VillainBubble : RigidBody2D {
 
 	public CircleShape2D CircleShape => (CircleShape2D)CollisionShape.Shape;
 
+	[Signal] public delegate void ContainRatioChangedEventHandler(double containRatio);
+
 	public void Grow() {
 		// Temporarily re-enable collisions on the joints
 		foreach (var joint in GetJoints()) {
@@ -21,6 +23,7 @@ public partial class VillainBubble : RigidBody2D {
 		}
 
 		CollisionShape.Scale = new Vector2(CollisionShape.Scale.X + SIZE_CHANGE_INCREMENT, CollisionShape.Scale.Y + SIZE_CHANGE_INCREMENT);
+		NotifyContainRatioChange();
 		if (CollisionShape.Scale.X >= GAME_OVER_SCALE) {
 			BubbleGame.Game.GameOver();
 		} else {
@@ -55,6 +58,7 @@ public partial class VillainBubble : RigidBody2D {
 		}
 
 		CollisionShape.Scale = new Vector2(CollisionShape.Scale.X - SIZE_CHANGE_INCREMENT, CollisionShape.Scale.Y - SIZE_CHANGE_INCREMENT);
+		NotifyContainRatioChange();
 		BubbleGame.Game.Audio.Shrink();
 	}
 
@@ -70,6 +74,7 @@ public partial class VillainBubble : RigidBody2D {
 		var tween = SetConfig(null);
 		tween.CustomStep(999f);
 		CollisionShape.Scale = new Vector2(MINIMUM_SCALE, MINIMUM_SCALE);
+		NotifyContainRatioChange();
 		// Delete all children that are Joints
 		foreach (Node child in GetChildren()) {
 			if (child is PinJoint2D joint) {
@@ -86,5 +91,13 @@ public partial class VillainBubble : RigidBody2D {
 		tween.TweenProperty(Sprite, "modulate", bubbleColor, 0.15f);
 		Config = config;
 		return tween;
+	}
+
+	void NotifyContainRatioChange() {
+		EmitSignal(SignalName.ContainRatioChanged, GetContainRatio());
+	}
+
+	double GetContainRatio() {
+		return (CollisionShape.Scale.X - MINIMUM_SCALE) / (GAME_OVER_SCALE - MINIMUM_SCALE);
 	}
 }

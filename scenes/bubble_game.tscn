@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://borggvjowbqn2"]
+[gd_scene load_steps=63 format=3 uid="uid://borggvjowbqn2"]
 
 [ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_axaqe"]
 [ext_resource type="Resource" uid="uid://dpm2joux2uabo" path="res://gameplay/match4.tres" id="2_0lbne"]
@@ -37,6 +37,7 @@
 [ext_resource type="Texture2D" uid="uid://dc4kcvtvddd50" path="res://sprites/mockup2_track.png" id="20_boehu"]
 [ext_resource type="Shader" path="res://shaders/background.gdshader" id="20_vleso"]
 [ext_resource type="Texture2D" uid="uid://b6bc8bmh3lltv" path="res://sprites/bg.png" id="21_elrbj"]
+[ext_resource type="Script" path="res://scripts/ContainRect.cs" id="27_fh7nl"]
 [ext_resource type="Script" path="res://scripts/PressureRect.cs" id="28_1n4ef"]
 [ext_resource type="Texture2D" uid="uid://dv7m7b346fvki" path="res://sprites/inner_bubble.png" id="28_mcajo"]
 [ext_resource type="LabelSettings" uid="uid://cfje14hgxm4pw" path="res://fonts/heading.tres" id="29_3gfu0"]
@@ -239,22 +240,26 @@ Growth"
 label_settings = ExtResource("29_3gfu0")
 horizontal_alignment = 1
 
-[node name="ContainLabel" type="Label" parent="CanvasLayer/LeftPanel"]
-modulate = Color(0, 0, 0, 1)
-offset_left = 14.0
-offset_top = 67.0
-offset_right = 74.0
-offset_bottom = 102.0
-text = "contain"
-label_settings = ExtResource("30_qnp8l")
-
-[node name="ContainRect" type="ColorRect" parent="CanvasLayer/LeftPanel"]
-visible = false
+[node name="ContainRect2" type="TextureProgressBar" parent="CanvasLayer/LeftPanel"]
 layout_mode = 0
 offset_left = 14.0
 offset_top = 83.0
 offset_right = 66.0
 offset_bottom = 99.0
+max_value = 1.0
+step = 0.001
+value = 1.0
+nine_patch_stretch = true
+texture_progress = SubResource("GradientTexture1D_m4ot6")
+script = ExtResource("27_fh7nl")
+
+[node name="ContainLabel" type="Label" parent="CanvasLayer/LeftPanel/ContainRect2"]
+modulate = Color(0, 0, 0, 1)
+offset_top = -16.0
+offset_right = 60.0
+offset_bottom = 19.0
+text = "contain"
+label_settings = ExtResource("30_qnp8l")
 
 [node name="PressureRect" type="TextureProgressBar" parent="CanvasLayer/LeftPanel"]
 layout_mode = 0
@@ -507,3 +512,4 @@ position = Vector2(512, 49)
 shape = SubResource("WorldBoundaryShape2D_ishrt")
 
 [connection signal="OnShoot" from="TrackPath/GunFollow2D/Gun" to="." method="_on_shoot_event"]
+[connection signal="ContainRatioChanged" from="VillainBubble" to="CanvasLayer/LeftPanel/ContainRect2" method="_on_contain_ratio_changed"]
