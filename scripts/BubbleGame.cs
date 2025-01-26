@@ -18,6 +18,8 @@ public partial class BubbleGame : Node2D {
 
     public int Score { get; private set; } = 0;
     [Signal] public delegate void ScoreChangedEventHandler(int score);
+    [Signal] public delegate void TimeElapsedEventHandler(int seconds);
+    [Signal] public delegate void ChainChangedEventHandler(int chain);
     public int GainPoints(int points) {
         Score += points;
         EmitSignal(SignalName.ScoreChanged, Score);
@@ -31,13 +33,13 @@ public partial class BubbleGame : Node2D {
     public override void _Ready() {
         base._Ready();
         MaybePickNewVillainBubbleColor();
+        Reset();
     }
 
     public void RegisterBubble(Bubble bubble) {
         Bubbles.AddChild(bubble);
     }
 
-    int poppedBubbles = 0;
     public void DestroyBubble(Bubble bubble) {
         bool canShrink = true;
         if (GameplayConfig.VillainBubbleColorChanges && bubble.Config != VillainBubble.Config) {
@@ -45,13 +47,8 @@ public partial class BubbleGame : Node2D {
         }
 
         if (bubble != null && !bubble.IsQueuedForDeletion() && canShrink) {
-            poppedBubbles++;
-            while (poppedBubbles >= GameplayConfig.ShrinkBubblePops) {
-                poppedBubbles -= GameplayConfig.ShrinkBubblePops;
-                VillainBubble.Shrink();
-                incrementBadDuration *= 0.99f;
-                MaybePickNewVillainBubbleColor();
-            }
+            GD.Print($"Pop: Pressure decrease by {1.0 / GameplayConfig.ShrinkBubblePops}");
+            Pressure -= 1.0 / GameplayConfig.ShrinkBubblePops;
         }
         GD.Print($"Destroying bubble {bubble}");
         bubble.StartDestroy();
@@ -127,7 +124,7 @@ public partial class BubbleGame : Node2D {
         return GameplayConfig.Bubbles[index];
     }
 
-    float chainTimer = 0f;
+    public double ChainTimeRemaining { get; private set; }= 0f;
     int currentChain = 1;
 
     public void MaybePopBubbles(Bubble bubble) {
@@ -143,8 +140,9 @@ public partial class BubbleGame : Node2D {
         GD.Print($"Gaining Points: Base={pointsGained}  SizeMul={VillainBubble.ScoreMultiplier}  ChainMul={currentChain}  SpeedMul={DifficultyMultiplier}");
         pointsGained = (int)(pointsGained * VillainBubble.ScoreMultiplier * currentChain * DifficultyMultiplier);
         GainPoints(pointsGained);
-        currentChain = Mathf.Clamp(currentChain + 1, 1, 8);
-        chainTimer = 1f;
+        currentChain += 1;
+        EmitSignal(SignalName.ChainChanged, currentChain);
+        ChainTimeRemaining = GameplayConfig.ChainDuration;
 
         HashSet<Bubble> maybeFall = new();
         foreach (var p in maybePop) {
@@ -169,10 +167,11 @@ public partial class BubbleGame : Node2D {
         }
     }
 
-    float timeElapsed = 0;
-    const float DEFAULT_INCREMENT_BAD_DURATION = 6f;
-    float incrementBadDuration = DEFAULT_INCREMENT_BAD_DURATION;
-    float DifficultyMultiplier => Mathf.Pow(2, (DEFAULT_INCREMENT_BAD_DURATION / incrementBadDuration) - 1);
+    int lastSecond = 0;
+    double timeElapsed = 0;
+    public double Pressure { get; private set; } = 0;
+    double currentPressureDuration = 0;
+    double DifficultyMultiplier => Mathf.Pow(10, (GameplayConfig.BasePressureDuration / currentPressureDuration) - 1);
     // float DifficultyMultiplier => 1f;
     public override void _Process(double delta) {
         base._Process(delta);
@@ -182,15 +181,34 @@ public partial class BubbleGame : Node2D {
         }
 
         if (GameplayConfig.TimerTicks) {
-            timeElapsed += (float)delta;
-            if (timeElapsed > incrementBadDuration) {
-                timeElapsed -= incrementBadDuration;
-                _on_shoot_event();
-            }
+            Pressure += 1f / GameplayConfig.GrowBubbleShots / currentPressureDuration * delta;
+            // GD.Print($"Tick: Pressure increase by {1f / GameplayConfig.GrowBubbleShots / currentPressureDuration * delta} -> {Pressure}");
         }
-        chainTimer = (float)Mathf.MoveToward(chainTimer, 0f, delta);
-        if (chainTimer <= 0) {
-            currentChain = 1;
+        timeElapsed += (float)delta;
+        if ((int)timeElapsed != lastSecond) {
+            lastSecond = (int)timeElapsed;
+            EmitSignal(SignalName.TimeElapsed, lastSecond);
+        }
+
+        if (Pressure > 1.0) {
+            GD.Print($"Pressure {Pressure} over threshold! Growing!");
+            VillainBubble.Grow();
+            Pressure -= 1.0;
+        } else if (Pressure < 0.0) {
+            GD.Print($"Pressure {Pressure} under threshold! shrinking!");
+            VillainBubble.Shrink();
+            Pressure += 1.0;
+            currentPressureDuration *= GameplayConfig.PressureDecayMultiplier;
+            MaybePickNewVillainBubbleColor();
+        }
+
+        if (currentChain > 1) {
+            ChainTimeRemaining -= delta;
+            if (ChainTimeRemaining <= 0) {
+                currentChain = 1;
+                EmitSignal(SignalName.ChainChanged, currentChain);
+                ChainTimeRemaining = 0;
+            }
         }
     }
 
@@ -202,8 +220,9 @@ public partial class BubbleGame : Node2D {
 
     public void Reset() {
         timeElapsed = 0;
-        incrementBadDuration = DEFAULT_INCREMENT_BAD_DURATION;
+        currentPressureDuration = GameplayConfig.BasePressureDuration;
         numShots = 0;
+        Pressure = 0;
         foreach (var bubble in Bubbles.GetChildren()) {
             bubble.QueueFree();
         }
@@ -220,21 +239,18 @@ public partial class BubbleGame : Node2D {
 
     int numShots = 0;
     public void _on_shoot_event() {
-        numShots++;
-        if (numShots >= GameplayConfig.GrowBubbleShots) {
-            numShots = 0;
-            VillainBubble.Grow();
-        }
+        GD.Print($"Shoot: Pressure increase by {1.0 / GameplayConfig.GrowBubbleShots}");
+        Pressure += 1.0 / GameplayConfig.GrowBubbleShots;
     }
 
-	[Export] PackedScene BubbleSprite;
-	public void SpawnBubblePop(Vector2 globalPosition, Texture2D texture) {
-		var bubblePop = BubbleSprite.Instantiate<BubbleSprite>();
-		AddChild(bubblePop);
-		bubblePop.GlobalPosition = globalPosition;
-		bubblePop.Texture = texture;
-		bubblePop.PlayAnimation("pop");
-	}
+    [Export] PackedScene BubbleSprite;
+    public void SpawnBubblePop(Vector2 globalPosition, Texture2D texture) {
+        var bubblePop = BubbleSprite.Instantiate<BubbleSprite>();
+        AddChild(bubblePop);
+        bubblePop.GlobalPosition = globalPosition;
+        bubblePop.Texture = texture;
+        bubblePop.PlayAnimation("pop");
+    }
 
     public static BubbleGame Game { get; private set; }
 }

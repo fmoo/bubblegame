@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://borggvjowbqn2"]
+[gd_scene load_steps=62 format=3 uid="uid://borggvjowbqn2"]
 
 [ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_axaqe"]
 [ext_resource type="Resource" uid="uid://dpm2joux2uabo" path="res://gameplay/match4.tres" id="2_0lbne"]
@@ -37,6 +37,7 @@
 [ext_resource type="Texture2D" uid="uid://dc4kcvtvddd50" path="res://sprites/mockup2_track.png" id="20_boehu"]
 [ext_resource type="Shader" path="res://shaders/background.gdshader" id="20_vleso"]
 [ext_resource type="Texture2D" uid="uid://b6bc8bmh3lltv" path="res://sprites/bg.png" id="21_elrbj"]
+[ext_resource type="Script" path="res://scripts/PressureRect.cs" id="28_1n4ef"]
 [ext_resource type="Texture2D" uid="uid://dv7m7b346fvki" path="res://sprites/inner_bubble.png" id="28_mcajo"]
 [ext_resource type="LabelSettings" uid="uid://cfje14hgxm4pw" path="res://fonts/heading.tres" id="29_3gfu0"]
 [ext_resource type="Texture2D" uid="uid://xa38v1b4olde" path="res://sprites/inner_bubble_highlight.png" id="29_8m3lp"]
@@ -44,6 +45,7 @@
 [ext_resource type="Texture2D" uid="uid://0vkv8e0ryktr" path="res://sprites/combo_timer.png" id="29_yysxr"]
 [ext_resource type="LabelSettings" uid="uid://qx8cuxjoqn5t" path="res://fonts/subheading.tres" id="30_qnp8l"]
 [ext_resource type="Texture2D" uid="uid://dohac3g22la44" path="res://sprites/inner_bubble_fill.png" id="32_0fn8p"]
+[ext_resource type="Script" path="res://scripts/ChainRender.cs" id="32_15lmc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4libq"]
 shader = ExtResource("20_vleso")
@@ -58,6 +60,14 @@ shader_parameter/lighting = 0.4
 shader_parameter/spin_amount = 0.25
 shader_parameter/pixel_filter = 200.0
 shader_parameter/is_rotating = false
+
+[sub_resource type="Gradient" id="Gradient_3d7je"]
+offsets = PackedFloat32Array(0, 0.267057, 0.605263, 0.885965, 1)
+colors = PackedColorArray(0, 0.490135, 9.62615e-08, 1, 0.00682261, 0.486791, 9.56047e-08, 1, 0.873647, 0.830849, 0.195727, 1, 0.928151, 0.387289, 5.77569e-07, 1, 1, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_m4ot6"]
+gradient = SubResource("Gradient_3d7je")
+width = 52
 
 [sub_resource type="Curve2D" id="Curve2D_lbhqn"]
 _data = {
@@ -229,7 +239,7 @@ Growth"
 label_settings = ExtResource("29_3gfu0")
 horizontal_alignment = 1
 
-[node name="ComboLabel2" type="Label" parent="CanvasLayer/LeftPanel"]
+[node name="ContainLabel" type="Label" parent="CanvasLayer/LeftPanel"]
 modulate = Color(0, 0, 0, 1)
 offset_left = 14.0
 offset_top = 67.0
@@ -246,22 +256,26 @@ offset_top = 83.0
 offset_right = 66.0
 offset_bottom = 99.0
 
-[node name="ComboLabel3" type="Label" parent="CanvasLayer/LeftPanel"]
-modulate = Color(0, 0, 0, 1)
-offset_left = 14.0
-offset_top = 103.0
-offset_right = 74.0
-offset_bottom = 138.0
-text = "pressure"
-label_settings = ExtResource("30_qnp8l")
-
-[node name="PressureRect" type="ColorRect" parent="CanvasLayer/LeftPanel"]
-visible = false
+[node name="PressureRect" type="TextureProgressBar" parent="CanvasLayer/LeftPanel"]
 layout_mode = 0
 offset_left = 14.0
 offset_top = 119.0
 offset_right = 66.0
 offset_bottom = 135.0
+max_value = 1.0
+step = 0.001
+value = 1.0
+nine_patch_stretch = true
+texture_progress = SubResource("GradientTexture1D_m4ot6")
+script = ExtResource("28_1n4ef")
+
+[node name="PressureLabel" type="Label" parent="CanvasLayer/LeftPanel/PressureRect"]
+modulate = Color(0, 0, 0, 1)
+offset_top = -16.0
+offset_right = 60.0
+offset_bottom = 19.0
+text = "pressure"
+label_settings = ExtResource("30_qnp8l")
 
 [node name="RightPanel" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -324,13 +338,16 @@ text = "combo"
 label_settings = ExtResource("30_qnp8l")
 horizontal_alignment = 2
 
-[node name="ComboTimerBar" type="TextureProgressBar" parent="CanvasLayer/RightPanel"]
+[node name="ComboTimerBar" type="TextureProgressBar" parent="CanvasLayer/RightPanel" node_paths=PackedStringArray("ChainLabel")]
 offset_left = 22.0
 offset_top = 99.0
 offset_right = 102.0
 offset_bottom = 139.0
+step = 0.01
 value = 100.0
 texture_progress = ExtResource("29_yysxr")
+script = ExtResource("32_15lmc")
+ChainLabel = NodePath("CurrentChain")
 
 [node name="CurrentChain" type="Label" parent="CanvasLayer/RightPanel/ComboTimerBar"]
 layout_mode = 0

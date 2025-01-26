@@ -16,3 +16,4 @@ TimerTicks = true
 MinMatchSize = 3
 ShrinkBubblePops = 3
 GrowBubbleShots = 5
+BasePressureDuration = 3.0
