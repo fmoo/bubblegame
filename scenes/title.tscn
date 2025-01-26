@@ -1,0 +1,497 @@
+[gd_scene load_steps=59 format=3 uid="uid://dq2st87krvklv"]
+
+[ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_qvl6i"]
+[ext_resource type="Resource" uid="uid://dpm2joux2uabo" path="res://gameplay/match4.tres" id="2_3ycjp"]
+[ext_resource type="PackedScene" uid="uid://bpnitaatb3oe3" path="res://scenes/pin_joint.tscn" id="3_vhoir"]
+[ext_resource type="PackedScene" uid="uid://dqaenifftll1r" path="res://scenes/villain_pin_joint.tscn" id="4_iqqtn"]
+[ext_resource type="PackedScene" uid="uid://b5soh8b80t7ya" path="res://scenes/bubble_sprite.tscn" id="5_jnyci"]
+[ext_resource type="Script" path="res://scripts/Audio.cs" id="6_gs3if"]
+[ext_resource type="Script" path="res://scripts/BGM.cs" id="7_0y6e5"]
+[ext_resource type="Resource" path="res://bgm/scifi/cyberpunk_2020.tres" id="8_rkh0s"]
+[ext_resource type="Resource" path="res://bgm/scifi/millenium_stage.tres" id="9_viexr"]
+[ext_resource type="Resource" uid="uid://c87uawddpojxb" path="res://bgm/scifi/overworld_channel.tres" id="10_s65o7"]
+[ext_resource type="Resource" path="res://bgm/scifi/robo_runner.tres" id="11_6jjl5"]
+[ext_resource type="Resource" path="res://bgm/scifi/size_em_up.tres" id="12_dhxl1"]
+[ext_resource type="Resource" path="res://bgm/scifi/waiting.tres" id="13_x1lxd"]
+[ext_resource type="AudioStream" uid="uid://cb4ipcqc0bnok" path="res://sfx/shoot.wav" id="14_wtwha"]
+[ext_resource type="AudioStream" uid="uid://couc3qpkfeh3c" path="res://sfx/pop.wav" id="15_5kfuk"]
+[ext_resource type="AudioStream" uid="uid://cdq000tbps6w5" path="res://sfx/grow.wav" id="16_85ox5"]
+[ext_resource type="AudioStream" uid="uid://b7xmnqupx3g6t" path="res://sfx/shrink.wav" id="17_e464j"]
+[ext_resource type="AudioStream" uid="uid://biib8kk4q7p7q" path="res://sfx/gameover.wav" id="18_mq4pn"]
+[ext_resource type="Script" path="res://scripts/input/DebugMode.cs" id="19_34fff"]
+[ext_resource type="Script" path="res://scripts/input/InitialControlScheme.cs" id="20_xpgsf"]
+[ext_resource type="Script" path="res://scripts/input/SimpleShoot.cs" id="21_phhvv"]
+[ext_resource type="Script" path="res://scripts/input/TwinstickInstantControls.cs" id="22_eudhf"]
+[ext_resource type="Script" path="res://scripts/input/MouseControls.cs" id="23_2k0fm"]
+[ext_resource type="Shader" path="res://shaders/background.gdshader" id="24_gsxt1"]
+[ext_resource type="Texture2D" uid="uid://b6bc8bmh3lltv" path="res://sprites/bg.png" id="25_pa0y4"]
+[ext_resource type="LabelSettings" uid="uid://cfje14hgxm4pw" path="res://fonts/heading.tres" id="26_uggu3"]
+[ext_resource type="LabelSettings" uid="uid://qx8cuxjoqn5t" path="res://fonts/subheading.tres" id="28_oae08"]
+[ext_resource type="LabelSettings" uid="uid://d2pua3txaholq" path="res://fonts/mono_numbers.tres" id="30_5oabt"]
+[ext_resource type="Script" path="res://scripts/RenderScore.cs" id="31_wc51h"]
+[ext_resource type="Texture2D" uid="uid://0vkv8e0ryktr" path="res://sprites/combo_timer.png" id="32_fn7wa"]
+[ext_resource type="Script" path="res://scripts/ChainRender.cs" id="33_eh6px"]
+[ext_resource type="Texture2D" uid="uid://dc4kcvtvddd50" path="res://sprites/mockup2_track.png" id="34_5j8uw"]
+[ext_resource type="Texture2D" uid="uid://dqedr4oxf7pei" path="res://sprites/down-arrow.png" id="35_h3jkt"]
+[ext_resource type="Script" path="res://scripts/BubbleGun.cs" id="36_yenmr"]
+[ext_resource type="PackedScene" uid="uid://w1kv4tagcac8" path="res://scenes/bubble.tscn" id="37_edn0c"]
+[ext_resource type="Texture2D" uid="uid://8e06rc2smdp8" path="res://sprites/gun.png" id="38_j3lii"]
+[ext_resource type="Texture2D" uid="uid://bom4u37bst1wq" path="res://sprites/bubble_green.png" id="39_03amu"]
+[ext_resource type="Texture2D" uid="uid://bxpexe12qf7nr" path="res://sprites/gun_barrel.png" id="40_gt5an"]
+[ext_resource type="Script" path="res://scripts/ScaleTweenFollower.cs" id="43_0yv6o"]
+[ext_resource type="Script" path="res://scripts/MenuBubble.cs" id="46_0v8gc"]
+[ext_resource type="Script" path="res://scripts/BubbleQueue.cs" id="46_imxw1"]
+[ext_resource type="PhysicsMaterial" uid="uid://5gbmiagtsmip" path="res://physics/bouncy.tres" id="47_26ptm"]
+[ext_resource type="Texture2D" uid="uid://k8rfcrvg6brj" path="res://sprites/menu_button_plain.png" id="47_rl2gy"]
+[ext_resource type="Texture2D" uid="uid://bws87alr00t50" path="res://sprites/menu_button_fill.png" id="48_mr7nq"]
+[ext_resource type="Texture2D" uid="uid://cc81lbuwpavup" path="res://sprites/menu_button_highlight.png" id="49_aku8u"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4libq"]
+shader = ExtResource("24_gsxt1")
+shader_parameter/spin_rotation_speed = 2.0
+shader_parameter/move_speed = 7.0
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/colour_1 = Color(0.890196, 0.698039, 1, 1)
+shader_parameter/colour_2 = Color(0, 0.42, 0.706, 1)
+shader_parameter/colour_3 = Color(0.118582, 0.118581, 0.118581, 1)
+shader_parameter/contrast = 3.5
+shader_parameter/lighting = 0.4
+shader_parameter/spin_amount = 0.25
+shader_parameter/pixel_filter = 200.0
+shader_parameter/is_rotating = false
+
+[sub_resource type="Curve2D" id="Curve2D_lbhqn"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 244, 283, 0, 0, 0, 0, 245, 283, 0, 0, 0, 0, 274, 280, 0, 0, 0, 0, 301, 271, 0, 0, 0, 0, 324, 257, 0, 0, 0, 0, 343, 240, 0, 0, 0, 0, 358, 223, 0, 0, 0, 0, 372, 201, 0, 0, 0, 0, 380, 174, 0, 0, 0, 0, 383, 146, 0, 0, 0, 0, 383, 145, 0, 0, 0, 0, 383, 144, 0, 0, 0, 0, 380, 116, 0, 0, 0, 0, 372, 89, 0, 0, 0, 0, 359, 68, 0, 0, 0, 0, 344, 51, 0, 0, 0, 0, 324, 33, 0, 0, 0, 0, 301, 19, 0, 0, 0, 0, 274, 10, 0, 0, 0, 0, 245, 5, 0, 0, 0, 0, 244, 5, 0, 0, 0, 0, 243, 5, 0, 0, 0, 0, 214, 10, 0, 0, 0, 0, 187, 19, 0, 0, 0, 0, 164, 33, 0, 0, 0, 0, 144, 51, 0, 0, 0, 0, 130, 67, 0, 0, 0, 0, 116, 89, 0, 0, 0, 0, 108, 116, 0, 0, 0, 0, 105, 144, 0, 0, 0, 0, 105, 145, 0, 0, 0, 0, 105, 146, 0, 0, 0, 0, 108, 174, 0, 0, 0, 0, 116, 201, 0, 0, 0, 0, 129, 222, 0, 0, 0, 0, 144, 239, 0, 0, 0, 0, 164, 257, 0, 0, 0, 0, 187, 271, 0, 0, 0, 0, 214, 280, 0, 0, 0, 0, 243, 283, 0, 0, 0, 0, 244, 283)
+}
+point_count = 41
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b0upr"]
+atlas = ExtResource("38_j3lii")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3guec"]
+atlas = ExtResource("38_j3lii")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q705d"]
+atlas = ExtResource("38_j3lii")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqoip"]
+atlas = ExtResource("38_j3lii")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l5ofx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0upr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3guec")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q705d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqoip")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7gmt2"]
+rough = true
+absorbent = true
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l64gm"]
+height = 100.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_bow63"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_mg2jt"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_c6phh"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ishrt"]
+normal = Vector2(-1, 0)
+
+[node name="BubbleGame" type="Node2D" node_paths=PackedStringArray("Audio", "BubbleQueue", "Springs", "Bubbles", "Player")]
+texture_filter = 1
+script = ExtResource("1_qvl6i")
+Audio = NodePath("Audio")
+BubbleQueue = NodePath("BubbleQueue")
+GameplayConfig = ExtResource("2_3ycjp")
+Springs = NodePath("Springs")
+Bubbles = NodePath("Bubbles")
+Player = NodePath("TrackPath/GunFollow2D/Gun")
+TitleMode = true
+PinJointTemplate = ExtResource("3_vhoir")
+VillainPinJointTemplate = ExtResource("4_iqqtn")
+BubbleSprite = ExtResource("5_jnyci")
+
+[node name="Audio" type="Node" parent="." node_paths=PackedStringArray("BGM", "_Shoot", "_Pop", "_Grow", "_Shrink", "_GameOver")]
+script = ExtResource("6_gs3if")
+BGM = NodePath("BGM")
+_Shoot = NodePath("Shoot")
+_Pop = NodePath("Pop")
+_Grow = NodePath("Grow")
+_Shrink = NodePath("Shrink")
+_GameOver = NodePath("GameOver")
+
+[node name="BGM" type="AudioStreamPlayer" parent="Audio"]
+script = ExtResource("7_0y6e5")
+BGMConfigs = [ExtResource("8_rkh0s"), ExtResource("9_viexr"), ExtResource("10_s65o7"), ExtResource("11_6jjl5"), ExtResource("12_dhxl1"), ExtResource("13_x1lxd")]
+
+[node name="Shoot" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("14_wtwha")
+
+[node name="Pop" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("15_5kfuk")
+
+[node name="Grow" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("16_85ox5")
+
+[node name="Shrink" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("17_e464j")
+
+[node name="GameOver" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("18_mq4pn")
+
+[node name="ControlSchemes" type="Node2D" parent="."]
+
+[node name="DebugMode" type="Node2D" parent="ControlSchemes"]
+script = ExtResource("19_34fff")
+
+[node name="KeyboardPressStrafeAim" type="Node2D" parent="ControlSchemes" node_paths=PackedStringArray("MouseControls")]
+script = ExtResource("20_xpgsf")
+MouseControls = NodePath("../MouseControls")
+
+[node name="SimpleShoot" type="Node2D" parent="ControlSchemes"]
+script = ExtResource("21_phhvv")
+
+[node name="TwinstickInstant" type="Node2D" parent="ControlSchemes"]
+visible = false
+script = ExtResource("22_eudhf")
+
+[node name="MouseControls" type="Node2D" parent="ControlSchemes" node_paths=PackedStringArray("moveTargetPath")]
+position = Vector2(247, 144)
+script = ExtResource("23_2k0fm")
+moveTargetPath = NodePath("../../TrackPath/MouseAimHover2D")
+
+[node name="BackgroundVFX" type="ColorRect" parent="."]
+z_index = -3
+material = SubResource("ShaderMaterial_4libq")
+offset_right = 512.0
+offset_bottom = 288.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 0
+follow_viewport_enabled = true
+
+[node name="BGChrome2" type="TextureRect" parent="CanvasLayer"]
+z_index = -1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("25_pa0y4")
+
+[node name="LeftPanel" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 81.0
+grow_vertical = 2
+
+[node name="Underlay" type="ColorRect" parent="CanvasLayer/LeftPanel"]
+z_index = -10
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.79, 0.79, 0.79, 0.639216)
+
+[node name="HeadingBubbleGrowth" type="Label" parent="CanvasLayer/LeftPanel"]
+modulate = Color(0, 0.921569, 0.921569, 1)
+layout_mode = 0
+offset_left = 12.0
+offset_top = 8.0
+offset_right = 72.0
+offset_bottom = 43.0
+text = "Bubble
+Growth"
+label_settings = ExtResource("26_uggu3")
+horizontal_alignment = 1
+
+[node name="RightPanel" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -104.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Underlay2" type="ColorRect" parent="CanvasLayer/RightPanel"]
+z_index = -10
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.79, 0.79, 0.79, 0.639216)
+
+[node name="HeadingScore" type="Label" parent="CanvasLayer/RightPanel"]
+modulate = Color(0, 0.921569, 0.921569, 1)
+layout_mode = 0
+offset_left = 35.0
+offset_top = 4.0
+offset_right = 95.0
+offset_bottom = 39.0
+text = "Score"
+label_settings = ExtResource("26_uggu3")
+horizontal_alignment = 1
+
+[node name="Score" type="Label" parent="CanvasLayer/RightPanel"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -99.0
+offset_top = 30.0
+offset_right = -16.0
+offset_bottom = 42.0
+grow_horizontal = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/outline_size = 4
+text = "00000100"
+label_settings = ExtResource("30_5oabt")
+horizontal_alignment = 2
+visible_characters_behavior = 1
+script = ExtResource("31_wc51h")
+
+[node name="ComboLabel2" type="Label" parent="CanvasLayer/RightPanel"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 29.0
+offset_top = 51.0
+offset_right = 89.0
+offset_bottom = 86.0
+text = "combo"
+label_settings = ExtResource("28_oae08")
+horizontal_alignment = 2
+
+[node name="ComboTimerBar" type="TextureProgressBar" parent="CanvasLayer/RightPanel" node_paths=PackedStringArray("ChainLabel")]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 99.0
+offset_right = 102.0
+offset_bottom = 139.0
+step = 0.01
+value = 100.0
+texture_progress = ExtResource("32_fn7wa")
+script = ExtResource("33_eh6px")
+ChainLabel = NodePath("CurrentChain")
+
+[node name="CurrentChain" type="Label" parent="CanvasLayer/RightPanel/ComboTimerBar"]
+layout_mode = 0
+offset_left = -5.0
+offset_right = 14.0
+offset_bottom = 11.0
+text = "1x"
+label_settings = ExtResource("30_5oabt")
+
+[node name="ChainLabel" type="Label" parent="CanvasLayer/RightPanel/ComboTimerBar"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 7.0
+offset_top = -11.0
+offset_right = 67.0
+offset_bottom = 24.0
+text = "chain"
+label_settings = ExtResource("28_oae08")
+horizontal_alignment = 2
+
+[node name="HighScoreLabel" type="Label" parent="CanvasLayer/RightPanel"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 29.0
+offset_top = 245.0
+offset_right = 89.0
+offset_bottom = 280.0
+text = "high score"
+label_settings = ExtResource("28_oae08")
+horizontal_alignment = 2
+
+[node name="GameTimeLabel" type="Label" parent="CanvasLayer/RightPanel"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 29.0
+offset_top = 206.0
+offset_right = 89.0
+offset_bottom = 241.0
+text = "game time"
+label_settings = ExtResource("28_oae08")
+horizontal_alignment = 2
+
+[node name="MenuButtons" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Play" type="Label" parent="CanvasLayer/MenuButtons"]
+modulate = Color(0, 0.921569, 0.921569, 1)
+layout_mode = 0
+offset_left = 216.0
+offset_top = 134.0
+offset_right = 276.0
+offset_bottom = 169.0
+text = "Play"
+label_settings = ExtResource("26_uggu3")
+horizontal_alignment = 1
+
+[node name="TrackImage" type="Sprite2D" parent="."]
+z_index = -2
+texture = ExtResource("34_5j8uw")
+centered = false
+
+[node name="TrackPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_lbhqn")
+
+[node name="MouseAimHover2D" type="PathFollow2D" parent="TrackPath"]
+position = Vector2(244, 283)
+
+[node name="HoverCursor" type="Sprite2D" parent="TrackPath/MouseAimHover2D"]
+modulate = Color(1, 1, 1, 0.552941)
+position = Vector2(0, -23)
+texture = ExtResource("35_h3jkt")
+
+[node name="MouseAimClicked2D" type="PathFollow2D" parent="TrackPath"]
+visible = false
+position = Vector2(244, 283)
+
+[node name="ClickedCursor" type="Sprite2D" parent="TrackPath/MouseAimClicked2D"]
+position = Vector2(0, -23)
+texture = ExtResource("35_h3jkt")
+
+[node name="GunFollow2D" type="PathFollow2D" parent="TrackPath"]
+position = Vector2(244, 283)
+
+[node name="Gun" type="Node2D" parent="TrackPath/GunFollow2D" node_paths=PackedStringArray("pathFollow", "animatedBody", "turretSprite", "bubblePreviewSprite", "ActiveMoveTarget")]
+script = ExtResource("36_yenmr")
+bubbleScene = ExtResource("37_edn0c")
+pathFollow = NodePath("..")
+trackSpeed = 0.2
+animatedBody = NodePath("Body")
+turretSprite = NodePath("Turret")
+bubblePreviewSprite = NodePath("Body/BubbleSprite")
+ActiveMoveTarget = NodePath("../../MouseAimClicked2D")
+
+[node name="Body" type="AnimatedSprite2D" parent="TrackPath/GunFollow2D/Gun"]
+position = Vector2(0, -15)
+sprite_frames = SubResource("SpriteFrames_l5ofx")
+frame_progress = 0.795362
+speed_scale = 0.0
+offset = Vector2(0, -9)
+
+[node name="BubbleSprite" parent="TrackPath/GunFollow2D/Gun/Body" instance=ExtResource("5_jnyci")]
+position = Vector2(0, 11)
+texture = ExtResource("39_03amu")
+
+[node name="Turret" type="Sprite2D" parent="TrackPath/GunFollow2D/Gun"]
+position = Vector2(0, -15)
+texture = ExtResource("40_gt5an")
+offset = Vector2(1, -9)
+
+[node name="MenuButton" type="RigidBody2D" parent="." node_paths=PackedStringArray("CollisionShape", "Sprite")]
+position = Vector2(247, 144)
+physics_material_override = SubResource("PhysicsMaterial_7gmt2")
+freeze = true
+script = ExtResource("46_0v8gc")
+CollisionShape = NodePath("CollisionShape2D")
+Sprite = NodePath("Border")
+GameFunction = "PlayGame"
+
+[node name="Border" type="Sprite2D" parent="MenuButton" node_paths=PackedStringArray("Follow")]
+texture = ExtResource("47_rl2gy")
+script = ExtResource("43_0yv6o")
+Follow = NodePath("../CollisionShape2D")
+ScaleMultiplier = 1.0
+
+[node name="Fill" type="Sprite2D" parent="MenuButton/Border"]
+self_modulate = Color(1, 1, 1, 0.501961)
+show_behind_parent = true
+texture = ExtResource("48_mr7nq")
+
+[node name="Highlight" type="Sprite2D" parent="MenuButton" node_paths=PackedStringArray("Follow")]
+texture = ExtResource("49_aku8u")
+script = ExtResource("43_0yv6o")
+Follow = NodePath("../CollisionShape2D")
+ScaleMultiplier = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MenuButton"]
+position = Vector2(1.19209e-07, -2.38419e-07)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_l64gm")
+
+[node name="BubbleQueue" type="Node2D" parent="." node_paths=PackedStringArray("bubbleRenders")]
+position = Vector2(190, 19)
+script = ExtResource("46_imxw1")
+bubbleRenders = [NodePath("../TrackPath/GunFollow2D/Gun/Body/BubbleSprite"), NodePath("BubbleSprite2"), NodePath("BubbleSprite3")]
+
+[node name="BubbleSprite2" parent="BubbleQueue" instance=ExtResource("5_jnyci")]
+position = Vector2(149, 251)
+
+[node name="BubbleSprite3" parent="BubbleQueue" instance=ExtResource("5_jnyci")]
+position = Vector2(184, 216)
+
+[node name="Springs" type="Node2D" parent="."]
+
+[node name="Bubbles" type="Node2D" parent="."]
+
+[node name="Bubble" parent="Bubbles" instance=ExtResource("37_edn0c")]
+position = Vector2(197, 129)
+
+[node name="Bubble2" parent="Bubbles" instance=ExtResource("37_edn0c")]
+position = Vector2(192, 141)
+
+[node name="Bubble3" parent="Bubbles" instance=ExtResource("37_edn0c")]
+position = Vector2(194, 154)
+
+[node name="Level2" type="Node2D" parent="."]
+
+[node name="BouncyWalls" type="StaticBody2D" parent="Level2"]
+position = Vector2(0, 94)
+physics_material_override = ExtResource("47_26ptm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level2/BouncyWalls"]
+position = Vector2(2, 46)
+shape = SubResource("WorldBoundaryShape2D_bow63")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Level2/BouncyWalls"]
+position = Vector2(247, -94)
+shape = SubResource("WorldBoundaryShape2D_mg2jt")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Level2/BouncyWalls"]
+position = Vector2(245, 192)
+shape = SubResource("WorldBoundaryShape2D_c6phh")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Level2/BouncyWalls"]
+position = Vector2(512, 49)
+shape = SubResource("WorldBoundaryShape2D_ishrt")
+
+[connection signal="OnShoot" from="TrackPath/GunFollow2D/Gun" to="." method="_on_shoot_event"]

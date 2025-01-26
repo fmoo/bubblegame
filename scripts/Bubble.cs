@@ -9,11 +9,13 @@ public partial class Bubble : RigidBody2D {
 	public HashSet<Bubble> neighbors = new();
 	Dictionary<Texture, HashSet<Bubble>> colorNeighbors = new();
 	public bool HasVillainAnchor = false;
-
+	public bool HasMenuButtonAnchor = false;
+	public MenuBubble MenuButtonAnchor;
+	
 	public IEnumerable<Bubble> Neighbors => neighbors;
 	public bool IsAnchored {
 		get {
-			if (HasVillainAnchor) return true;
+			if (HasVillainAnchor || HasMenuButtonAnchor) return true;
 			// breadth walk neighbors to check if any are anchored
 			var visited = new HashSet<Bubble>();
 			var work = new Queue<Bubble>();
@@ -84,7 +86,9 @@ public partial class Bubble : RigidBody2D {
 			bubble.LinearVelocity = Vector2.Zero;
 			this.LinearVelocity = Vector2.Zero;
 
-			if (neighbors.Contains(bubble)) return;
+			if (neighbors.Contains(bubble)) {
+				return;
+			}
 			this.SetNeighbor(bubble);
 			bubble.SetNeighbor(this);
 
@@ -95,6 +99,8 @@ public partial class Bubble : RigidBody2D {
 		} else if (body is VillainBubble villainBubble) {
 			BubbleGame.Game.LinkToVillainBubblePinJoint(villainBubble, this);
 			
+		}else if (body is  MenuBubble menuBubble) {
+			BubbleGame.Game.LinkToMenuBubblePinJoint(menuBubble, this);
 		}
 	}
 
