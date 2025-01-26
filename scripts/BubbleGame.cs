@@ -253,7 +253,7 @@ public partial class BubbleGame : Node2D {
 	public void GameOver() {
 		Audio.GameOver();
 		GD.Print("Game Over");
-		if (GameOverPlanel != null)  {
+		if (GameOverPanel != null)  {
 			GameOverPanel.Visible = true;
 		}
 		GetTree().Paused = true;
