@@ -32,7 +32,9 @@ public partial class BubbleGame : Node2D {
 
 	public override void _Ready() {
 		base._Ready();
-		GameOverPanel.Visible = false;
+		if (GameOver != null) {
+			GameOverPanel.Visible = false;
+		}
 		MaybePickNewVillainBubbleColor();
 		Reset();
 	}
@@ -118,7 +120,7 @@ public partial class BubbleGame : Node2D {
 		RegisterLink(bubble, joint);
 		return joint;
 	}
-	
+
 	public PinJoint2D LinkToMenuBubblePinJoint(MenuBubble menuBubble, Bubble bubble) {
 		GD.Print($"Villain Bubble at {menuBubble.GlobalPosition} linked to Bubble at {bubble.GlobalPosition}");
 		bubble.HasVillainAnchor = true;
@@ -149,8 +151,8 @@ public partial class BubbleGame : Node2D {
 
 		var maybePop = bubble.WalkSameColorNeighbors();
 		if (maybePop.Count < GameplayConfig.MinMatchSize) return;
-		
-		if(!TitleMode) {
+
+		if (!TitleMode) {
 			var pointsGained = 50;
 			// 10x the points for every extra bubble popped simultaneously
 			pointsGained *= (int)Math.Pow(10, maybePop.Count - GameplayConfig.MinMatchSize);
@@ -163,7 +165,7 @@ public partial class BubbleGame : Node2D {
 			ChainTimeRemaining = GameplayConfig.ChainDuration;
 		}
 		HashSet<Bubble> maybeFall = new();
-		
+
 		var WasAnchored = false;
 		var AnchoredMenuBubble = new MenuBubble();
 		foreach (var p in maybePop) {
@@ -172,15 +174,15 @@ public partial class BubbleGame : Node2D {
 					maybeFall.Add(f);
 				}
 			}
-			if(p.IsAnchored) {
+			if (p.IsAnchored) {
 				WasAnchored = true;
 				AnchoredMenuBubble = p.MenuButtonAnchor;
 			}
 			DestroyBubble(p);
 		}
-		
-		if(TitleMode) {
-			if(WasAnchored) {
+
+		if (TitleMode) {
+			if (WasAnchored) {
 				Call(AnchoredMenuBubble.GameFunction);
 			}
 			return;
@@ -210,7 +212,7 @@ public partial class BubbleGame : Node2D {
 			Audio.BGM.PlayRandom();
 			// VillainBubble.SetConfig(PickColor());
 		}
-		if(TitleMode) {
+		if (TitleMode) {
 			return;
 		}
 		if (GameplayConfig.TimerTicks) {
@@ -249,11 +251,11 @@ public partial class BubbleGame : Node2D {
 		}
 	}
 
-    [Export] Control GameOverPanel;
+	[Export] Control GameOverPanel;
 	public void GameOver() {
 		Audio.GameOver();
 		GD.Print("Game Over");
-		if (GameOverPanel != null)  {
+		if (GameOverPanel != null) {
 			GameOverPanel.Visible = true;
 		}
 		GetTree().Paused = true;
@@ -270,7 +272,7 @@ public partial class BubbleGame : Node2D {
 		currentPressureDuration = GameplayConfig.BasePressureDuration;
 		numShots = 0;
 		Pressure = 0;
-		if(!TitleMode) {
+		if (!TitleMode) {
 			foreach (var bubble in Bubbles.GetChildren()) {
 				bubble.QueueFree();
 			}
@@ -280,14 +282,14 @@ public partial class BubbleGame : Node2D {
 			VillainBubble.Reset();
 			MaybePickNewVillainBubbleColor();
 		}
-		
+
 		Player.Reset();
 		BubbleQueue.Reset();
 		Score = 0;
 		EmitSignal(SignalName.ScoreChanged, Score);
 	}
-	
-	public async void PlayGame(){
+
+	public async void PlayGame() {
 		GD.Print("PLAYGAME");
 		await ToSignal(GetTree().CreateTimer(1.0f), SceneTreeTimer.SignalName.Timeout);
 		GetTree().ChangeSceneToFile("res://scenes/bubble_game.tscn");
@@ -295,7 +297,7 @@ public partial class BubbleGame : Node2D {
 
 	int numShots = 0;
 	public void _on_shoot_event() {
-		if(TitleMode) {
+		if (TitleMode) {
 			return;
 		}
 		GD.Print($"Shoot: Pressure increase by {1.0 / GameplayConfig.GrowBubbleShots}");
@@ -312,9 +314,9 @@ public partial class BubbleGame : Node2D {
 	}
 
 
-    public void _on_main_menu_pressed() {
-        GD.PrintErr("NOT IMPLEMENTED");
-    }
+	public void _on_main_menu_pressed() {
+		GD.PrintErr("NOT IMPLEMENTED");
+	}
 
 	public static BubbleGame Game { get; private set; }
 }
