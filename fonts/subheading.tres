@@ -1,0 +1,6 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://qx8cuxjoqn5t"]
+
+[ext_resource type="FontFile" uid="uid://dw6cd8gqykohx" path="res://fonts/tecno_small.ttf" id="1_4a4fv"]
+
+[resource]
+font = ExtResource("1_4a4fv")
