@@ -181,8 +181,12 @@ public partial class BubbleGame : Node2D {
         }
 
         if (GameplayConfig.TimerTicks) {
-            Pressure += 1f / GameplayConfig.GrowBubbleShots / currentPressureDuration * delta;
-            // GD.Print($"Tick: Pressure increase by {1f / GameplayConfig.GrowBubbleShots / currentPressureDuration * delta} -> {Pressure}");
+            if (GameplayConfig.ChainsStallPressure && currentChain > 1) {
+
+            } else {
+                Pressure += 1f / GameplayConfig.GrowBubbleShots / currentPressureDuration * delta;
+                // GD.Print($"Tick: Pressure increase by {1f / GameplayConfig.GrowBubbleShots / currentPressureDuration * delta} -> {Pressure}");
+            }
         }
         timeElapsed += (float)delta;
         if ((int)timeElapsed != lastSecond) {

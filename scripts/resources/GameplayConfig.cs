@@ -16,4 +16,5 @@ public partial class GameplayConfig : Resource {
     // Pressure grows at a rate of 1/GrowBubbleShots every BasePresureDuration seconds
     [Export] public double BasePressureDuration { get; private set; } = 6f;
     [Export] public double PressureDecayMultiplier { get; private set; } = 0.99f;
+    [Export] public bool ChainsStallPressure { get; private set; } = true;
 }

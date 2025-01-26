@@ -4,7 +4,7 @@ using System;
 public partial class RenderScore : Label {
 	float baseScore = 0;
 	float targetScore = 0;
-	float displayScore = 0;
+	public float displayScore { get; private set; } = 0;
 
 	public override void _Ready() {
 		BubbleGame.Game.ScoreChanged += OnScoreChanged;
