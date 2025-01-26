@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://dq2st87krvklv"]
+[gd_scene load_steps=53 format=3 uid="uid://dq2st87krvklv"]
 
 [ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_qvl6i"]
 [ext_resource type="Resource" uid="uid://dpm2joux2uabo" path="res://gameplay/match4.tres" id="2_3ycjp"]
@@ -37,14 +37,10 @@
 [ext_resource type="PackedScene" uid="uid://w1kv4tagcac8" path="res://scenes/bubble.tscn" id="37_edn0c"]
 [ext_resource type="Texture2D" uid="uid://8e06rc2smdp8" path="res://sprites/gun.png" id="38_j3lii"]
 [ext_resource type="Texture2D" uid="uid://bom4u37bst1wq" path="res://sprites/bubble_green.png" id="39_03amu"]
+[ext_resource type="PackedScene" uid="uid://cxqnqrb2rcm31" path="res://scenes/menu_button_bubble.tscn" id="39_nrdsn"]
 [ext_resource type="Texture2D" uid="uid://bxpexe12qf7nr" path="res://sprites/gun_barrel.png" id="40_gt5an"]
-[ext_resource type="Script" path="res://scripts/ScaleTweenFollower.cs" id="43_0yv6o"]
-[ext_resource type="Script" path="res://scripts/MenuBubble.cs" id="46_0v8gc"]
 [ext_resource type="Script" path="res://scripts/BubbleQueue.cs" id="46_imxw1"]
 [ext_resource type="PhysicsMaterial" uid="uid://5gbmiagtsmip" path="res://physics/bouncy.tres" id="47_26ptm"]
-[ext_resource type="Texture2D" uid="uid://k8rfcrvg6brj" path="res://sprites/menu_button_plain.png" id="47_rl2gy"]
-[ext_resource type="Texture2D" uid="uid://bws87alr00t50" path="res://sprites/menu_button_fill.png" id="48_mr7nq"]
-[ext_resource type="Texture2D" uid="uid://cc81lbuwpavup" path="res://sprites/menu_button_highlight.png" id="49_aku8u"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4libq"]
 shader = ExtResource("24_gsxt1")
@@ -101,13 +97,6 @@ animations = [{
 "name": &"default",
 "speed": 10.0
 }]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7gmt2"]
-rough = true
-absorbent = true
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l64gm"]
-height = 100.0
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_bow63"]
 normal = Vector2(1, 0)
@@ -417,36 +406,7 @@ position = Vector2(0, -15)
 texture = ExtResource("40_gt5an")
 offset = Vector2(1, -9)
 
-[node name="MenuButton" type="RigidBody2D" parent="." node_paths=PackedStringArray("CollisionShape", "Sprite")]
-position = Vector2(247, 144)
-physics_material_override = SubResource("PhysicsMaterial_7gmt2")
-freeze = true
-script = ExtResource("46_0v8gc")
-CollisionShape = NodePath("CollisionShape2D")
-Sprite = NodePath("Border")
-GameFunction = "PlayGame"
-
-[node name="Border" type="Sprite2D" parent="MenuButton" node_paths=PackedStringArray("Follow")]
-texture = ExtResource("47_rl2gy")
-script = ExtResource("43_0yv6o")
-Follow = NodePath("../CollisionShape2D")
-ScaleMultiplier = 1.0
-
-[node name="Fill" type="Sprite2D" parent="MenuButton/Border"]
-self_modulate = Color(1, 1, 1, 0.501961)
-show_behind_parent = true
-texture = ExtResource("48_mr7nq")
-
-[node name="Highlight" type="Sprite2D" parent="MenuButton" node_paths=PackedStringArray("Follow")]
-texture = ExtResource("49_aku8u")
-script = ExtResource("43_0yv6o")
-Follow = NodePath("../CollisionShape2D")
-ScaleMultiplier = 1.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MenuButton"]
-position = Vector2(1.19209e-07, -2.38419e-07)
-rotation = 1.5708
-shape = SubResource("CapsuleShape2D_l64gm")
+[node name="MenuButtonBubble" parent="." instance=ExtResource("39_nrdsn")]
 
 [node name="BubbleQueue" type="Node2D" parent="." node_paths=PackedStringArray("bubbleRenders")]
 position = Vector2(190, 19)

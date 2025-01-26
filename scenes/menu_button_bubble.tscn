@@ -1,0 +1,45 @@
+[gd_scene load_steps=8 format=3 uid="uid://cxqnqrb2rcm31"]
+
+[ext_resource type="Script" path="res://scripts/MenuBubble.cs" id="1_6wd1y"]
+[ext_resource type="Texture2D" uid="uid://k8rfcrvg6brj" path="res://sprites/menu_button_plain.png" id="2_fjj8f"]
+[ext_resource type="Script" path="res://scripts/ScaleTweenFollower.cs" id="3_p0cey"]
+[ext_resource type="Texture2D" uid="uid://bws87alr00t50" path="res://sprites/menu_button_fill.png" id="4_e6y4r"]
+[ext_resource type="Texture2D" uid="uid://cc81lbuwpavup" path="res://sprites/menu_button_highlight.png" id="5_gj0tf"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7gmt2"]
+rough = true
+absorbent = true
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l64gm"]
+height = 100.0
+
+[node name="MenuButton" type="RigidBody2D" node_paths=PackedStringArray("CollisionShape", "Sprite")]
+position = Vector2(247, 144)
+physics_material_override = SubResource("PhysicsMaterial_7gmt2")
+freeze = true
+script = ExtResource("1_6wd1y")
+CollisionShape = NodePath("CollisionShape2D")
+Sprite = NodePath("Border")
+GameFunction = "PlayGame"
+
+[node name="Border" type="Sprite2D" parent="." node_paths=PackedStringArray("Follow")]
+texture = ExtResource("2_fjj8f")
+script = ExtResource("3_p0cey")
+Follow = NodePath("../CollisionShape2D")
+ScaleMultiplier = 1.0
+
+[node name="Fill" type="Sprite2D" parent="Border"]
+self_modulate = Color(1, 1, 1, 0.501961)
+show_behind_parent = true
+texture = ExtResource("4_e6y4r")
+
+[node name="Highlight" type="Sprite2D" parent="." node_paths=PackedStringArray("Follow")]
+texture = ExtResource("5_gj0tf")
+script = ExtResource("3_p0cey")
+Follow = NodePath("../CollisionShape2D")
+ScaleMultiplier = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1.19209e-07, -2.38419e-07)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_l64gm")
