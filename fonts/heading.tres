@@ -3,8 +3,9 @@
 [ext_resource type="FontFile" uid="uid://c87vdjhfsxfxu" path="res://fonts/tecno_large_bold.ttf" id="1_gxwtr"]
 
 [resource]
-line_spacing = 0.0
+line_spacing = -1.0
 font = ExtResource("1_gxwtr")
+font_color = Color(0, 0.921569, 0.921569, 1)
 shadow_size = 2
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(-1, 1)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://borggvjowbqn2"]
+[gd_scene load_steps=68 format=3 uid="uid://borggvjowbqn2"]
 
 [ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_axaqe"]
 [ext_resource type="Resource" uid="uid://dpm2joux2uabo" path="res://gameplay/match4.tres" id="2_0lbne"]
@@ -49,6 +49,8 @@
 [ext_resource type="Script" path="res://scripts/ChainRender.cs" id="32_15lmc"]
 [ext_resource type="Script" path="res://scripts/RenderGameTime.cs" id="34_ntjar"]
 [ext_resource type="Script" path="res://scripts/RenderHighScore.cs" id="35_b6gyq"]
+[ext_resource type="Texture2D" uid="uid://blvgh8vhmvpyg" path="res://sprites/panel.png" id="50_rkduh"]
+[ext_resource type="FontFile" uid="uid://fht4lbhg4nde" path="res://fonts/tecno_small_thin.ttf" id="51_wb3vn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4libq"]
 shader = ExtResource("20_vleso")
@@ -132,7 +134,18 @@ normal = Vector2(0, 1)
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ishrt"]
 normal = Vector2(-1, 0)
 
-[node name="BubbleGame" type="Node2D" node_paths=PackedStringArray("Audio", "BubbleQueue", "Springs", "Bubbles", "VillainBubble", "Player")]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0plal"]
+texture = ExtResource("50_rkduh")
+texture_margin_left = 9.0
+texture_margin_top = 9.0
+texture_margin_right = 9.0
+texture_margin_bottom = 9.0
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+
+[node name="BubbleGame" type="Node2D" node_paths=PackedStringArray("Audio", "BubbleQueue", "Springs", "Bubbles", "VillainBubble", "Player", "GameOverPanel")]
 texture_filter = 1
 script = ExtResource("1_axaqe")
 Audio = NodePath("Audio")
@@ -144,9 +157,11 @@ VillainBubble = NodePath("VillainBubble")
 Player = NodePath("TrackPath/GunFollow2D/Gun")
 PinJointTemplate = ExtResource("2_dakla")
 VillainPinJointTemplate = ExtResource("7_5koiv")
+GameOverPanel = NodePath("CanvasLayer2/GameOverPanel")
 BubbleSprite = ExtResource("4_otc38")
 
 [node name="Audio" type="Node" parent="." node_paths=PackedStringArray("BGM", "_Shoot", "_Pop", "_Grow", "_Shrink", "_GameOver")]
+process_mode = 3
 script = ExtResource("7_wso5g")
 BGM = NodePath("BGM")
 _Shoot = NodePath("Shoot")
@@ -202,6 +217,7 @@ offset_right = 512.0
 offset_bottom = 288.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 3
 layer = 0
 follow_viewport_enabled = true
 
@@ -232,7 +248,6 @@ grow_vertical = 2
 color = Color(0.79, 0.79, 0.79, 0.639216)
 
 [node name="HeadingBubbleGrowth" type="Label" parent="CanvasLayer/LeftPanel"]
-modulate = Color(0, 0.921569, 0.921569, 1)
 layout_mode = 0
 offset_left = 12.0
 offset_top = 8.0
@@ -308,7 +323,6 @@ grow_vertical = 2
 color = Color(0.79, 0.79, 0.79, 0.639216)
 
 [node name="HeadingScore" type="Label" parent="CanvasLayer/RightPanel"]
-modulate = Color(0, 0.921569, 0.921569, 1)
 layout_mode = 0
 offset_left = 35.0
 offset_top = 4.0
@@ -565,5 +579,49 @@ shape = SubResource("WorldBoundaryShape2D_c6phh")
 position = Vector2(512, 49)
 shape = SubResource("WorldBoundaryShape2D_ishrt")
 
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+process_mode = 3
+
+[node name="GameOverPanel" type="PanelContainer" parent="CanvasLayer2"]
+custom_minimum_size = Vector2(150, 100)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -50.0
+offset_right = 75.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_0plal")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer2/GameOverPanel"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer2/GameOverPanel/VBoxContainer"]
+layout_mode = 2
+text = "Game Over"
+label_settings = ExtResource("29_3gfu0")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="CanvasLayer2/GameOverPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 3)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="CanvasLayer2/GameOverPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("51_wb3vn")
+text = "Play Again"
+
+[node name="Button2" type="Button" parent="CanvasLayer2/GameOverPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("51_wb3vn")
+text = "Main Menu"
+
 [connection signal="OnShoot" from="TrackPath/GunFollow2D/Gun" to="." method="_on_shoot_event"]
 [connection signal="ContainRatioChanged" from="VillainBubble" to="CanvasLayer/LeftPanel/ContainRect2" method="_on_contain_ratio_changed"]
+[connection signal="pressed" from="CanvasLayer2/GameOverPanel/VBoxContainer/Button" to="." method="_on_play_again_pressed"]
+[connection signal="pressed" from="CanvasLayer2/GameOverPanel/VBoxContainer/Button2" to="." method="_on_main_menu_pressed"]

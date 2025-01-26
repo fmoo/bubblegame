@@ -32,6 +32,7 @@ public partial class BubbleGame : Node2D {
 
 	public override void _Ready() {
 		base._Ready();
+		GameOverPanel.Visible = false;
 		MaybePickNewVillainBubbleColor();
 		Reset();
 	}
@@ -140,7 +141,7 @@ public partial class BubbleGame : Node2D {
 		return GameplayConfig.Bubbles[index];
 	}
 
-	public double ChainTimeRemaining { get; private set; }= 0f;
+	public double ChainTimeRemaining { get; private set; } = 0f;
 	int currentChain = 1;
 
 	public void MaybePopBubbles(Bubble bubble) {
@@ -248,10 +249,20 @@ public partial class BubbleGame : Node2D {
 		}
 	}
 
+    [Export] Control GameOverPanel;
 	public void GameOver() {
 		Audio.GameOver();
 		GD.Print("Game Over");
+		if (GameOverPlanel != null)  {
+			GameOverPanel.Visible = true;
+		}
+		GetTree().Paused = true;
+	}
+
+	public void _on_play_again_pressed() {
 		Reset();
+		GameOverPanel.Visible = false;
+		GetTree().Paused = false;
 	}
 
 	public void Reset() {
@@ -299,6 +310,11 @@ public partial class BubbleGame : Node2D {
 		bubblePop.Texture = texture;
 		bubblePop.PlayAnimation("pop");
 	}
+
+
+    public void _on_main_menu_pressed() {
+        GD.PrintErr("NOT IMPLEMENTED");
+    }
 
 	public static BubbleGame Game { get; private set; }
 }
