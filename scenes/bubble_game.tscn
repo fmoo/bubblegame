@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://borggvjowbqn2"]
+[gd_scene load_steps=57 format=3 uid="uid://borggvjowbqn2"]
 
 [ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_axaqe"]
 [ext_resource type="Resource" uid="uid://dpm2joux2uabo" path="res://gameplay/match4.tres" id="2_0lbne"]
@@ -40,6 +40,7 @@
 [ext_resource type="Texture2D" uid="uid://dv7m7b346fvki" path="res://sprites/inner_bubble.png" id="28_mcajo"]
 [ext_resource type="Texture2D" uid="uid://xa38v1b4olde" path="res://sprites/inner_bubble_highlight.png" id="29_8m3lp"]
 [ext_resource type="Script" path="res://scripts/ScaleTweenFollower.cs" id="29_udvti"]
+[ext_resource type="Texture2D" uid="uid://0vkv8e0ryktr" path="res://sprites/combo_timer.png" id="29_yysxr"]
 [ext_resource type="Texture2D" uid="uid://dohac3g22la44" path="res://sprites/inner_bubble_fill.png" id="32_0fn8p"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_cavy0"]
@@ -146,10 +147,10 @@ texture_filter = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -98.0
-offset_top = 16.0
-offset_right = -15.0
-offset_bottom = 28.0
+offset_left = -99.0
+offset_top = 30.0
+offset_right = -16.0
+offset_bottom = 42.0
 grow_horizontal = 0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 0
@@ -214,6 +215,14 @@ z_index = -3
 material = SubResource("ShaderMaterial_4libq")
 offset_right = 512.0
 offset_bottom = 288.0
+
+[node name="ComboTimerBar" type="TextureProgressBar" parent="."]
+offset_left = 430.0
+offset_top = 51.0
+offset_right = 510.0
+offset_bottom = 91.0
+value = 50.0
+texture_progress = ExtResource("29_yysxr")
 
 [node name="BG" type="Sprite2D" parent="."]
 z_index = -1
