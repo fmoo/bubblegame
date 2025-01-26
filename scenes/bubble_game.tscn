@@ -188,17 +188,114 @@ material = SubResource("ShaderMaterial_4libq")
 offset_right = 512.0
 offset_bottom = 288.0
 
-[node name="BGChrome" type="Sprite2D" parent="."]
-z_index = -1
-texture = ExtResource("21_elrbj")
-centered = false
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 0
 follow_viewport_enabled = true
 
-[node name="Score" type="Label" parent="CanvasLayer"]
+[node name="BGChrome2" type="TextureRect" parent="CanvasLayer"]
+z_index = -1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("21_elrbj")
+
+[node name="LeftPanel" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 81.0
+grow_vertical = 2
+
+[node name="Underlay" type="ColorRect" parent="CanvasLayer/LeftPanel"]
+z_index = -10
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.79, 0.79, 0.79, 0.639216)
+
+[node name="HeadingBubbleGrowth" type="Label" parent="CanvasLayer/LeftPanel"]
+modulate = Color(0, 0.921569, 0.921569, 1)
+offset_left = 12.0
+offset_top = 8.0
+offset_right = 72.0
+offset_bottom = 43.0
+text = "Bubble
+Growth"
+label_settings = ExtResource("29_3gfu0")
+horizontal_alignment = 1
+
+[node name="ComboLabel2" type="Label" parent="CanvasLayer/LeftPanel"]
+modulate = Color(0, 0, 0, 1)
+offset_left = 14.0
+offset_top = 67.0
+offset_right = 74.0
+offset_bottom = 102.0
+text = "contain"
+label_settings = ExtResource("30_qnp8l")
+
+[node name="ContainRect" type="ColorRect" parent="CanvasLayer/LeftPanel"]
+visible = false
+layout_mode = 0
+offset_left = 14.0
+offset_top = 83.0
+offset_right = 66.0
+offset_bottom = 99.0
+
+[node name="ComboLabel3" type="Label" parent="CanvasLayer/LeftPanel"]
+modulate = Color(0, 0, 0, 1)
+offset_left = 14.0
+offset_top = 103.0
+offset_right = 74.0
+offset_bottom = 138.0
+text = "pressure"
+label_settings = ExtResource("30_qnp8l")
+
+[node name="PressureRect" type="ColorRect" parent="CanvasLayer/LeftPanel"]
+visible = false
+layout_mode = 0
+offset_left = 14.0
+offset_top = 119.0
+offset_right = 66.0
+offset_bottom = 135.0
+
+[node name="RightPanel" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -104.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Underlay2" type="ColorRect" parent="CanvasLayer/RightPanel"]
+z_index = -10
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.79, 0.79, 0.79, 0.639216)
+
+[node name="HeadingScore" type="Label" parent="CanvasLayer/RightPanel"]
+modulate = Color(0, 0.921569, 0.921569, 1)
+offset_left = 35.0
+offset_top = 4.0
+offset_right = 95.0
+offset_bottom = 39.0
+text = "Score"
+label_settings = ExtResource("29_3gfu0")
+horizontal_alignment = 1
+
+[node name="Score" type="Label" parent="CanvasLayer/RightPanel"]
 texture_filter = 1
+layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -217,15 +314,25 @@ horizontal_alignment = 2
 visible_characters_behavior = 1
 script = ExtResource("8_n7kaq")
 
-[node name="ComboTimerBar" type="TextureProgressBar" parent="CanvasLayer"]
-offset_left = 430.0
+[node name="ComboLabel2" type="Label" parent="CanvasLayer/RightPanel"]
+modulate = Color(0, 0, 0, 1)
+offset_left = 29.0
 offset_top = 51.0
-offset_right = 510.0
-offset_bottom = 91.0
+offset_right = 89.0
+offset_bottom = 86.0
+text = "combo"
+label_settings = ExtResource("30_qnp8l")
+horizontal_alignment = 2
+
+[node name="ComboTimerBar" type="TextureProgressBar" parent="CanvasLayer/RightPanel"]
+offset_left = 22.0
+offset_top = 99.0
+offset_right = 102.0
+offset_bottom = 139.0
 value = 100.0
 texture_progress = ExtResource("29_yysxr")
 
-[node name="Current" type="Label" parent="CanvasLayer/ComboTimerBar"]
+[node name="CurrentChain" type="Label" parent="CanvasLayer/RightPanel/ComboTimerBar"]
 layout_mode = 0
 offset_left = -5.0
 offset_right = 14.0
@@ -233,34 +340,33 @@ offset_bottom = 11.0
 text = "1x"
 label_settings = ExtResource("6_eue5f")
 
-[node name="CaptionBubbleGrowth" type="Label" parent="CanvasLayer"]
-modulate = Color(0, 0.921569, 0.921569, 1)
-offset_left = 12.0
-offset_top = 7.0
-offset_right = 72.0
-offset_bottom = 42.0
-text = "Bubble
-Growth"
-label_settings = ExtResource("29_3gfu0")
-horizontal_alignment = 1
-
-[node name="CaptionScore" type="Label" parent="CanvasLayer"]
-modulate = Color(0, 0.921569, 0.921569, 1)
-offset_left = 443.0
-offset_top = 4.0
-offset_right = 503.0
-offset_bottom = 39.0
-text = "Score"
-label_settings = ExtResource("29_3gfu0")
-horizontal_alignment = 1
-
-[node name="CaptionCombo" type="Label" parent="CanvasLayer"]
+[node name="ChainLabel" type="Label" parent="CanvasLayer/RightPanel/ComboTimerBar"]
 modulate = Color(0, 0, 0, 1)
-offset_left = 437.0
-offset_top = 66.0
-offset_right = 497.0
-offset_bottom = 101.0
-text = "combo"
+offset_left = 7.0
+offset_top = -11.0
+offset_right = 67.0
+offset_bottom = 24.0
+text = "chain"
+label_settings = ExtResource("30_qnp8l")
+horizontal_alignment = 2
+
+[node name="HighScoreLabel" type="Label" parent="CanvasLayer/RightPanel"]
+modulate = Color(0, 0, 0, 1)
+offset_left = 29.0
+offset_top = 245.0
+offset_right = 89.0
+offset_bottom = 280.0
+text = "high score"
+label_settings = ExtResource("30_qnp8l")
+horizontal_alignment = 2
+
+[node name="GameTimeLabel" type="Label" parent="CanvasLayer/RightPanel"]
+modulate = Color(0, 0, 0, 1)
+offset_left = 29.0
+offset_top = 206.0
+offset_right = 89.0
+offset_bottom = 241.0
+text = "game time"
 label_settings = ExtResource("30_qnp8l")
 horizontal_alignment = 2
 
