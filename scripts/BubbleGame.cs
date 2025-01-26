@@ -315,7 +315,9 @@ public partial class BubbleGame : Node2D {
 
 
 	public void _on_main_menu_pressed() {
-		GD.PrintErr("NOT IMPLEMENTED");
+		GetTree().ChangeSceneToFile("res://scenes/title.tscn");
+		// Unpause
+		GetTree().Paused = false;
 	}
 
 	public static BubbleGame Game { get; private set; }

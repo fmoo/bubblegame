@@ -1,7 +1,7 @@
 [gd_scene load_steps=53 format=3 uid="uid://dq2st87krvklv"]
 
 [ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_qvl6i"]
-[ext_resource type="Resource" uid="uid://dpm2joux2uabo" path="res://gameplay/match4.tres" id="2_3ycjp"]
+[ext_resource type="Resource" uid="uid://cphutkik5yksw" path="res://gameplay/title.tres" id="2_nm86w"]
 [ext_resource type="PackedScene" uid="uid://bpnitaatb3oe3" path="res://scenes/pin_joint.tscn" id="3_vhoir"]
 [ext_resource type="PackedScene" uid="uid://dqaenifftll1r" path="res://scenes/villain_pin_joint.tscn" id="4_iqqtn"]
 [ext_resource type="PackedScene" uid="uid://b5soh8b80t7ya" path="res://scenes/bubble_sprite.tscn" id="5_jnyci"]
@@ -114,7 +114,7 @@ texture_filter = 1
 script = ExtResource("1_qvl6i")
 Audio = NodePath("Audio")
 BubbleQueue = NodePath("BubbleQueue")
-GameplayConfig = ExtResource("2_3ycjp")
+GameplayConfig = ExtResource("2_nm86w")
 Springs = NodePath("Springs")
 Bubbles = NodePath("Bubbles")
 Player = NodePath("TrackPath/GunFollow2D/Gun")
