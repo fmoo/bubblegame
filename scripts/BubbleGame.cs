@@ -177,7 +177,8 @@ public partial class BubbleGame : Node2D {
     public override void _Process(double delta) {
         base._Process(delta);
         if (Input.IsActionJustReleased("debug_physics")) {
-            VillainBubble.SetConfig(PickColor());
+            Audio.BGM.PlayRandom();
+            // VillainBubble.SetConfig(PickColor());
         }
 
         if (GameplayConfig.TimerTicks) {
