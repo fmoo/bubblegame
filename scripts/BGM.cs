@@ -23,11 +23,10 @@ public partial class BGM : AudioStreamPlayer {
 		}
 	}
 
-	const float FADE_OUT_TIME = 3f;
+	const float FADE_OUT_TIME = 4f;
 	const float MIN_DB = -80f;
 
 	public BGMConfig PlayRandom() {
-		GD.Print("HERE!");
 		isChangingTracks = true;
 		var config = BGMConfigs[GD.RandRange(0, BGMConfigs.Length - 1)];
 		while (Stream == config.AudioStream) {

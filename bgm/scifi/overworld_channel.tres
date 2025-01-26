@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="BGMConfig" load_steps=3 format=3 uid="uid://c87uawddpojxb"]
 
-[ext_resource type="AudioStream" uid="uid://dqe7wq7n1mgs4" path="res://bgm/scifi/Millenium Stage.ogg" id="1_qwia5"]
+[ext_resource type="AudioStream" uid="uid://dty2uv2vedecv" path="res://bgm/scifi/Overworld Channel (FULL).ogg" id="1_8x2qy"]
 [ext_resource type="Script" path="res://scripts/resources/BGMConfig.cs" id="2_vmbxb"]
 
 [resource]
 script = ExtResource("2_vmbxb")
-AudioStream = ExtResource("1_qwia5")
+AudioStream = ExtResource("1_8x2qy")
 Title = "Millenium Stage"
 Composer = "Bert Cole"
 Link = "https://bit-by-bit-sound.itch.io/"

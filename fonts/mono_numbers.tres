@@ -1,0 +1,10 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://d2pua3txaholq"]
+
+[ext_resource type="FontFile" uid="uid://cut5thov7tnj" path="res://fonts/ChevyRay - Chocolate Mono.ttf" id="1_7r1ev"]
+
+[resource]
+line_spacing = 0.0
+font = ExtResource("1_7r1ev")
+font_size = 11
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
