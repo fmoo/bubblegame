@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://dq2st87krvklv"]
+[gd_scene load_steps=47 format=3 uid="uid://dq2st87krvklv"]
 
 [ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_qvl6i"]
 [ext_resource type="Resource" uid="uid://cphutkik5yksw" path="res://gameplay/title.tres" id="2_nm86w"]
@@ -7,12 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b5soh8b80t7ya" path="res://scenes/bubble_sprite.tscn" id="5_jnyci"]
 [ext_resource type="Script" path="res://scripts/Audio.cs" id="6_gs3if"]
 [ext_resource type="Script" path="res://scripts/BGM.cs" id="7_0y6e5"]
-[ext_resource type="Resource" uid="uid://dh6tlvmfiu5g1" path="res://bgm/scifi/cyberpunk_2020.tres" id="8_rkh0s"]
-[ext_resource type="Resource" uid="uid://d3b7g2i5sx2ds" path="res://bgm/scifi/millenium_stage.tres" id="9_viexr"]
-[ext_resource type="Resource" uid="uid://c87uawddpojxb" path="res://bgm/scifi/overworld_channel.tres" id="10_s65o7"]
-[ext_resource type="Resource" uid="uid://dswf8ccxm7gbu" path="res://bgm/scifi/robo_runner.tres" id="11_6jjl5"]
-[ext_resource type="Resource" uid="uid://dtinh555dmhwp" path="res://bgm/scifi/size_em_up.tres" id="12_dhxl1"]
-[ext_resource type="Resource" uid="uid://bknv7h5wsytjf" path="res://bgm/scifi/waiting.tres" id="13_x1lxd"]
+[ext_resource type="Resource" uid="uid://bpmtsq37021tt" path="res://bgm/scifi/identity.tres" id="8_7kd0s"]
 [ext_resource type="AudioStream" uid="uid://cb4ipcqc0bnok" path="res://sfx/shoot.wav" id="14_wtwha"]
 [ext_resource type="AudioStream" uid="uid://couc3qpkfeh3c" path="res://sfx/pop.wav" id="15_5kfuk"]
 [ext_resource type="AudioStream" uid="uid://cdq000tbps6w5" path="res://sfx/grow.wav" id="16_85ox5"]
@@ -133,7 +128,7 @@ _GameOver = NodePath("GameOver")
 
 [node name="BGM" type="AudioStreamPlayer" parent="Audio"]
 script = ExtResource("7_0y6e5")
-BGMConfigs = [ExtResource("8_rkh0s"), ExtResource("9_viexr"), ExtResource("10_s65o7"), ExtResource("11_6jjl5"), ExtResource("12_dhxl1"), ExtResource("13_x1lxd")]
+BGMConfigs = [ExtResource("8_7kd0s")]
 
 [node name="Shoot" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("14_wtwha")
