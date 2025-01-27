@@ -4,14 +4,13 @@ using System;
 public partial class RenderHighScore : Label {
 	[Export] RenderScore RenderScore;
 
-	int currentHighScore = 0;
-
+	public static long CurrentHighScore = 0;
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta) {
-		if (RenderScore.displayScore > currentHighScore) {
-			currentHighScore = (int)RenderScore.displayScore;
+		if (RenderScore != null && RenderScore.displayScore > CurrentHighScore) {
+			CurrentHighScore = (long)RenderScore.displayScore;
 		}
-		Text = $"{currentHighScore:00000000}";
+		Text = $"{CurrentHighScore:00000000}";
 	}
 }
