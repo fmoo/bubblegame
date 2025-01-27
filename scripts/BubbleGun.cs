@@ -48,6 +48,10 @@ public partial class BubbleGun : Node2D {
 
 	public override void _Process(double delta) {
 		base._Process(delta);
+		if (cooldownTime > 0) {
+			cooldownTime = Mathf.Max(0, cooldownTime - delta);
+		}
+
 		bubblePreviewSprite.GlobalRotation = 0;
 
 		float speedScale = 0f;
@@ -80,7 +84,10 @@ public partial class BubbleGun : Node2D {
 		return oldRotation != Rotation;
 	}
 
+	const double COOLDOWN = 0.300;
+	double cooldownTime = 0;
 	public void Shoot() {
+		if (cooldownTime > 0) return;
 		BubbleGame.Game.Audio.Shoot();
 		Bubble bubble = bubbleScene.Instantiate<Bubble>();
 		BubbleGame.Game.RegisterBubble(bubble);
@@ -92,6 +99,7 @@ public partial class BubbleGun : Node2D {
 		bubble.GlobalPosition = turretSprite.GlobalPosition;
 		bubble.LinearVelocity = new Vector2(0, -1).Rotated(turretSprite.GlobalRotation) * bubbleSpeed;
 
+		cooldownTime = COOLDOWN;
 		EmitSignal(SignalName.OnShoot);
 	}
 
