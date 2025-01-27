@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://dq2st87krvklv"]
+[gd_scene load_steps=52 format=3 uid="uid://dq2st87krvklv"]
 
 [ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_qvl6i"]
 [ext_resource type="Resource" uid="uid://cphutkik5yksw" path="res://gameplay/title.tres" id="2_nm86w"]
@@ -36,6 +36,7 @@
 [ext_resource type="Texture2D" uid="uid://8e06rc2smdp8" path="res://sprites/gun.png" id="38_j3lii"]
 [ext_resource type="Texture2D" uid="uid://bom4u37bst1wq" path="res://sprites/bubble_green.png" id="39_03amu"]
 [ext_resource type="PackedScene" uid="uid://cxqnqrb2rcm31" path="res://scenes/menu_button_bubble.tscn" id="39_nrdsn"]
+[ext_resource type="PackedScene" uid="uid://b0ip2qtsaicl" path="res://scenes/destructo_walls.tscn" id="39_od4qu"]
 [ext_resource type="Texture2D" uid="uid://bxpexe12qf7nr" path="res://sprites/gun_barrel.png" id="40_gt5an"]
 [ext_resource type="Script" path="res://scripts/BubbleQueue.cs" id="46_imxw1"]
 [ext_resource type="PhysicsMaterial" uid="uid://5gbmiagtsmip" path="res://physics/bouncy.tres" id="47_26ptm"]
@@ -366,6 +367,8 @@ position = Vector2(192, 141)
 position = Vector2(194, 154)
 
 [node name="Level2" type="Node2D" parent="."]
+
+[node name="DestructoWalls" parent="Level2" instance=ExtResource("39_od4qu")]
 
 [node name="BouncyWalls" type="StaticBody2D" parent="Level2"]
 position = Vector2(0, 94)

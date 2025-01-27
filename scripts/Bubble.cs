@@ -11,7 +11,7 @@ public partial class Bubble : RigidBody2D {
 	public bool HasVillainAnchor = false;
 	public bool HasMenuButtonAnchor = false;
 	public MenuBubble MenuButtonAnchor;
-	
+
 	public IEnumerable<Bubble> Neighbors => neighbors;
 	public bool IsAnchored {
 		get {
@@ -98,9 +98,11 @@ public partial class Bubble : RigidBody2D {
 
 		} else if (body is VillainBubble villainBubble) {
 			BubbleGame.Game.LinkToVillainBubblePinJoint(villainBubble, this);
-			
-		}else if (body is  MenuBubble menuBubble) {
+
+		} else if (body is MenuBubble menuBubble) {
 			BubbleGame.Game.LinkToMenuBubblePinJoint(menuBubble, this);
+		} else if (body is DestructoWall) {
+			StartDestroy();
 		}
 	}
 
@@ -133,12 +135,6 @@ public partial class Bubble : RigidBody2D {
 		}
 		QueueFree();
 		BubbleGame.Game.SpawnBubblePop(GlobalPosition, Sprite.Texture);
-		// Sprite.PlayAnimation("pop");
-
-		// var tween = GetTree().CreateTween();
-		// tween.TweenCallback(Callable.From(() => {
-		// 	this.QueueFree();
-		// })).SetDelay(1f);
 	}
 
 	public BubbleConfig Config { get; private set; }
