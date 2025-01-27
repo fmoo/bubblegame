@@ -32,7 +32,7 @@ public partial class BubbleGame : Node2D {
 
 	public override void _Ready() {
 		base._Ready();
-		if (GameOver != null) {
+		if (GameOverPanel != null) {
 			GameOverPanel.Visible = false;
 		}
 		MaybePickNewVillainBubbleColor();
@@ -315,9 +315,9 @@ public partial class BubbleGame : Node2D {
 
 
 	public void _on_main_menu_pressed() {
+		GetTree().Paused = false;
 		GetTree().ChangeSceneToFile("res://scenes/title.tscn");
 		// Unpause
-		GetTree().Paused = false;
 	}
 
 	public static BubbleGame Game { get; private set; }
