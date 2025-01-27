@@ -1,18 +1,18 @@
-[gd_scene load_steps=52 format=3 uid="uid://dq2st87krvklv"]
+[gd_scene load_steps=53 format=3 uid="uid://dq2st87krvklv"]
 
 [ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_qvl6i"]
-[ext_resource type="Resource" uid="uid://cphutkik5yksw" path="res://gameplay/title.tres" id="2_nm86w"]
+[ext_resource type="Resource" path="res://gameplay/title.tres" id="2_nm86w"]
 [ext_resource type="PackedScene" uid="uid://bpnitaatb3oe3" path="res://scenes/pin_joint.tscn" id="3_vhoir"]
 [ext_resource type="PackedScene" uid="uid://dqaenifftll1r" path="res://scenes/villain_pin_joint.tscn" id="4_iqqtn"]
 [ext_resource type="PackedScene" uid="uid://b5soh8b80t7ya" path="res://scenes/bubble_sprite.tscn" id="5_jnyci"]
 [ext_resource type="Script" path="res://scripts/Audio.cs" id="6_gs3if"]
 [ext_resource type="Script" path="res://scripts/BGM.cs" id="7_0y6e5"]
-[ext_resource type="Resource" uid="uid://dh6tlvmfiu5g1" path="res://bgm/scifi/cyberpunk_2020.tres" id="8_rkh0s"]
-[ext_resource type="Resource" uid="uid://d3b7g2i5sx2ds" path="res://bgm/scifi/millenium_stage.tres" id="9_viexr"]
+[ext_resource type="Resource" path="res://bgm/scifi/cyberpunk_2020.tres" id="8_rkh0s"]
+[ext_resource type="Resource" path="res://bgm/scifi/millenium_stage.tres" id="9_viexr"]
 [ext_resource type="Resource" uid="uid://c87uawddpojxb" path="res://bgm/scifi/overworld_channel.tres" id="10_s65o7"]
-[ext_resource type="Resource" uid="uid://dswf8ccxm7gbu" path="res://bgm/scifi/robo_runner.tres" id="11_6jjl5"]
-[ext_resource type="Resource" uid="uid://dtinh555dmhwp" path="res://bgm/scifi/size_em_up.tres" id="12_dhxl1"]
-[ext_resource type="Resource" uid="uid://bknv7h5wsytjf" path="res://bgm/scifi/waiting.tres" id="13_x1lxd"]
+[ext_resource type="Resource" path="res://bgm/scifi/robo_runner.tres" id="11_6jjl5"]
+[ext_resource type="Resource" path="res://bgm/scifi/size_em_up.tres" id="12_dhxl1"]
+[ext_resource type="Resource" path="res://bgm/scifi/waiting.tres" id="13_x1lxd"]
 [ext_resource type="AudioStream" uid="uid://cb4ipcqc0bnok" path="res://sfx/shoot.wav" id="14_wtwha"]
 [ext_resource type="AudioStream" uid="uid://couc3qpkfeh3c" path="res://sfx/pop.wav" id="15_5kfuk"]
 [ext_resource type="AudioStream" uid="uid://cdq000tbps6w5" path="res://sfx/grow.wav" id="16_85ox5"]
@@ -25,6 +25,7 @@
 [ext_resource type="Script" path="res://scripts/input/MouseControls.cs" id="23_2k0fm"]
 [ext_resource type="Shader" path="res://shaders/background.gdshader" id="24_gsxt1"]
 [ext_resource type="Texture2D" uid="uid://3v0mvd20wsgm" path="res://sprites/bg_title.png" id="25_1ntpi"]
+[ext_resource type="LabelSettings" uid="uid://c44ddlfjds04k" path="res://fonts/title.tres" id="26_am4rm"]
 [ext_resource type="LabelSettings" uid="uid://cfje14hgxm4pw" path="res://fonts/heading.tres" id="26_uggu3"]
 [ext_resource type="Script" path="res://scripts/RenderHighScore.cs" id="28_itbhu"]
 [ext_resource type="LabelSettings" uid="uid://qx8cuxjoqn5t" path="res://fonts/subheading.tres" id="28_oae08"]
@@ -36,7 +37,7 @@
 [ext_resource type="Texture2D" uid="uid://8e06rc2smdp8" path="res://sprites/gun.png" id="38_j3lii"]
 [ext_resource type="Texture2D" uid="uid://bom4u37bst1wq" path="res://sprites/bubble_green.png" id="39_03amu"]
 [ext_resource type="PackedScene" uid="uid://cxqnqrb2rcm31" path="res://scenes/menu_button_bubble.tscn" id="39_nrdsn"]
-[ext_resource type="PackedScene" uid="uid://b0ip2qtsaicl" path="res://scenes/destructo_walls.tscn" id="39_od4qu"]
+[ext_resource type="PackedScene" path="res://scenes/destructo_walls.tscn" id="39_od4qu"]
 [ext_resource type="Texture2D" uid="uid://bxpexe12qf7nr" path="res://sprites/gun_barrel.png" id="40_gt5an"]
 [ext_resource type="Script" path="res://scripts/BubbleQueue.cs" id="46_imxw1"]
 [ext_resource type="PhysicsMaterial" uid="uid://5gbmiagtsmip" path="res://physics/bouncy.tres" id="47_26ptm"]
@@ -207,16 +208,36 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.79, 0.79, 0.79, 0.639216)
 
-[node name="HeadingBubbleGrowth" type="Label" parent="CanvasLayer/LeftPanel"]
+[node name="Title" type="Label" parent="CanvasLayer/LeftPanel"]
 modulate = Color(0, 0.921569, 0.921569, 1)
 layout_mode = 0
-offset_left = 12.0
-offset_top = 8.0
-offset_right = 72.0
-offset_bottom = 43.0
-text = "Bubble
-Growth"
-label_settings = ExtResource("26_uggu3")
+offset_left = -8.0
+offset_top = 20.0
+offset_right = 91.0
+offset_bottom = 171.0
+text = "B
+u
+b
+b 
+l
+e"
+label_settings = ExtResource("26_am4rm")
+horizontal_alignment = 1
+
+[node name="Title2" type="Label" parent="CanvasLayer/LeftPanel"]
+modulate = Color(0, 0.921569, 0.921569, 1)
+layout_mode = 0
+offset_left = 412.0
+offset_top = 20.0
+offset_right = 511.0
+offset_bottom = 171.0
+text = "B
+o
+o
+g 
+i
+e"
+label_settings = ExtResource("26_am4rm")
 horizontal_alignment = 1
 
 [node name="RightPanel" type="Control" parent="CanvasLayer"]
