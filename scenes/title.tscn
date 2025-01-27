@@ -24,7 +24,7 @@
 [ext_resource type="Script" path="res://scripts/input/TwinstickInstantControls.cs" id="22_eudhf"]
 [ext_resource type="Script" path="res://scripts/input/MouseControls.cs" id="23_2k0fm"]
 [ext_resource type="Shader" path="res://shaders/background.gdshader" id="24_gsxt1"]
-[ext_resource type="Texture2D" uid="uid://b6bc8bmh3lltv" path="res://sprites/bg.png" id="25_pa0y4"]
+[ext_resource type="Texture2D" uid="uid://3v0mvd20wsgm" path="res://sprites/bg_title.png" id="25_1ntpi"]
 [ext_resource type="LabelSettings" uid="uid://cfje14hgxm4pw" path="res://fonts/heading.tres" id="26_uggu3"]
 [ext_resource type="Script" path="res://scripts/RenderHighScore.cs" id="28_itbhu"]
 [ext_resource type="LabelSettings" uid="uid://qx8cuxjoqn5t" path="res://fonts/subheading.tres" id="28_oae08"]
@@ -188,7 +188,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("25_pa0y4")
+texture = ExtResource("25_1ntpi")
 
 [node name="LeftPanel" type="Control" parent="CanvasLayer"]
 layout_mode = 3
