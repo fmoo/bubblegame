@@ -259,6 +259,7 @@ public partial class BubbleGame : Node2D {
 			GameOverPanel.Visible = true;
 		}
 		GetTree().Paused = true;
+		RenderHighScore.SaveHighScore();
 	}
 
 	public void _on_play_again_pressed() {
