@@ -208,10 +208,6 @@ public partial class BubbleGame : Node2D {
 	// float DifficultyMultiplier => 1f;
 	public override void _Process(double delta) {
 		base._Process(delta);
-		if (Input.IsActionJustReleased("debug_physics")) {
-			Audio.BGM.PlayRandom();
-			// VillainBubble.SetConfig(PickColor());
-		}
 		if (TitleMode) {
 			return;
 		}
