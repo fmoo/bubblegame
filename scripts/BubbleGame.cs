@@ -204,7 +204,7 @@ public partial class BubbleGame : Node2D {
 	double timeElapsed = 0;
 	public double Pressure { get; private set; } = 0;
 	double currentPressureDuration = 0;
-	double DifficultyMultiplier => Mathf.Pow(10, (GameplayConfig.BasePressureDuration / currentPressureDuration) - 1);
+	double DifficultyMultiplier => Mathf.Pow(2, (GameplayConfig.BasePressureDuration / currentPressureDuration) - 1);
 	// float DifficultyMultiplier => 1f;
 	public override void _Process(double delta) {
 		base._Process(delta);
