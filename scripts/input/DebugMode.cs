@@ -13,7 +13,7 @@ public partial class DebugMode : ControlSchemeBase {
         base._Process(delta);
         if (Input.IsActionJustPressed("debug_reset")) {
             GD.Print("DEBUG: Resetting game");
-            BubbleGame.Game.Reset();
+            // BubbleGame.Game.Reset();
         }
         if (Input.IsActionJustPressed("debug_growbubble")) {
             GD.Print("DEBUG: Growing bubble");
