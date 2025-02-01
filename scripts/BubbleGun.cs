@@ -84,7 +84,7 @@ public partial class BubbleGun : Node2D {
 		return oldRotation != Rotation;
 	}
 
-	const double COOLDOWN = 0.300;
+	public const double COOLDOWN = 0.300;
 	double cooldownTime = 0;
 	public void Shoot() {
 		if (cooldownTime > 0) return;
