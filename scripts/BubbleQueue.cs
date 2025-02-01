@@ -31,8 +31,10 @@ public partial class BubbleQueue : Node2D {
 			AddChild(bubbleClone);
 			bubbleClone.GlobalPosition = bubbleRenders[i].GlobalPosition;
 			if (i == 1) {
-				bubbleClone.SetTarget(bubbleRenders[i - 1]);
-				tween.TweenProperty(bubbleClone, "TargetRatio", 1f, BubbleGun.COOLDOWN);
+				var startPosition = bubbleClone.GlobalPosition;
+				tween.TweenMethod(Callable.From<float>((value) => {
+					bubbleClone.GlobalPosition = startPosition.Lerp(bubbleRenders[0].GlobalPosition, value);
+				}), 0.0, 1.0, BubbleGun.COOLDOWN);
 			} else {
 				tween.TweenProperty(bubbleClone, "global_position", bubbleRenders[i - 1].GlobalPosition, BubbleGun.COOLDOWN);
 			}
@@ -54,7 +56,7 @@ public partial class BubbleQueue : Node2D {
 		colorQueue.Add(BubbleGame.Game.PickColor());
 		// RefreshRender();
 		StartTween();
-		return result; 
+		return result;
 	}
 
 	void RefreshRender() {
@@ -65,20 +67,19 @@ public partial class BubbleQueue : Node2D {
 
 	public void Reset() {
 		colorQueue.Clear();
-		
-		if(BubbleGame.Game.TitleMode) {
+
+		if (BubbleGame.Game.TitleMode) {
 			for (int i = 0; i < bubbleRenders.Length; i++) {
 				var color = BubbleGame.Game.GameplayConfig.Bubbles[0];
 				colorQueue.Add(color);
 			}
-		}
-		else {
+		} else {
 			for (int i = 0; i < bubbleRenders.Length; i++) {
 				var color = BubbleGame.Game.PickColor();
 				colorQueue.Add(color);
 			}
 		}
-		
+
 		RefreshRender();
 	}
 }
