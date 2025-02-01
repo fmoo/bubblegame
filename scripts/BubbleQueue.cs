@@ -4,6 +4,9 @@ using Godot;
 public partial class BubbleQueue : Node2D {
 	[Export] public BubbleSprite[] bubbleRenders;
 	[Export] Node2D queueEjector;
+	[Export] PathFollow2D reloadPath;
+	[Export] PathFollow2D gunPath;
+	[Export] double ejectorPathRatio = 0.0995;
 	List<BubbleConfig> colorQueue = new();
 	public override void _Ready() {
 		base._Ready();
@@ -33,9 +36,18 @@ public partial class BubbleQueue : Node2D {
 			bubbleClone.GlobalPosition = bubbleRenders[i].GlobalPosition;
 			if (i == 1) {
 				var tween2 = GetTree().CreateTween();
+				// For the first 1/4 of time, we tween bubble directly to the "ejector" position
 				tween2.TweenProperty(bubbleClone, "global_position", queueEjector.GlobalPosition, BubbleGun.COOLDOWN / 4.0);
+				// For the remaining 3/4 of the time, we tween the bubble along the reloadPath
 				tween2.TweenMethod(Callable.From<float>((value) => {
-					bubbleClone.GlobalPosition = queueEjector.GlobalPosition.Lerp(bubbleRenders[0].GlobalPosition, value);
+					// Hack to make the bubble go the short way around the path
+					var targetRatio = gunPath.ProgressRatio;
+					if (targetRatio > ejectorPathRatio + 0.5) {
+						targetRatio -= 1.0f;
+					}
+					reloadPath.ProgressRatio = (float)Mathf.Lerp(ejectorPathRatio, targetRatio, value);
+					bubbleClone.GlobalPosition = reloadPath.GlobalPosition;
+
 				}), 0.0, 1.0, BubbleGun.COOLDOWN * 3.0 / 4.0);
 			} else {
 				tween.TweenProperty(bubbleClone, "global_position", bubbleRenders[i - 1].GlobalPosition, BubbleGun.COOLDOWN);

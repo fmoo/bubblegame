@@ -310,6 +310,11 @@ centered = false
 [node name="TrackPath" type="Path2D" parent="."]
 curve = SubResource("Curve2D_lbhqn")
 
+[node name="Reload" type="PathFollow2D" parent="TrackPath"]
+position = Vector2(324.733, 256.415)
+rotation = -0.589439
+progress = 86.469
+
 [node name="MouseAimHover2D" type="PathFollow2D" parent="TrackPath"]
 position = Vector2(244, 283)
 
@@ -357,8 +362,10 @@ offset = Vector2(1, -9)
 
 [node name="MenuButtonBubble" parent="." instance=ExtResource("39_nrdsn")]
 
-[node name="BubbleQueue" parent="." node_paths=PackedStringArray("bubbleRenders") instance=ExtResource("34_ctyse")]
+[node name="BubbleQueue" parent="." node_paths=PackedStringArray("bubbleRenders", "reloadPath", "gunPath") instance=ExtResource("34_ctyse")]
 bubbleRenders = [NodePath("../TrackPath/GunFollow2D/Gun/Body/BubbleSprite"), NodePath("BubbleSprite2"), NodePath("BubbleSprite3")]
+reloadPath = NodePath("../TrackPath/Reload")
+gunPath = NodePath("../TrackPath/GunFollow2D")
 
 [node name="Springs" type="Node2D" parent="."]
 
