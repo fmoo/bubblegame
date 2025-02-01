@@ -3,6 +3,7 @@ using Godot;
 
 public partial class BubbleQueue : Node2D {
 	[Export] public BubbleSprite[] bubbleRenders;
+	[Export] Node2D queueEjector;
 	List<BubbleConfig> colorQueue = new();
 	public override void _Ready() {
 		base._Ready();
@@ -31,10 +32,11 @@ public partial class BubbleQueue : Node2D {
 			AddChild(bubbleClone);
 			bubbleClone.GlobalPosition = bubbleRenders[i].GlobalPosition;
 			if (i == 1) {
-				var startPosition = bubbleClone.GlobalPosition;
-				tween.TweenMethod(Callable.From<float>((value) => {
-					bubbleClone.GlobalPosition = startPosition.Lerp(bubbleRenders[0].GlobalPosition, value);
-				}), 0.0, 1.0, BubbleGun.COOLDOWN);
+				var tween2 = GetTree().CreateTween();
+				tween2.TweenProperty(bubbleClone, "global_position", queueEjector.GlobalPosition, BubbleGun.COOLDOWN / 4.0);
+				tween2.TweenMethod(Callable.From<float>((value) => {
+					bubbleClone.GlobalPosition = queueEjector.GlobalPosition.Lerp(bubbleRenders[0].GlobalPosition, value);
+				}), 0.0, 1.0, BubbleGun.COOLDOWN * 3.0 / 4.0);
 			} else {
 				tween.TweenProperty(bubbleClone, "global_position", bubbleRenders[i - 1].GlobalPosition, BubbleGun.COOLDOWN);
 			}

@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://scripts/BubbleGun.cs" id="2_t6f7g"]
 [ext_resource type="Texture2D" uid="uid://bom4u37bst1wq" path="res://sprites/bubble_green.png" id="3_dsvbh"]
 [ext_resource type="PackedScene" uid="uid://w1kv4tagcac8" path="res://scenes/bubble.tscn" id="3_gb0c4"]
-[ext_resource type="Script" path="res://scripts/BubbleQueue.cs" id="3_knjol"]
 [ext_resource type="Script" path="res://scripts/VillainBubble.cs" id="3_mo6oh"]
 [ext_resource type="PackedScene" uid="uid://b5soh8b80t7ya" path="res://scenes/bubble_sprite.tscn" id="4_otc38"]
 [ext_resource type="PhysicsMaterial" uid="uid://5gbmiagtsmip" path="res://physics/bouncy.tres" id="6_4ubpa"]
@@ -49,6 +48,7 @@
 [ext_resource type="Script" path="res://scripts/ChainRender.cs" id="32_15lmc"]
 [ext_resource type="Script" path="res://scripts/RenderGameTime.cs" id="34_ntjar"]
 [ext_resource type="Script" path="res://scripts/RenderHighScore.cs" id="35_b6gyq"]
+[ext_resource type="PackedScene" uid="uid://bgsc4gwcivxfl" path="res://scenes/bubble_queue.tscn" id="48_yixq4"]
 [ext_resource type="PackedScene" uid="uid://b0ip2qtsaicl" path="res://scenes/destructo_walls.tscn" id="50_eqnjs"]
 [ext_resource type="Texture2D" uid="uid://blvgh8vhmvpyg" path="res://sprites/panel.png" id="50_rkduh"]
 [ext_resource type="FontFile" uid="uid://fht4lbhg4nde" path="res://fonts/tecno_small_thin.ttf" id="51_wb3vn"]
@@ -544,16 +544,8 @@ Follow = NodePath("../CollisionShape2D")
 position = Vector2(1.19209e-07, -2.38419e-07)
 shape = SubResource("CircleShape2D_gnq0l")
 
-[node name="BubbleQueue" type="Node2D" parent="Arena" node_paths=PackedStringArray("bubbleRenders")]
-position = Vector2(190, 19)
-script = ExtResource("3_knjol")
+[node name="BubbleQueue" parent="Arena" node_paths=PackedStringArray("bubbleRenders") instance=ExtResource("48_yixq4")]
 bubbleRenders = [NodePath("../TrackPath/GunFollow2D/Gun/Body/BubbleSprite"), NodePath("BubbleSprite2"), NodePath("BubbleSprite3")]
-
-[node name="BubbleSprite2" parent="Arena/BubbleQueue" instance=ExtResource("4_otc38")]
-position = Vector2(149, 251)
-
-[node name="BubbleSprite3" parent="Arena/BubbleQueue" instance=ExtResource("4_otc38")]
-position = Vector2(184, 216)
 
 [node name="Springs" type="Node2D" parent="Arena"]
 

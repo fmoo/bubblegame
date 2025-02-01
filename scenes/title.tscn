@@ -26,6 +26,7 @@
 [ext_resource type="LabelSettings" uid="uid://qx8cuxjoqn5t" path="res://fonts/subheading.tres" id="28_oae08"]
 [ext_resource type="LabelSettings" uid="uid://d2pua3txaholq" path="res://fonts/mono_numbers.tres" id="30_5oabt"]
 [ext_resource type="Texture2D" uid="uid://dc4kcvtvddd50" path="res://sprites/mockup2_track.png" id="34_5j8uw"]
+[ext_resource type="PackedScene" uid="uid://bgsc4gwcivxfl" path="res://scenes/bubble_queue.tscn" id="34_ctyse"]
 [ext_resource type="Texture2D" uid="uid://dqedr4oxf7pei" path="res://sprites/down-arrow.png" id="35_h3jkt"]
 [ext_resource type="Script" path="res://scripts/BubbleGun.cs" id="36_yenmr"]
 [ext_resource type="PackedScene" uid="uid://w1kv4tagcac8" path="res://scenes/bubble.tscn" id="37_edn0c"]
@@ -34,7 +35,6 @@
 [ext_resource type="PackedScene" uid="uid://cxqnqrb2rcm31" path="res://scenes/menu_button_bubble.tscn" id="39_nrdsn"]
 [ext_resource type="PackedScene" uid="uid://b0ip2qtsaicl" path="res://scenes/destructo_walls.tscn" id="39_od4qu"]
 [ext_resource type="Texture2D" uid="uid://bxpexe12qf7nr" path="res://sprites/gun_barrel.png" id="40_gt5an"]
-[ext_resource type="Script" path="res://scripts/BubbleQueue.cs" id="46_imxw1"]
 [ext_resource type="PhysicsMaterial" uid="uid://5gbmiagtsmip" path="res://physics/bouncy.tres" id="47_26ptm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4libq"]
@@ -357,16 +357,8 @@ offset = Vector2(1, -9)
 
 [node name="MenuButtonBubble" parent="." instance=ExtResource("39_nrdsn")]
 
-[node name="BubbleQueue" type="Node2D" parent="." node_paths=PackedStringArray("bubbleRenders")]
-position = Vector2(190, 19)
-script = ExtResource("46_imxw1")
+[node name="BubbleQueue" parent="." node_paths=PackedStringArray("bubbleRenders") instance=ExtResource("34_ctyse")]
 bubbleRenders = [NodePath("../TrackPath/GunFollow2D/Gun/Body/BubbleSprite"), NodePath("BubbleSprite2"), NodePath("BubbleSprite3")]
-
-[node name="BubbleSprite2" parent="BubbleQueue" instance=ExtResource("5_jnyci")]
-position = Vector2(149, 251)
-
-[node name="BubbleSprite3" parent="BubbleQueue" instance=ExtResource("5_jnyci")]
-position = Vector2(184, 216)
 
 [node name="Springs" type="Node2D" parent="."]
 
