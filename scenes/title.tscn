@@ -1,13 +1,14 @@
-[gd_scene load_steps=48 format=3 uid="uid://dq2st87krvklv"]
+[gd_scene load_steps=49 format=3 uid="uid://dq2st87krvklv"]
 
 [ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_qvl6i"]
-[ext_resource type="Resource" uid="uid://cphutkik5yksw" path="res://gameplay/title.tres" id="2_nm86w"]
+[ext_resource type="Resource" path="res://gameplay/title.tres" id="2_nm86w"]
 [ext_resource type="PackedScene" uid="uid://bpnitaatb3oe3" path="res://scenes/pin_joint.tscn" id="3_vhoir"]
+[ext_resource type="PackedScene" uid="uid://fwgale7raaqn" path="res://scenes/groove_joint.tscn" id="4_5c8rd"]
 [ext_resource type="PackedScene" uid="uid://dqaenifftll1r" path="res://scenes/villain_pin_joint.tscn" id="4_iqqtn"]
 [ext_resource type="PackedScene" uid="uid://b5soh8b80t7ya" path="res://scenes/bubble_sprite.tscn" id="5_jnyci"]
 [ext_resource type="Script" path="res://scripts/Audio.cs" id="6_gs3if"]
 [ext_resource type="Script" path="res://scripts/BGM.cs" id="7_0y6e5"]
-[ext_resource type="Resource" uid="uid://bpmtsq37021tt" path="res://bgm/scifi/identity.tres" id="8_7kd0s"]
+[ext_resource type="Resource" path="res://bgm/scifi/identity.tres" id="8_7kd0s"]
 [ext_resource type="AudioStream" uid="uid://cb4ipcqc0bnok" path="res://sfx/shoot.wav" id="14_wtwha"]
 [ext_resource type="AudioStream" uid="uid://couc3qpkfeh3c" path="res://sfx/pop.wav" id="15_5kfuk"]
 [ext_resource type="AudioStream" uid="uid://cdq000tbps6w5" path="res://sfx/grow.wav" id="16_85ox5"]
@@ -20,7 +21,7 @@
 [ext_resource type="Script" path="res://scripts/input/MouseControls.cs" id="23_2k0fm"]
 [ext_resource type="Shader" path="res://shaders/background.gdshader" id="24_gsxt1"]
 [ext_resource type="Texture2D" uid="uid://3v0mvd20wsgm" path="res://sprites/bg_title.png" id="25_1ntpi"]
-[ext_resource type="LabelSettings" path="res://fonts/title.tres" id="26_am4rm"]
+[ext_resource type="LabelSettings" uid="uid://c44ddlfjds04k" path="res://fonts/title.tres" id="26_am4rm"]
 [ext_resource type="LabelSettings" uid="uid://cfje14hgxm4pw" path="res://fonts/heading.tres" id="26_uggu3"]
 [ext_resource type="Script" path="res://scripts/RenderHighScore.cs" id="28_itbhu"]
 [ext_resource type="LabelSettings" uid="uid://qx8cuxjoqn5t" path="res://fonts/subheading.tres" id="28_oae08"]
@@ -33,7 +34,7 @@
 [ext_resource type="Texture2D" uid="uid://8e06rc2smdp8" path="res://sprites/gun.png" id="38_j3lii"]
 [ext_resource type="Texture2D" uid="uid://bom4u37bst1wq" path="res://sprites/bubble_green.png" id="39_03amu"]
 [ext_resource type="PackedScene" uid="uid://cxqnqrb2rcm31" path="res://scenes/menu_button_bubble.tscn" id="39_nrdsn"]
-[ext_resource type="PackedScene" uid="uid://b0ip2qtsaicl" path="res://scenes/destructo_walls.tscn" id="39_od4qu"]
+[ext_resource type="PackedScene" path="res://scenes/destructo_walls.tscn" id="39_od4qu"]
 [ext_resource type="Texture2D" uid="uid://bxpexe12qf7nr" path="res://sprites/gun_barrel.png" id="40_gt5an"]
 [ext_resource type="PhysicsMaterial" uid="uid://5gbmiagtsmip" path="res://physics/bouncy.tres" id="47_26ptm"]
 
@@ -115,6 +116,7 @@ Bubbles = NodePath("Bubbles")
 Player = NodePath("TrackPath/GunFollow2D/Gun")
 TitleMode = true
 PinJointTemplate = ExtResource("3_vhoir")
+GrooveJointTemplate = ExtResource("4_5c8rd")
 VillainPinJointTemplate = ExtResource("4_iqqtn")
 BubbleSprite = ExtResource("5_jnyci")
 
@@ -312,7 +314,7 @@ curve = SubResource("Curve2D_lbhqn")
 
 [node name="Reload" type="PathFollow2D" parent="TrackPath"]
 position = Vector2(324.733, 256.415)
-rotation = -0.589439
+rotation = -0.589441
 progress = 86.469
 
 [node name="MouseAimHover2D" type="PathFollow2D" parent="TrackPath"]
@@ -362,10 +364,8 @@ offset = Vector2(1, -9)
 
 [node name="MenuButtonBubble" parent="." instance=ExtResource("39_nrdsn")]
 
-[node name="BubbleQueue" parent="." node_paths=PackedStringArray("bubbleRenders", "reloadPath", "gunPath") instance=ExtResource("34_ctyse")]
+[node name="BubbleQueue" parent="." node_paths=PackedStringArray("bubbleRenders") instance=ExtResource("34_ctyse")]
 bubbleRenders = [NodePath("../TrackPath/GunFollow2D/Gun/Body/BubbleSprite"), NodePath("BubbleSprite2"), NodePath("BubbleSprite3")]
-reloadPath = NodePath("../TrackPath/Reload")
-gunPath = NodePath("../TrackPath/GunFollow2D")
 
 [node name="Springs" type="Node2D" parent="."]
 

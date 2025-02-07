@@ -14,6 +14,7 @@ public partial class BubbleGame : Node2D {
 	[Export] public bool DebugMode { get; private set; } = false;
 	[Export] public bool TitleMode { get; private set; } = false;
 	[Export] PackedScene PinJointTemplate;
+	[Export] PackedScene GrooveJointTemplate;
 	[Export] PackedScene VillainPinJointTemplate;
 
 	public int Score { get; private set; } = 0;
@@ -132,6 +133,25 @@ public partial class BubbleGame : Node2D {
 		joint.NodeB = bubble.GetPath();
 		joint.GlobalPosition = menuBubble.GlobalPosition;
 		joint.GlobalRotation = menuBubble.GlobalPosition.AngleToPoint(bubble.GlobalPosition);
+
+		RegisterLink(bubble, joint);
+		return joint;
+	}
+	public GrooveJoint2D LinkToMenuBubbleGrooveJoint(MenuBubble menuBubble, Bubble bubble) {
+		GD.Print($"Villain Bubble at {menuBubble.GlobalPosition} linked to Bubble at {bubble.GlobalPosition}");
+		bubble.HasVillainAnchor = true;
+		bubble.HasMenuButtonAnchor = true;
+		bubble.MenuButtonAnchor = menuBubble;
+		var joint = GrooveJointTemplate.Instantiate<GrooveJoint2D>();
+		menuBubble.AddChild(joint);
+		joint.NodeA = menuBubble.GetPath();
+		joint.NodeB = bubble.GetPath();
+		joint.GlobalPosition = bubble.GlobalPosition;
+		if(bubble.LinearVelocity.X >= 0) {
+			joint.RotationDegrees = -90;
+		} else {
+			joint.RotationDegrees = 90;
+		}
 
 		RegisterLink(bubble, joint);
 		return joint;
