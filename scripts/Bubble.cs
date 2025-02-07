@@ -100,7 +100,7 @@ public partial class Bubble : RigidBody2D {
 			BubbleGame.Game.LinkToVillainBubblePinJoint(villainBubble, this);
 
 		} else if (body is MenuBubble menuBubble) {
-			BubbleGame.Game.LinkToMenuBubblePinJoint(menuBubble, this);
+			BubbleGame.Game.LinkToMenuBubble(menuBubble, this);
 		} else if (body is DestructoWall) {
 			StartDestroy();
 		}

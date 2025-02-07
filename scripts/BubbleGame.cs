@@ -1,7 +1,7 @@
-using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Godot;
 
 public partial class BubbleGame : Node2D {
 	[Export] public Audio Audio { get; private set; }
@@ -60,6 +60,7 @@ public partial class BubbleGame : Node2D {
 
 	void MaybePickNewVillainBubbleColor() {
 		// Pick a new color for the villain bubble
+
 		if (!GameplayConfig.VillainBubbleColorChanges) return;
 		var currentColor = VillainBubble.Config;
 		var newColor = PickColor();
@@ -76,10 +77,12 @@ public partial class BubbleGame : Node2D {
 		var joint = PinJointTemplate.Instantiate<PinJoint2D>();
 		bubble1.AddChild(joint);
 		// Springs.AddChild(joint);
+
 		joint.NodeA = bubble1.GetPath();
 		joint.NodeB = bubble2.GetPath();
 		joint.GlobalPosition = bubble1.GlobalPosition;
 		// joint.GlobalPosition = (bubble1.GlobalPosition + bubble2.GlobalPosition) / 2;
+
 		joint.GlobalRotation = bubble1.GlobalPosition.AngleToPoint(bubble2.GlobalPosition);
 		return joint;
 	}
@@ -87,11 +90,13 @@ public partial class BubbleGame : Node2D {
 		GD.Print($"Villain Bubble at {villainBubble.GlobalPosition} linked to Bubble at {bubble2.GlobalPosition}");
 
 		// Get the point of intersection by moving from bubble2 towards bubble1 by bubble2.Radius
+
 		var direction = (villainBubble.GlobalPosition - bubble2.GlobalPosition).Normalized();
 		var intersection = bubble2.GlobalPosition + direction * bubble2.Radius;
 
 		// Create the sync point for the bubble at the intersectionPoint,
 		// making it a child of the villainBubble.
+
 		var joint = new RemoteTransform2D();
 		villainBubble.AddChild(joint);
 		joint.GlobalPosition = bubble2.GlobalPosition;
@@ -122,8 +127,23 @@ public partial class BubbleGame : Node2D {
 		return joint;
 	}
 
+	public void LinkToMenuBubble(MenuBubble menuBubble, Bubble bubble) {
+		// If the position of the bubble is beyond the width of the bubble, use a pin joint,
+		// otherwise use a groove joint.
+		if (bubble.GlobalPosition.X > menuBubble.GlobalPosition.X + menuBubble.RectangleShape.Size.X / 2 ||
+			bubble.GlobalPosition.X < menuBubble.GlobalPosition.X - menuBubble.RectangleShape.Size.X / 2
+		) {
+			bubble.LinearVelocity = Vector2.Zero;
+			bubble.AngularVelocity = 0;
+			// bubble.FreezeMode = RigidBody2D.FreezeModeEnum.Static;
+			bubble.SetDeferred("freeze", true);
+		} else {
+			LinkToMenuBubbleGrooveJoint(menuBubble, bubble);
+		}
+	}
+
 	public PinJoint2D LinkToMenuBubblePinJoint(MenuBubble menuBubble, Bubble bubble) {
-		GD.Print($"Villain Bubble at {menuBubble.GlobalPosition} linked to Bubble at {bubble.GlobalPosition}");
+		GD.Print($"Menu Bubble at {menuBubble.GlobalPosition} linked to Bubble at {bubble.GlobalPosition}");
 		bubble.HasVillainAnchor = true;
 		bubble.HasMenuButtonAnchor = true;
 		bubble.MenuButtonAnchor = menuBubble;
@@ -138,20 +158,21 @@ public partial class BubbleGame : Node2D {
 		return joint;
 	}
 	public GrooveJoint2D LinkToMenuBubbleGrooveJoint(MenuBubble menuBubble, Bubble bubble) {
-		GD.Print($"Villain Bubble at {menuBubble.GlobalPosition} linked to Bubble at {bubble.GlobalPosition}");
+		GD.Print($"Menu Bubble at {menuBubble.GlobalPosition} linked to Bubble at {bubble.GlobalPosition}");
 		bubble.HasVillainAnchor = true;
 		bubble.HasMenuButtonAnchor = true;
 		bubble.MenuButtonAnchor = menuBubble;
 		var joint = GrooveJointTemplate.Instantiate<GrooveJoint2D>();
 		menuBubble.AddChild(joint);
-		joint.NodeA = menuBubble.GetPath();
-		joint.NodeB = bubble.GetPath();
-		joint.GlobalPosition = bubble.GlobalPosition;
-		if(bubble.LinearVelocity.X >= 0) {
-			joint.RotationDegrees = -90;
-		} else {
-			joint.RotationDegrees = 90;
-		}
+		joint.SetDeferred("node_a", menuBubble.GetPath());
+		joint.SetDeferred("node_b", bubble.GetPath());
+		joint.GlobalPosition = new Vector2(
+			menuBubble.GlobalPosition.X - menuBubble.RectangleShape.Size.X / 2,
+			bubble.GlobalPosition.Y
+		);
+		joint.Length = menuBubble.RectangleShape.Size.X;
+		joint.InitialOffset = joint.Length - (menuBubble.GlobalPosition.X - bubble.GlobalPosition.X + (menuBubble.RectangleShape.Size.X / 2));
+		joint.GlobalRotationDegrees = -90;
 
 		RegisterLink(bubble, joint);
 		return joint;
@@ -226,6 +247,7 @@ public partial class BubbleGame : Node2D {
 	double currentPressureDuration = 0;
 	double DifficultyMultiplier => Mathf.Pow(2, (GameplayConfig.BasePressureDuration / currentPressureDuration) - 1);
 	// float DifficultyMultiplier => 1f;
+
 	public override void _Process(double delta) {
 		base._Process(delta);
 		if (TitleMode) {
@@ -237,6 +259,7 @@ public partial class BubbleGame : Node2D {
 			} else {
 				Pressure += 1f / GameplayConfig.GrowBubbleShots / currentPressureDuration * delta;
 				// GD.Print($"Tick: Pressure increase by {1f / GameplayConfig.GrowBubbleShots / currentPressureDuration * delta} -> {Pressure}");
+
 			}
 		}
 		timeElapsed += (float)delta;
@@ -335,6 +358,7 @@ public partial class BubbleGame : Node2D {
 		GetTree().Paused = false;
 		GetTree().ChangeSceneToFile("res://scenes/title.tscn");
 		// Unpause
+
 	}
 
 	public static BubbleGame Game { get; private set; }

@@ -1,7 +1,6 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 
 public partial class MenuBubble : RigidBody2D {
 	[Export] CollisionShape2D CollisionShape;
@@ -14,6 +13,7 @@ public partial class MenuBubble : RigidBody2D {
 	public float ScoreMultiplier => CollisionShape.Scale.X / MINIMUM_SCALE;
 
 	public CircleShape2D CircleShape => (CircleShape2D)CollisionShape.Shape;
+	public RectangleShape2D RectangleShape => (RectangleShape2D)CollisionShape.Shape;
 
 	[Signal] public delegate void ContainRatioChangedEventHandler(double containRatio);
 

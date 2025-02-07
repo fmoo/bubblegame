@@ -10,8 +10,8 @@
 rough = true
 absorbent = true
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l64gm"]
-height = 100.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yq2ku"]
+size = Vector2(99, 21)
 
 [node name="MenuButton" type="RigidBody2D" node_paths=PackedStringArray("CollisionShape", "Sprite")]
 position = Vector2(247, 144)
@@ -40,6 +40,5 @@ Follow = NodePath("../CollisionShape2D")
 ScaleMultiplier = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1.19209e-07, -2.38419e-07)
-rotation = 1.5708
-shape = SubResource("CapsuleShape2D_l64gm")
+position = Vector2(-0.5, -0.5)
+shape = SubResource("RectangleShape2D_yq2ku")
