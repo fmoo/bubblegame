@@ -44,7 +44,7 @@ public partial class BubbleGame : Node2D {
 		Bubbles.AddChild(bubble);
 	}
 
-	public void DestroyBubble(Bubble bubble) {
+	public void DestroyBubble(Bubble bubble, float multiplier) {
 		bool canShrink = true;
 		if (GameplayConfig.VillainBubbleColorChanges && bubble.Config != VillainBubble.Config) {
 			canShrink = false;
@@ -52,7 +52,7 @@ public partial class BubbleGame : Node2D {
 
 		if (bubble != null && !bubble.IsQueuedForDeletion() && canShrink) {
 			GD.Print($"Pop: Pressure decrease by {1.0 / GameplayConfig.ShrinkBubblePops}");
-			Pressure -= 1.0 / GameplayConfig.ShrinkBubblePops;
+			Pressure -= 1.0 * multiplier / GameplayConfig.ShrinkBubblePops;
 		}
 		GD.Print($"Destroying bubble {bubble}");
 		bubble.StartDestroy();
@@ -219,7 +219,9 @@ public partial class BubbleGame : Node2D {
 				WasAnchored = true;
 				AnchoredMenuBubble = p.MenuButtonAnchor;
 			}
-			DestroyBubble(p);
+			//for each ball popped over min match size, multiply shrink amount
+			var ShrinkMultiplier = maybePop.Count - (GameplayConfig.MinMatchSize - 1f);
+			DestroyBubble(p, ShrinkMultiplier);
 		}
 
 		if (TitleMode) {
