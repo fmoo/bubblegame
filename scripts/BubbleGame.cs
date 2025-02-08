@@ -36,6 +36,9 @@ public partial class BubbleGame : Node2D {
 		if (GameOverPanel != null) {
 			GameOverPanel.Visible = false;
 		}
+		if (PausePanel != null) {
+			PausePanel.Visible = false;
+		}
 		MaybePickNewVillainBubbleColor();
 		Reset();
 	}
@@ -133,20 +136,19 @@ public partial class BubbleGame : Node2D {
 		if (bubble.GlobalPosition.X > menuBubble.GlobalPosition.X + menuBubble.RectangleShape.Size.X / 2 ||
 			bubble.GlobalPosition.X < menuBubble.GlobalPosition.X - menuBubble.RectangleShape.Size.X / 2
 		) {
-			bubble.LinearVelocity = Vector2.Zero;
-			bubble.AngularVelocity = 0;
-			// bubble.FreezeMode = RigidBody2D.FreezeModeEnum.Static;
-			bubble.SetDeferred("freeze", true);
+			bubble.LockPosition = bubble.GlobalPosition;
 		} else {
 			LinkToMenuBubbleGrooveJoint(menuBubble, bubble);
 		}
+		bubble.HasVillainAnchor = true;
+		bubble.HasMenuButtonAnchor = true;
+		bubble.MenuButtonAnchor = menuBubble;
 	}
 
 	public PinJoint2D LinkToMenuBubblePinJoint(MenuBubble menuBubble, Bubble bubble) {
 		GD.Print($"Menu Bubble at {menuBubble.GlobalPosition} linked to Bubble at {bubble.GlobalPosition}");
 		bubble.HasVillainAnchor = true;
 		bubble.HasMenuButtonAnchor = true;
-		bubble.MenuButtonAnchor = menuBubble;
 		var joint = PinJointTemplate.Instantiate<PinJoint2D>();
 		menuBubble.AddChild(joint);
 		joint.NodeA = menuBubble.GetPath();
@@ -303,9 +305,23 @@ public partial class BubbleGame : Node2D {
 		RenderHighScore.SaveHighScore();
 	}
 
+	[Export] Control PausePanel;
+	public void TogglePause() {
+		if (GameOverPanel != null && GameOverPanel.Visible) return;
+		if (PausePanel == null) return;
+		if (GetTree().Paused) {
+			GetTree().Paused = false;
+			PausePanel.Visible = false;
+		} else {
+			GetTree().Paused = true;
+			PausePanel.Visible = true;
+		}
+	}
+
 	public void _on_play_again_pressed() {
 		Reset();
-		GameOverPanel.Visible = false;
+		if (GameOverPanel != null) GameOverPanel.Visible = false;
+		if (PausePanel != null) PausePanel.Visible = false;
 		GetTree().Paused = false;
 	}
 

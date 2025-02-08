@@ -1,22 +1,25 @@
-using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Godot;
 
 public partial class Bubble : RigidBody2D {
 	[Export] CollisionShape2D CollisionShape;
 	[Export] public BubbleSprite Sprite { get; private set; }
+	[Export] public bool IsFixedForMenu { get; private set; } = false;
 	public HashSet<Bubble> neighbors = new();
 	Dictionary<Texture, HashSet<Bubble>> colorNeighbors = new();
 	public bool HasVillainAnchor = false;
 	public bool HasMenuButtonAnchor = false;
 	public MenuBubble MenuButtonAnchor;
+	public Vector2? LockPosition = null;
 
 	public IEnumerable<Bubble> Neighbors => neighbors;
 	public bool IsAnchored {
 		get {
 			if (HasVillainAnchor || HasMenuButtonAnchor) return true;
 			// breadth walk neighbors to check if any are anchored
+
 			var visited = new HashSet<Bubble>();
 			var work = new Queue<Bubble>();
 			work.Enqueue(this);
@@ -64,6 +67,7 @@ public partial class Bubble : RigidBody2D {
 					}
 				} catch (Exception e) {
 					// GD.PrintErr(e);
+
 				}
 			}
 		}
@@ -111,9 +115,19 @@ public partial class Bubble : RigidBody2D {
 		}
 	}
 
+	public override void _Ready() {
+		base._Ready();
+		if (IsFixedForMenu) {
+			LockPosition = GlobalPosition;
+		}
+	}
+
 	public override void _Process(double delta) {
 		base._Process(delta);
 		Sprite.GlobalRotation = 0f;
+		if (LockPosition is Vector2 lockPosition) {
+			GlobalPosition = lockPosition;
+		}
 	}
 	public override void _PhysicsProcess(double delta) {
 		base._PhysicsProcess(delta);
@@ -122,6 +136,7 @@ public partial class Bubble : RigidBody2D {
 
 	public void StartDestroy() {
 		// Disable collisions and set velocity to 0
+
 		CollisionLayer = 0;
 		CollisionMask = 0;
 		CollisionShape = null;
@@ -129,6 +144,7 @@ public partial class Bubble : RigidBody2D {
 
 		BubbleGame.Game.Audio.Pop();
 		// Walk neighbors and remove yourself from their list
+
 		foreach (var neighbor in neighbors) {
 			neighbor.neighbors.Remove(this);
 			neighbor.colorNeighbors[this.Sprite.Texture].Remove(this);
