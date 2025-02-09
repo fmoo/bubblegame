@@ -277,7 +277,6 @@ visible_characters_behavior = 1
 script = ExtResource("28_itbhu")
 
 [node name="HighScoreLabel" type="Label" parent="CanvasLayer/RightPanel/HighScore"]
-modulate = Color(0, 0, 0, 1)
 layout_mode = 0
 offset_left = 24.0
 offset_top = -19.0

@@ -1,0 +1,97 @@
+[gd_scene load_steps=8 format=3 uid="uid://deesebw4q0gpi"]
+
+[ext_resource type="Texture2D" uid="uid://blvgh8vhmvpyg" path="res://sprites/panel.png" id="1_v6qn8"]
+[ext_resource type="LabelSettings" uid="uid://cfje14hgxm4pw" path="res://fonts/heading.tres" id="2_ac0pn"]
+[ext_resource type="FontFile" uid="uid://dw6cd8gqykohx" path="res://fonts/tecno_small.ttf" id="3_abxbc"]
+[ext_resource type="Script" path="res://ui/AudioBusSlider.cs" id="4_nkk7f"]
+[ext_resource type="FontFile" uid="uid://fht4lbhg4nde" path="res://fonts/tecno_small_thin.ttf" id="5_gdvvh"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0plal"]
+texture = ExtResource("1_v6qn8")
+texture_margin_left = 9.0
+texture_margin_top = 9.0
+texture_margin_right = 9.0
+texture_margin_bottom = 9.0
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_5m3aj"]
+font = ExtResource("3_abxbc")
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[node name="SettingsPanel" type="PanelContainer"]
+custom_minimum_size = Vector2(150, 100)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -50.0
+offset_right = 75.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_0plal")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TitleCaption" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Settings"
+label_settings = ExtResource("2_ac0pn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Separator" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 3)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Master Volume"
+label_settings = SubResource("LabelSettings_5m3aj")
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+script = ExtResource("4_nkk7f")
+BusName = "Master"
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "BGM Volume"
+label_settings = SubResource("LabelSettings_5m3aj")
+
+[node name="HSlider2" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+script = ExtResource("4_nkk7f")
+BusName = "BGM"
+
+[node name="Label3" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "SFX Volume"
+label_settings = SubResource("LabelSettings_5m3aj")
+
+[node name="HSlider3" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+script = ExtResource("4_nkk7f")
+BusName = "SFX"
+PlaySFX = true
+
+[node name="BackButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_gdvvh")
+text = "Return"
