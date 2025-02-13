@@ -148,7 +148,7 @@ expand_margin_top = 10.0
 expand_margin_right = 10.0
 expand_margin_bottom = 10.0
 
-[node name="BubbleGame" type="Node2D" node_paths=PackedStringArray("Audio", "BubbleQueue", "Springs", "Bubbles", "VillainBubble", "Player", "GameOverPanel", "PausePanel")]
+[node name="BubbleGame" type="Node2D" node_paths=PackedStringArray("Audio", "BubbleQueue", "Springs", "Bubbles", "VillainBubble", "Player", "GameOverPanel")]
 texture_filter = 1
 script = ExtResource("1_axaqe")
 Audio = NodePath("Audio")
@@ -161,7 +161,6 @@ Player = NodePath("Arena/TrackPath/GunFollow2D/Gun")
 PinJointTemplate = ExtResource("2_dakla")
 VillainPinJointTemplate = ExtResource("7_5koiv")
 GameOverPanel = NodePath("CanvasLayer2/GameOverPanel")
-PausePanel = NodePath("CanvasLayer2/PausePanel")
 BubbleSprite = ExtResource("4_otc38")
 
 [node name="Audio" type="Node" parent="." node_paths=PackedStringArray("BGM", "_Shoot", "_Pop", "_Grow", "_Shrink", "_GameOver")]
@@ -220,9 +219,10 @@ position = Vector2(247, 144)
 script = ExtResource("17_8g50q")
 moveTargetPath = NodePath("../../Arena/TrackPath/MouseAimHover2D")
 
-[node name="PauseGame" type="Node2D" parent="ControlSchemes"]
-process_mode = 4
+[node name="PauseGame" type="Node2D" parent="ControlSchemes" node_paths=PackedStringArray("PausePanel")]
+process_mode = 3
 script = ExtResource("24_f68so")
+PausePanel = NodePath("../../CanvasLayer2/PausePanel")
 VisibleProcessMode = 3
 InvisibleProcessMode = 3
 
@@ -633,6 +633,7 @@ theme_override_fonts/font = ExtResource("51_wb3vn")
 text = "Main Menu"
 
 [node name="PausePanel" type="PanelContainer" parent="CanvasLayer2"]
+visible = false
 custom_minimum_size = Vector2(150, 100)
 anchors_preset = 8
 anchor_left = 0.5
@@ -683,6 +684,6 @@ visible = false
 [connection signal="ContainRatioChanged" from="Arena/VillainBubble" to="CanvasLayer/LeftPanel/ContainRect2" method="_on_contain_ratio_changed"]
 [connection signal="pressed" from="CanvasLayer2/GameOverPanel/VBoxContainer/Button" to="." method="_on_play_again_pressed"]
 [connection signal="pressed" from="CanvasLayer2/GameOverPanel/VBoxContainer/Button2" to="." method="_on_main_menu_pressed"]
-[connection signal="pressed" from="CanvasLayer2/PausePanel/VBoxContainer/Button" to="." method="TogglePause"]
+[connection signal="pressed" from="CanvasLayer2/PausePanel/VBoxContainer/Button" to="." method="Unpause"]
 [connection signal="pressed" from="CanvasLayer2/PausePanel/VBoxContainer/Button3" to="." method="_on_play_again_pressed"]
 [connection signal="pressed" from="CanvasLayer2/PausePanel/VBoxContainer/Button2" to="." method="_on_main_menu_pressed"]

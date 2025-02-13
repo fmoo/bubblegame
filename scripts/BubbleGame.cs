@@ -36,9 +36,6 @@ public partial class BubbleGame : Node2D {
 		if (GameOverPanel != null) {
 			GameOverPanel.Visible = false;
 		}
-		if (PausePanel != null) {
-			PausePanel.Visible = false;
-		}
 		MaybePickNewVillainBubbleColor();
 		Reset();
 	}
@@ -298,31 +295,29 @@ public partial class BubbleGame : Node2D {
 	public void GameOver() {
 		Audio.GameOver();
 		GD.Print("Game Over");
-		if (GameOverPanel != null) {
-			GameOverPanel.Visible = true;
-		}
-		GetTree().Paused = true;
 		RenderHighScore.SaveHighScore();
+		PauseWithPanel(GameOverPanel);
 	}
 
-	[Export] Control PausePanel;
-	public void TogglePause() {
-		if (GameOverPanel != null && GameOverPanel.Visible) return;
-		if (PausePanel == null) return;
-		if (GetTree().Paused) {
-			GetTree().Paused = false;
-			PausePanel.Visible = false;
-		} else {
-			GetTree().Paused = true;
-			PausePanel.Visible = true;
+	Control VisiblePausePanel = null;
+	public void PauseWithPanel(Control panel) {
+		if (GetTree().Paused) return;
+		GetTree().Paused = true;
+		VisiblePausePanel = panel;
+		panel.Visible = true;
+	}
+	public void Unpause() {
+		if (!GetTree().Paused) return;
+		GetTree().Paused = false;
+		if (VisiblePausePanel != null) {
+			VisiblePausePanel.Visible = false;
+			VisiblePausePanel = null;
 		}
 	}
 
 	public void _on_play_again_pressed() {
 		Reset();
-		if (GameOverPanel != null) GameOverPanel.Visible = false;
-		if (PausePanel != null) PausePanel.Visible = false;
-		GetTree().Paused = false;
+		Unpause();
 	}
 
 	public void Reset() {

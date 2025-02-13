@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://dq2st87krvklv"]
+[gd_scene load_steps=50 format=3 uid="uid://dq2st87krvklv"]
 
 [ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_qvl6i"]
 [ext_resource type="Resource" uid="uid://cphutkik5yksw" path="res://gameplay/title.tres" id="2_nm86w"]
@@ -23,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://3v0mvd20wsgm" path="res://sprites/bg_title.png" id="25_1ntpi"]
 [ext_resource type="LabelSettings" path="res://fonts/title.tres" id="26_am4rm"]
 [ext_resource type="LabelSettings" uid="uid://cfje14hgxm4pw" path="res://fonts/heading.tres" id="26_uggu3"]
+[ext_resource type="PackedScene" uid="uid://deesebw4q0gpi" path="res://scenes/settings_panel.tscn" id="27_a0pbe"]
 [ext_resource type="Script" path="res://scripts/RenderHighScore.cs" id="28_itbhu"]
 [ext_resource type="LabelSettings" uid="uid://qx8cuxjoqn5t" path="res://fonts/subheading.tres" id="28_oae08"]
 [ext_resource type="LabelSettings" uid="uid://d2pua3txaholq" path="res://fonts/mono_numbers.tres" id="30_5oabt"]
@@ -407,5 +408,12 @@ shape = SubResource("WorldBoundaryShape2D_c6phh")
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Level2/BouncyWalls"]
 position = Vector2(512, 49)
 shape = SubResource("WorldBoundaryShape2D_ishrt")
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+
+[node name="SettingsPanel" parent="CanvasLayer2" instance=ExtResource("27_a0pbe")]
+visible = false
+offset_top = -91.0
+offset_bottom = 91.0
 
 [connection signal="OnShoot" from="TrackPath/GunFollow2D/Gun" to="." method="_on_shoot_event"]
