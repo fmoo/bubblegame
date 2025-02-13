@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://borggvjowbqn2"]
+[gd_scene load_steps=73 format=3 uid="uid://borggvjowbqn2"]
 
 [ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_axaqe"]
 [ext_resource type="Resource" uid="uid://dpm2joux2uabo" path="res://gameplay/match4.tres" id="2_0lbne"]
@@ -45,6 +45,7 @@
 [ext_resource type="Script" path="res://scripts/ScaleTweenFollower.cs" id="29_udvti"]
 [ext_resource type="Texture2D" uid="uid://0vkv8e0ryktr" path="res://sprites/combo_timer.png" id="29_yysxr"]
 [ext_resource type="LabelSettings" uid="uid://qx8cuxjoqn5t" path="res://fonts/subheading.tres" id="30_qnp8l"]
+[ext_resource type="PackedScene" uid="uid://5tea8yn6omyn" path="res://scenes/config_button.tscn" id="31_4e11d"]
 [ext_resource type="Texture2D" uid="uid://dohac3g22la44" path="res://sprites/inner_bubble_fill.png" id="32_0fn8p"]
 [ext_resource type="Script" path="res://scripts/ChainRender.cs" id="32_15lmc"]
 [ext_resource type="Script" path="res://scripts/RenderGameTime.cs" id="34_ntjar"]
@@ -54,6 +55,7 @@
 [ext_resource type="Texture2D" uid="uid://blvgh8vhmvpyg" path="res://sprites/panel.png" id="50_rkduh"]
 [ext_resource type="FontFile" uid="uid://fht4lbhg4nde" path="res://fonts/tecno_small_thin.ttf" id="51_wb3vn"]
 [ext_resource type="PackedScene" uid="uid://deesebw4q0gpi" path="res://scenes/settings_panel.tscn" id="54_7msvu"]
+[ext_resource type="Script" path="res://ui/UnpauseButton.cs" id="55_nk17e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4libq"]
 shader = ExtResource("20_vleso")
@@ -315,6 +317,10 @@ offset_right = 60.0
 offset_bottom = 19.0
 text = "pressure"
 label_settings = ExtResource("30_qnp8l")
+
+[node name="ConfigButton" parent="CanvasLayer/LeftPanel" node_paths=PackedStringArray("ConfigPanel") instance=ExtResource("31_4e11d")]
+layout_mode = 1
+ConfigPanel = NodePath("../../../CanvasLayer2/SettingsPanel")
 
 [node name="RightPanel" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -666,6 +672,7 @@ layout_mode = 2
 layout_mode = 2
 theme_override_fonts/font = ExtResource("51_wb3vn")
 text = "Return to Game"
+script = ExtResource("55_nk17e")
 
 [node name="Button3" type="Button" parent="CanvasLayer2/PausePanel/VBoxContainer"]
 layout_mode = 2
@@ -684,6 +691,5 @@ visible = false
 [connection signal="ContainRatioChanged" from="Arena/VillainBubble" to="CanvasLayer/LeftPanel/ContainRect2" method="_on_contain_ratio_changed"]
 [connection signal="pressed" from="CanvasLayer2/GameOverPanel/VBoxContainer/Button" to="." method="_on_play_again_pressed"]
 [connection signal="pressed" from="CanvasLayer2/GameOverPanel/VBoxContainer/Button2" to="." method="_on_main_menu_pressed"]
-[connection signal="pressed" from="CanvasLayer2/PausePanel/VBoxContainer/Button" to="." method="Unpause"]
 [connection signal="pressed" from="CanvasLayer2/PausePanel/VBoxContainer/Button3" to="." method="_on_play_again_pressed"]
 [connection signal="pressed" from="CanvasLayer2/PausePanel/VBoxContainer/Button2" to="." method="_on_main_menu_pressed"]

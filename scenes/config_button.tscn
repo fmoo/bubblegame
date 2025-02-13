@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://5tea8yn6omyn"]
+
+[ext_resource type="FontFile" uid="uid://dw6cd8gqykohx" path="res://fonts/tecno_small.ttf" id="1_kglfb"]
+[ext_resource type="Script" path="res://ui/ConfigButton.cs" id="1_r8xw3"]
+
+[node name="ConfigButton" type="Button"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -33.5
+offset_top = -31.0
+offset_right = 33.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("1_kglfb")
+text = "Config"
+script = ExtResource("1_r8xw3")

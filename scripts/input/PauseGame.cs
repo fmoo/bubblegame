@@ -8,7 +8,9 @@ public partial class PauseGame : ControlSchemeBase {
         base._Process(delta);
         if (Input.IsActionJustPressed("toggle_pause")) {
             if (!GetTree().Paused) {
-                BubbleGame.Game.PauseWithPanel(PausePanel);
+                if (PausePanel != null) {
+                    BubbleGame.Game.PauseWithPanel(PausePanel);
+                }
             } else {
                 BubbleGame.Game.Unpause();
             }

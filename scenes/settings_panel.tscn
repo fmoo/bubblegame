@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://deesebw4q0gpi"]
+[gd_scene load_steps=9 format=3 uid="uid://deesebw4q0gpi"]
 
 [ext_resource type="Texture2D" uid="uid://blvgh8vhmvpyg" path="res://sprites/panel.png" id="1_v6qn8"]
 [ext_resource type="LabelSettings" uid="uid://cfje14hgxm4pw" path="res://fonts/heading.tres" id="2_ac0pn"]
 [ext_resource type="FontFile" uid="uid://dw6cd8gqykohx" path="res://fonts/tecno_small.ttf" id="3_abxbc"]
 [ext_resource type="Script" path="res://ui/AudioBusSlider.cs" id="4_nkk7f"]
 [ext_resource type="FontFile" uid="uid://fht4lbhg4nde" path="res://fonts/tecno_small_thin.ttf" id="5_gdvvh"]
+[ext_resource type="Script" path="res://ui/UnpauseButton.cs" id="6_etvnw"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0plal"]
 texture = ExtResource("1_v6qn8")
@@ -23,6 +24,7 @@ outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
 [node name="SettingsPanel" type="PanelContainer"]
+process_mode = 2
 custom_minimum_size = Vector2(150, 100)
 anchors_preset = 8
 anchor_left = 0.5
@@ -95,3 +97,4 @@ PlaySFX = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_gdvvh")
 text = "Return"
+script = ExtResource("6_etvnw")
