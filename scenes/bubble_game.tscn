@@ -55,7 +55,7 @@
 [ext_resource type="Texture2D" uid="uid://blvgh8vhmvpyg" path="res://sprites/panel.png" id="50_rkduh"]
 [ext_resource type="FontFile" uid="uid://fht4lbhg4nde" path="res://fonts/tecno_small_thin.ttf" id="51_wb3vn"]
 [ext_resource type="PackedScene" uid="uid://deesebw4q0gpi" path="res://scenes/settings_panel.tscn" id="54_7msvu"]
-[ext_resource type="Script" path="res://ui/UnpauseButton.cs" id="55_nk17e"]
+[ext_resource type="Script" path="res://ui/unpause_button.gd" id="55_nk17e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4libq"]
 shader = ExtResource("20_vleso")

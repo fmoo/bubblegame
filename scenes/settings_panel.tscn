@@ -5,7 +5,7 @@
 [ext_resource type="FontFile" uid="uid://dw6cd8gqykohx" path="res://fonts/tecno_small.ttf" id="3_abxbc"]
 [ext_resource type="Script" path="res://ui/AudioBusSlider.cs" id="4_nkk7f"]
 [ext_resource type="FontFile" uid="uid://fht4lbhg4nde" path="res://fonts/tecno_small_thin.ttf" id="5_gdvvh"]
-[ext_resource type="Script" path="res://ui/UnpauseButton.cs" id="6_etvnw"]
+[ext_resource type="Script" path="res://ui/unpause_button.gd" id="6_0k4xj"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0plal"]
 texture = ExtResource("1_v6qn8")
@@ -97,4 +97,4 @@ PlaySFX = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_gdvvh")
 text = "Return"
-script = ExtResource("6_etvnw")
+script = ExtResource("6_0k4xj")
