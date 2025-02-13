@@ -366,6 +366,9 @@ public partial class BubbleGame : Node2D {
 		bubblePop.PlayAnimation("pop");
 	}
 
+	public void Quit() {
+		GetTree().Quit();
+	}
 
 	public void _on_main_menu_pressed() {
 		GetTree().Paused = false;
