@@ -88,7 +88,7 @@ public partial class BubbleGun : Node2D {
 	double cooldownTime = 0;
 	public void Shoot() {
 		if (cooldownTime > 0) return;
-		BubbleGame.Game.Audio.Shoot();
+		BubbleGame.Game.Audio.Call("Shoot");
 		Bubble bubble = bubbleScene.Instantiate<Bubble>();
 		BubbleGame.Game.RegisterBubble(bubble);
 

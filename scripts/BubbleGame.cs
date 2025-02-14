@@ -4,7 +4,7 @@ using System.Linq;
 using Godot;
 
 public partial class BubbleGame : Node2D {
-	[Export] public Audio Audio { get; private set; }
+	[Export] public Node Audio { get; private set; }
 	[Export] public BubbleQueue BubbleQueue { get; private set; }
 	[Export] public GameplayConfig GameplayConfig { get; private set; }
 	[Export] public Node2D Springs;
@@ -293,7 +293,7 @@ public partial class BubbleGame : Node2D {
 
 	[Export] Control GameOverPanel;
 	public void GameOver() {
-		Audio.GameOver();
+		Audio.Call("GameOver");
 		GD.Print("Game Over");
 		RenderHighScore.SaveHighScore();
 		PauseWithPanel(GameOverPanel);

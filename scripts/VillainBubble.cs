@@ -27,7 +27,7 @@ public partial class VillainBubble : RigidBody2D {
 		if (CollisionShape.Scale.X >= GAME_OVER_SCALE) {
 			BubbleGame.Game.GameOver();
 		} else {
-			BubbleGame.Game.Audio.Grow();
+			BubbleGame.Game.Audio.Call("Grow");
 		}
 	}
 
@@ -59,7 +59,7 @@ public partial class VillainBubble : RigidBody2D {
 
 		CollisionShape.Scale = new Vector2(CollisionShape.Scale.X - SIZE_CHANGE_INCREMENT, CollisionShape.Scale.Y - SIZE_CHANGE_INCREMENT);
 		NotifyContainRatioChange();
-		BubbleGame.Game.Audio.Shrink();
+		BubbleGame.Game.Audio.Call("Shrink");
 	}
 
 	public IEnumerable<PinJoint2D> GetJoints() {

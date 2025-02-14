@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://fwgale7raaqn" path="res://scenes/groove_joint.tscn" id="4_5c8rd"]
 [ext_resource type="PackedScene" uid="uid://dqaenifftll1r" path="res://scenes/villain_pin_joint.tscn" id="4_iqqtn"]
 [ext_resource type="PackedScene" uid="uid://b5soh8b80t7ya" path="res://scenes/bubble_sprite.tscn" id="5_jnyci"]
-[ext_resource type="Script" path="res://scripts/Audio.cs" id="6_gs3if"]
+[ext_resource type="Script" path="res://scripts/audio.gd" id="6_gs3if"]
 [ext_resource type="Script" path="res://scripts/BGM.cs" id="7_0y6e5"]
 [ext_resource type="Resource" uid="uid://bpmtsq37021tt" path="res://bgm/scifi/identity.tres" id="8_7kd0s"]
 [ext_resource type="AudioStream" uid="uid://cb4ipcqc0bnok" path="res://sfx/shoot.wav" id="14_wtwha"]
