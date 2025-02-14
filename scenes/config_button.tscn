@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://5tea8yn6omyn"]
 
 [ext_resource type="FontFile" uid="uid://dw6cd8gqykohx" path="res://fonts/tecno_small.ttf" id="1_kglfb"]
-[ext_resource type="Script" path="res://ui/config_button.gd" id="1_r8xw3"]
+[ext_resource type="Script" path="res://scripts/ui/config_button.gd" id="1_r8xw3"]
 
 [node name="ConfigButton" type="Button"]
 anchors_preset = 7

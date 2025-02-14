@@ -47,7 +47,7 @@
 [ext_resource type="LabelSettings" uid="uid://qx8cuxjoqn5t" path="res://fonts/subheading.tres" id="30_qnp8l"]
 [ext_resource type="PackedScene" uid="uid://5tea8yn6omyn" path="res://scenes/config_button.tscn" id="31_4e11d"]
 [ext_resource type="Texture2D" uid="uid://dohac3g22la44" path="res://sprites/inner_bubble_fill.png" id="32_0fn8p"]
-[ext_resource type="Script" path="res://scripts/ChainRender.cs" id="32_15lmc"]
+[ext_resource type="Script" path="res://scripts/ui/ChainRender.cs" id="32_15lmc"]
 [ext_resource type="Script" path="res://scripts/RenderGameTime.cs" id="34_ntjar"]
 [ext_resource type="Script" path="res://scripts/RenderHighScore.cs" id="35_b6gyq"]
 [ext_resource type="PackedScene" uid="uid://bgsc4gwcivxfl" path="res://scenes/bubble_queue.tscn" id="48_yixq4"]
@@ -55,7 +55,7 @@
 [ext_resource type="Texture2D" uid="uid://blvgh8vhmvpyg" path="res://sprites/panel.png" id="50_rkduh"]
 [ext_resource type="FontFile" uid="uid://fht4lbhg4nde" path="res://fonts/tecno_small_thin.ttf" id="51_wb3vn"]
 [ext_resource type="PackedScene" uid="uid://deesebw4q0gpi" path="res://scenes/settings_panel.tscn" id="54_7msvu"]
-[ext_resource type="Script" path="res://ui/unpause_button.gd" id="55_nk17e"]
+[ext_resource type="Script" path="res://scripts/ui/unpause_button.gd" id="55_nk17e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4libq"]
 shader = ExtResource("20_vleso")

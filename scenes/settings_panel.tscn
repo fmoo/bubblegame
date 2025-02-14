@@ -3,9 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://blvgh8vhmvpyg" path="res://sprites/panel.png" id="1_v6qn8"]
 [ext_resource type="LabelSettings" uid="uid://cfje14hgxm4pw" path="res://fonts/heading.tres" id="2_ac0pn"]
 [ext_resource type="FontFile" uid="uid://dw6cd8gqykohx" path="res://fonts/tecno_small.ttf" id="3_abxbc"]
-[ext_resource type="Script" path="res://ui/audio_bus_slider.gd" id="4_rgm1k"]
+[ext_resource type="Script" path="res://scripts/ui/audio_bus_slider.gd" id="4_rgm1k"]
 [ext_resource type="FontFile" uid="uid://fht4lbhg4nde" path="res://fonts/tecno_small_thin.ttf" id="5_gdvvh"]
-[ext_resource type="Script" path="res://ui/unpause_button.gd" id="6_0k4xj"]
+[ext_resource type="Script" path="res://scripts/ui/unpause_button.gd" id="6_0k4xj"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0plal"]
 texture = ExtResource("1_v6qn8")

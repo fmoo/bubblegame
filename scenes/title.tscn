@@ -41,7 +41,7 @@
 [ext_resource type="Texture2D" uid="uid://bxpexe12qf7nr" path="res://sprites/gun_barrel.png" id="40_gt5an"]
 [ext_resource type="Texture2D" uid="uid://blvgh8vhmvpyg" path="res://sprites/panel.png" id="41_mbh2j"]
 [ext_resource type="FontFile" uid="uid://fht4lbhg4nde" path="res://fonts/tecno_small_thin.ttf" id="42_6po13"]
-[ext_resource type="Script" path="res://ui/unpause_button.gd" id="43_qb3s4"]
+[ext_resource type="Script" path="res://scripts/ui/unpause_button.gd" id="43_qb3s4"]
 [ext_resource type="PhysicsMaterial" uid="uid://5gbmiagtsmip" path="res://physics/bouncy.tres" id="47_26ptm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4libq"]
