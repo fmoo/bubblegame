@@ -11,7 +11,7 @@
 [ext_resource type="PhysicsMaterial" uid="uid://5gbmiagtsmip" path="res://physics/bouncy.tres" id="6_4ubpa"]
 [ext_resource type="LabelSettings" uid="uid://d2pua3txaholq" path="res://fonts/mono_numbers.tres" id="6_eue5f"]
 [ext_resource type="PackedScene" uid="uid://dqaenifftll1r" path="res://scenes/villain_pin_joint.tscn" id="7_5koiv"]
-[ext_resource type="Script" path="res://scripts/input/DebugMode.cs" id="7_7wqd8"]
+[ext_resource type="Script" path="res://scripts/input/debug_mode.gd" id="7_7wqd8"]
 [ext_resource type="AudioStream" uid="uid://cb4ipcqc0bnok" path="res://sfx/shoot.wav" id="7_onkte"]
 [ext_resource type="Script" path="res://scripts/audio.gd" id="7_wso5g"]
 [ext_resource type="Script" path="res://scripts/input/InitialControlScheme.cs" id="8_5o3ur"]
