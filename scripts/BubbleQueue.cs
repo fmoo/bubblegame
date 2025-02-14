@@ -25,6 +25,8 @@ public partial class BubbleQueue : Node2D {
 		}
 	}
 
+	const double COOLDOWN = 0.3;
+
 	public void StartTween() {
 		var tween = GetTree().CreateTween().SetParallel(true);
 		Sprite2D[] clones = new Sprite2D[bubbleRenders.Length - 1];
@@ -37,7 +39,7 @@ public partial class BubbleQueue : Node2D {
 			if (i == 1) {
 				var tween2 = GetTree().CreateTween();
 				// For the first 1/4 of time, we tween bubble directly to the "ejector" position
-				tween2.TweenProperty(bubbleClone, "global_position", queueEjector.GlobalPosition, BubbleGun.COOLDOWN / 4.0);
+				tween2.TweenProperty(bubbleClone, "global_position", queueEjector.GlobalPosition, COOLDOWN / 4.0);
 				// For the remaining 3/4 of the time, we tween the bubble along the reloadPath
 				tween2.TweenMethod(Callable.From<float>((value) => {
 					// Hack to make the bubble go the short way around the path
@@ -48,9 +50,9 @@ public partial class BubbleQueue : Node2D {
 					reloadPath.ProgressRatio = (float)Mathf.Lerp(ejectorPathRatio, targetRatio, value);
 					bubbleClone.GlobalPosition = reloadPath.GlobalPosition;
 
-				}), 0.0, 1.0, BubbleGun.COOLDOWN * 3.0 / 4.0);
+				}), 0.0, 1.0, COOLDOWN * 3.0 / 4.0);
 			} else {
-				tween.TweenProperty(bubbleClone, "global_position", bubbleRenders[i - 1].GlobalPosition, BubbleGun.COOLDOWN);
+				tween.TweenProperty(bubbleClone, "global_position", bubbleRenders[i - 1].GlobalPosition, COOLDOWN);
 			}
 		}
 		HideBubbles();
@@ -75,7 +77,7 @@ public partial class BubbleQueue : Node2D {
 
 	void RefreshRender() {
 		for (int i = 0; i < bubbleRenders.Length; i++) {
-			bubbleRenders[i].Call("SetConfig",colorQueue[i]);
+			bubbleRenders[i].Call("SetConfig", colorQueue[i]);
 		}
 	}
 

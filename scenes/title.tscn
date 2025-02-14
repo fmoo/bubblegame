@@ -32,7 +32,7 @@
 [ext_resource type="Texture2D" uid="uid://dc4kcvtvddd50" path="res://sprites/mockup2_track.png" id="34_5j8uw"]
 [ext_resource type="PackedScene" uid="uid://bgsc4gwcivxfl" path="res://scenes/bubble_queue.tscn" id="34_ctyse"]
 [ext_resource type="Texture2D" uid="uid://dqedr4oxf7pei" path="res://sprites/down-arrow.png" id="35_h3jkt"]
-[ext_resource type="Script" path="res://scripts/BubbleGun.cs" id="36_yenmr"]
+[ext_resource type="Script" path="res://scripts/bubble_gun.gd" id="36_yenmr"]
 [ext_resource type="PackedScene" uid="uid://w1kv4tagcac8" path="res://scenes/bubble.tscn" id="37_edn0c"]
 [ext_resource type="Texture2D" uid="uid://8e06rc2smdp8" path="res://sprites/gun.png" id="38_j3lii"]
 [ext_resource type="Texture2D" uid="uid://bom4u37bst1wq" path="res://sprites/bubble_green.png" id="39_03amu"]

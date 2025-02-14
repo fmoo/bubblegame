@@ -10,7 +10,7 @@ public partial class BubbleGame : Node2D {
 	[Export] public Node2D Springs;
 	[Export] public Node2D Bubbles;
 	[Export] public VillainBubble VillainBubble { get; private set; }
-	[Export] public BubbleGun Player { get; private set; }
+	[Export] public Node2D Player { get; private set; }
 	[Export] public bool DebugMode { get; private set; } = false;
 	[Export] public bool TitleMode { get; private set; } = false;
 	[Export] PackedScene PinJointTemplate;
@@ -336,7 +336,7 @@ public partial class BubbleGame : Node2D {
 			MaybePickNewVillainBubbleColor();
 		}
 
-		Player.Reset();
+		Player.Call("Reset");
 		BubbleQueue.Reset();
 		Score = 0;
 		EmitSignal(SignalName.ScoreChanged, Score);

@@ -13,11 +13,11 @@ public partial class TwinstickInstantControls : ControlSchemeBase {
             Input.GetActionStrength("twinstick2_right") - Input.GetActionStrength("twinstick2_left"),
             Input.GetActionStrength("twinstick2_up") - Input.GetActionStrength("twinstick2_down")
         );
-        BubbleGame.Game.Player.SetTrackAngle(leftStick);
-        BubbleGame.Game.Player.SetTurretAngle(rightStick);
+        BubbleGame.Game.Player.Call("SetTrackAngle", leftStick);
+        BubbleGame.Game.Player.Call("SetTurretAngle", rightStick);
 
         if (Input.IsActionJustPressed("twinstick_shoot")) {
-            BubbleGame.Game.Player.Shoot();
+            BubbleGame.Game.Player.Call("Shoot");
         }
     }
 }

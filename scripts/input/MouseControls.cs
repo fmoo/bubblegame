@@ -13,14 +13,14 @@ public partial class MouseControls : ControlSchemeBase {
         if (!IsVisibleInTree()) return;
         // Right click means shoot
         if (@event is InputEventMouseButton mouseButton && mouseButton.ButtonIndex == MouseButton.Right && mouseButton.Pressed) {
-            BubbleGame.Game.Player.Shoot();
+            BubbleGame.Game.Player.Call("Shoot");
         }
         // Left click means SetStrafePosition
         if (@event is InputEventMouseButton mouseButton2 && mouseButton2.ButtonIndex == MouseButton.Left) {
             if (mouseButton2.Pressed) {
                 moveMouseDown = true;
                 var InputDirection = GetLocalMousePosition();
-                BubbleGame.Game.Player.SetTrackDestination(InputDirection);
+                BubbleGame.Game.Player.Call("SetTrackDestination", InputDirection);
             } else {
                 moveMouseDown = false;
             }
@@ -38,12 +38,12 @@ public partial class MouseControls : ControlSchemeBase {
         var InputDirection = GetLocalMousePosition();
         if (!DisableMouseAim) {
             moveTargetPath.ProgressRatio = (InputDirection.AngleTo(Vector2.Up) - Mathf.Pi) / Mathf.Tau;
-            BubbleGame.Game.Player.TurretLookAt(GetGlobalMousePosition());
+            BubbleGame.Game.Player.Call("TurretLookAt", GetGlobalMousePosition());
         }
 
         // If the player is holding the button down, update the targeting to reflect
         if (moveMouseDown) {
-            BubbleGame.Game.Player.SetTrackDestination(InputDirection);
+            BubbleGame.Game.Player.Call("SetTrackDestination", InputDirection);
         }
 
     }
