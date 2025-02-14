@@ -142,7 +142,7 @@ public partial class Bubble : RigidBody2D {
 		CollisionShape = null;
 		LinearVelocity = Vector2.Zero;
 
-		BubbleGame.Game.Audio.Pop();
+		BubbleGame.Game.Audio.Call("Pop");
 		// Walk neighbors and remove yourself from their list
 
 		foreach (var neighbor in neighbors) {

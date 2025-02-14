@@ -38,7 +38,7 @@ public partial class AudioBusSlider : HSlider {
 		);
 
 		if (PlaySFX && timeSinceSound > SFX_DEBOUNCE) {
-			BubbleGame.Game.Audio.Shoot();
+			BubbleGame.Game.Audio.Call("Shoot");
 			timeSinceSound = 0;
 		}
 	}

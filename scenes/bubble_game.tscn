@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://dqaenifftll1r" path="res://scenes/villain_pin_joint.tscn" id="7_5koiv"]
 [ext_resource type="Script" path="res://scripts/input/DebugMode.cs" id="7_7wqd8"]
 [ext_resource type="AudioStream" uid="uid://cb4ipcqc0bnok" path="res://sfx/shoot.wav" id="7_onkte"]
-[ext_resource type="Script" path="res://scripts/Audio.cs" id="7_wso5g"]
+[ext_resource type="Script" path="res://scripts/audio.gd" id="7_wso5g"]
 [ext_resource type="Script" path="res://scripts/input/InitialControlScheme.cs" id="8_5o3ur"]
 [ext_resource type="AudioStream" uid="uid://couc3qpkfeh3c" path="res://sfx/pop.wav" id="8_j1bko"]
 [ext_resource type="Script" path="res://scripts/RenderScore.cs" id="8_n7kaq"]

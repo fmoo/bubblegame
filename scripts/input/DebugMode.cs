@@ -12,7 +12,7 @@ public partial class DebugMode : ControlSchemeBase {
     public override void _Process(double delta) {
         base._Process(delta);
 		if (Input.IsActionJustReleased("debug_physics")) {
-			BubbleGame.Game.Audio.BGM.PlayRandom();
+			(BubbleGame.Game.Audio.Get("BGM").Obj as BGM).PlayRandom();
 		}
         if (Input.IsActionJustPressed("debug_reset")) {
             // GD.Print("DEBUG: Resetting game");
