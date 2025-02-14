@@ -48,7 +48,7 @@
 [ext_resource type="PackedScene" uid="uid://5tea8yn6omyn" path="res://scenes/config_button.tscn" id="31_4e11d"]
 [ext_resource type="Texture2D" uid="uid://dohac3g22la44" path="res://sprites/inner_bubble_fill.png" id="32_0fn8p"]
 [ext_resource type="Script" path="res://scripts/ui/ChainRender.cs" id="32_15lmc"]
-[ext_resource type="Script" path="res://scripts/ui/RenderGameTime.cs" id="34_ntjar"]
+[ext_resource type="Script" path="res://scripts/ui/render_game_time.gd" id="34_ntjar"]
 [ext_resource type="Script" path="res://scripts/ui/RenderHighScore.cs" id="35_b6gyq"]
 [ext_resource type="PackedScene" uid="uid://bgsc4gwcivxfl" path="res://scenes/bubble_queue.tscn" id="48_yixq4"]
 [ext_resource type="PackedScene" uid="uid://b0ip2qtsaicl" path="res://scenes/destructo_walls.tscn" id="50_eqnjs"]
