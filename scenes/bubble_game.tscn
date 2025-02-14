@@ -38,8 +38,8 @@
 [ext_resource type="Shader" path="res://shaders/background.gdshader" id="20_vleso"]
 [ext_resource type="Texture2D" uid="uid://b6bc8bmh3lltv" path="res://sprites/bg.png" id="21_elrbj"]
 [ext_resource type="Script" path="res://scripts/input/pause_game.gd" id="24_f68so"]
-[ext_resource type="Script" path="res://scripts/ui/ContainRect.cs" id="27_fh7nl"]
-[ext_resource type="Script" path="res://scripts/ui/PressureRect.cs" id="28_1n4ef"]
+[ext_resource type="Script" path="res://scripts/ui/contain_rect.gd" id="27_fh7nl"]
+[ext_resource type="Script" path="res://scripts/ui/pressure_rect.gd" id="28_1n4ef"]
 [ext_resource type="Texture2D" uid="uid://dv7m7b346fvki" path="res://sprites/inner_bubble.png" id="28_mcajo"]
 [ext_resource type="LabelSettings" uid="uid://cfje14hgxm4pw" path="res://fonts/heading.tres" id="29_3gfu0"]
 [ext_resource type="Texture2D" uid="uid://xa38v1b4olde" path="res://sprites/inner_bubble_highlight.png" id="29_8m3lp"]
@@ -689,7 +689,6 @@ text = "Quit"
 visible = false
 
 [connection signal="OnShoot" from="Arena/TrackPath/GunFollow2D/Gun" to="." method="_on_shoot_event"]
-[connection signal="ContainRatioChanged" from="Arena/VillainBubble" to="CanvasLayer/LeftPanel/ContainRect2" method="_on_contain_ratio_changed"]
 [connection signal="pressed" from="CanvasLayer2/GameOverPanel/VBoxContainer/Button" to="." method="_on_play_again_pressed"]
 [connection signal="pressed" from="CanvasLayer2/GameOverPanel/VBoxContainer/Button2" to="." method="_on_main_menu_pressed"]
 [connection signal="pressed" from="CanvasLayer2/PausePanel/VBoxContainer/Button3" to="." method="_on_play_again_pressed"]
