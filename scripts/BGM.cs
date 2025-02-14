@@ -2,13 +2,13 @@ using Godot;
 using System;
 
 public partial class BGM : AudioStreamPlayer {
-	[Export] public BGMConfig[] BGMConfigs { get; private set; } = new BGMConfig[0];
+	[Export] public Resource[] BGMConfigs { get; private set; } = new Resource[0];
 
-	[Signal] public delegate void OnBGMChangeEventHandler(BGMConfig config);
+	[Signal] public delegate void OnBGMChangeEventHandler(Resource config);
 
 	double timeSinceStart = 0;
 	bool isChangingTracks = false;
-	BGMConfig currentConfig = null;
+	Resource currentConfig = null;
 
 	public override void _Ready() {
 		base._Ready();
@@ -18,7 +18,7 @@ public partial class BGM : AudioStreamPlayer {
 	public override void _Process(double delta) {
 		base._Process(delta);
 		timeSinceStart += delta;
-		if (timeSinceStart >= currentConfig.FadeAfter && !isChangingTracks) {
+		if (timeSinceStart >= currentConfig.Get("FadeAfter").AsDouble() && !isChangingTracks) {
 			PlayRandom();
 		}
 	}
@@ -26,20 +26,20 @@ public partial class BGM : AudioStreamPlayer {
 	const float FADE_OUT_TIME = 4f;
 	const float MIN_DB = -80f;
 
-	public BGMConfig PlayRandom() {
+	public Resource PlayRandom() {
 		var fadeOutTime = Stream != null ? FADE_OUT_TIME : 0;
 		isChangingTracks = true;
 		var config = BGMConfigs[GD.RandRange(0, BGMConfigs.Length - 1)];
-		while (Stream == config.AudioStream) {
+		while (Stream == config.Get("_AudioStream").As<AudioStream>()) {
 			// Pick a new song
 			config = BGMConfigs[GD.RandRange(0, BGMConfigs.Length - 1)];
 		}
-		GD.Print($"Playing {config.Title} by {config.Composer}");
+		GD.Print($"Playing {config.Get("Title").AsString()} by {config.Get("Composer").AsString()}");
 		var tween = GetTree().CreateTween();
 		// Fade out the current track
 		tween.TweenProperty(this, "volume_db", MIN_DB, fadeOutTime);
 		tween.TweenCallback(Callable.From(() => {
-			Stream = config.AudioStream;
+			Stream = config.Get("_AudioStream").As<AudioStream>();
 			VolumeDb = 0;
 			Play();
 			timeSinceStart = 0f;

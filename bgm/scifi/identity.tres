@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="BGMConfig" load_steps=3 format=3 uid="uid://bpmtsq37021tt"]
 
 [ext_resource type="AudioStream" uid="uid://c33t4qustqbl" path="res://bgm/scifi/Identity.ogg" id="1_b27a4"]
-[ext_resource type="Script" path="res://scripts/resources/BGMConfig.cs" id="2_wrvs6"]
+[ext_resource type="Script" path="res://scripts/resources/bgm_config.gd" id="2_wrvs6"]
 
 [resource]
 script = ExtResource("2_wrvs6")
-AudioStream = ExtResource("1_b27a4")
+_AudioStream = ExtResource("1_b27a4")
 Title = "Identity"
 Composer = "Bert Cole"
 Link = "https://bit-by-bit-sound.itch.io/"

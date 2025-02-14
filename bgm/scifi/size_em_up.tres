@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="BGMConfig" load_steps=3 format=3 uid="uid://dtinh555dmhwp"]
 
 [ext_resource type="AudioStream" uid="uid://24l6qm7km8w4" path="res://bgm/scifi/Size 'Em Up.ogg" id="1_p6i8c"]
-[ext_resource type="Script" path="res://scripts/resources/BGMConfig.cs" id="2_dpltp"]
+[ext_resource type="Script" path="res://scripts/resources/bgm_config.gd" id="2_dpltp"]
 
 [resource]
 script = ExtResource("2_dpltp")
-AudioStream = ExtResource("1_p6i8c")
+_AudioStream = ExtResource("1_p6i8c")
 Title = "Size 'Em Up"
 Composer = "Bert Cole"
 Link = "https://bit-by-bit-sound.itch.io/"
