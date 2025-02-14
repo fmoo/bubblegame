@@ -1,4 +1,5 @@
 extends Node
+class_name Audio
 
 @export var BGM: AudioStreamPlayer = null
 
