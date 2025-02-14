@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://b5soh8b80t7ya"]
 
 [ext_resource type="Texture2D" uid="uid://dugmk8ouwtnds" path="res://sprites/bubble_blue.png" id="1_0evjc"]
-[ext_resource type="Script" path="res://scripts/BubbleSprite.cs" id="2_7c3sj"]
+[ext_resource type="Script" path="res://scripts/bubble_sprite.gd" id="2_vl4p2"]
 
 [sub_resource type="Animation" id="Animation_aa6hx"]
 length = 0.001
@@ -88,11 +88,11 @@ _data = {
 "pop": SubResource("Animation_p1mfw")
 }
 
-[node name="BubbleSprite" type="Sprite2D" node_paths=PackedStringArray("AnimationPlayer")]
+[node name="BubbleSprite" type="Sprite2D" node_paths=PackedStringArray("animation_player")]
 texture = ExtResource("1_0evjc")
 hframes = 15
-script = ExtResource("2_7c3sj")
-AnimationPlayer = NodePath("AnimationPlayer")
+script = ExtResource("2_vl4p2")
+animation_player = NodePath("AnimationPlayer")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

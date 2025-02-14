@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Godot;
 
 public partial class BubbleQueue : Node2D {
-	[Export] public BubbleSprite[] bubbleRenders;
+	[Export] public Sprite2D[] bubbleRenders;
 	[Export] Node2D queueEjector;
 	[Export] PathFollow2D reloadPath;
 	[Export] PathFollow2D gunPath;
@@ -27,10 +27,10 @@ public partial class BubbleQueue : Node2D {
 
 	public void StartTween() {
 		var tween = GetTree().CreateTween().SetParallel(true);
-		BubbleSprite[] clones = new BubbleSprite[bubbleRenders.Length - 1];
+		Sprite2D[] clones = new Sprite2D[bubbleRenders.Length - 1];
 		for (int i = 1; i < bubbleRenders.Length; i++) {
 			// Copy the bubble
-			var bubbleClone = bubbleRenders[i].Duplicate() as BubbleSprite;
+			var bubbleClone = bubbleRenders[i].Duplicate() as Sprite2D;
 			clones[i - 1] = bubbleClone;
 			AddChild(bubbleClone);
 			bubbleClone.GlobalPosition = bubbleRenders[i].GlobalPosition;
@@ -75,7 +75,7 @@ public partial class BubbleQueue : Node2D {
 
 	void RefreshRender() {
 		for (int i = 0; i < bubbleRenders.Length; i++) {
-			bubbleRenders[i].SetConfig(colorQueue[i]);
+			bubbleRenders[i].Call("SetConfig",colorQueue[i]);
 		}
 	}
 

@@ -359,11 +359,11 @@ public partial class BubbleGame : Node2D {
 
 	[Export] PackedScene BubbleSprite;
 	public void SpawnBubblePop(Vector2 globalPosition, Texture2D texture) {
-		var bubblePop = BubbleSprite.Instantiate<BubbleSprite>();
+		var bubblePop = BubbleSprite.Instantiate<Sprite2D>();
 		AddChild(bubblePop);
 		bubblePop.GlobalPosition = globalPosition;
 		bubblePop.Texture = texture;
-		bubblePop.PlayAnimation("pop");
+		bubblePop.Call("PlayAnimation", "pop");
 	}
 
 	public void Quit() {

@@ -5,7 +5,7 @@ using Godot;
 
 public partial class Bubble : RigidBody2D {
 	[Export] CollisionShape2D CollisionShape;
-	[Export] public BubbleSprite Sprite { get; private set; }
+	[Export] public Sprite2D Sprite { get; private set; }
 	[Export] public bool IsFixedForMenu { get; private set; } = false;
 	public HashSet<Bubble> neighbors = new();
 	Dictionary<Texture, HashSet<Bubble>> colorNeighbors = new();
@@ -156,6 +156,6 @@ public partial class Bubble : RigidBody2D {
 	public BubbleConfig Config { get; private set; }
 	public void SetConfig(BubbleConfig config) {
 		Config = config;
-		Sprite.SetConfig(config);
+		Sprite.Call("SetConfig",config);
 	}
 }
