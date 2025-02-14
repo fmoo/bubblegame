@@ -105,7 +105,7 @@ public partial class Bubble : RigidBody2D {
 
 		} else if (body is MenuBubble menuBubble) {
 			BubbleGame.Game.LinkToMenuBubble(menuBubble, this);
-		} else if (body is DestructoWall) {
+		} else if (body.Get("destructo_wall").AsBool()) {
 			StartDestroy();
 		}
 	}
