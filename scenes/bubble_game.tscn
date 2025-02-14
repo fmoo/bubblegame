@@ -43,7 +43,7 @@
 [ext_resource type="Texture2D" uid="uid://dv7m7b346fvki" path="res://sprites/inner_bubble.png" id="28_mcajo"]
 [ext_resource type="LabelSettings" uid="uid://cfje14hgxm4pw" path="res://fonts/heading.tres" id="29_3gfu0"]
 [ext_resource type="Texture2D" uid="uid://xa38v1b4olde" path="res://sprites/inner_bubble_highlight.png" id="29_8m3lp"]
-[ext_resource type="Script" path="res://scripts/ScaleTweenFollower.cs" id="29_udvti"]
+[ext_resource type="Script" path="res://scripts/scale_tween_follower.gd" id="29_udvti"]
 [ext_resource type="Texture2D" uid="uid://0vkv8e0ryktr" path="res://sprites/combo_timer.png" id="29_yysxr"]
 [ext_resource type="LabelSettings" uid="uid://qx8cuxjoqn5t" path="res://fonts/subheading.tres" id="30_qnp8l"]
 [ext_resource type="PackedScene" uid="uid://5tea8yn6omyn" path="res://scenes/config_button.tscn" id="31_4e11d"]

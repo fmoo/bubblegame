@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/MenuBubble.cs" id="1_6wd1y"]
 [ext_resource type="Texture2D" uid="uid://k8rfcrvg6brj" path="res://sprites/menu_button_plain.png" id="2_fjj8f"]
-[ext_resource type="Script" path="res://scripts/ScaleTweenFollower.cs" id="3_p0cey"]
+[ext_resource type="Script" path="res://scripts/scale_tween_follower.gd" id="3_p0cey"]
 [ext_resource type="Texture2D" uid="uid://bws87alr00t50" path="res://sprites/menu_button_fill.png" id="4_e6y4r"]
 [ext_resource type="Texture2D" uid="uid://cc81lbuwpavup" path="res://sprites/menu_button_highlight.png" id="5_gj0tf"]
 
