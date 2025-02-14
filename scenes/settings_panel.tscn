@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://blvgh8vhmvpyg" path="res://sprites/panel.png" id="1_v6qn8"]
 [ext_resource type="LabelSettings" uid="uid://cfje14hgxm4pw" path="res://fonts/heading.tres" id="2_ac0pn"]
 [ext_resource type="FontFile" uid="uid://dw6cd8gqykohx" path="res://fonts/tecno_small.ttf" id="3_abxbc"]
-[ext_resource type="Script" path="res://ui/AudioBusSlider.cs" id="4_nkk7f"]
+[ext_resource type="Script" path="res://ui/audio_bus_slider.gd" id="4_rgm1k"]
 [ext_resource type="FontFile" uid="uid://fht4lbhg4nde" path="res://fonts/tecno_small_thin.ttf" id="5_gdvvh"]
 [ext_resource type="Script" path="res://ui/unpause_button.gd" id="6_0k4xj"]
 
@@ -63,7 +63,7 @@ layout_mode = 2
 max_value = 1.0
 step = 0.01
 value = 1.0
-script = ExtResource("4_nkk7f")
+script = ExtResource("4_rgm1k")
 BusName = "Master"
 
 [node name="Label2" type="Label" parent="VBoxContainer"]
@@ -76,7 +76,7 @@ layout_mode = 2
 max_value = 1.0
 step = 0.01
 value = 1.0
-script = ExtResource("4_nkk7f")
+script = ExtResource("4_rgm1k")
 BusName = "BGM"
 
 [node name="Label3" type="Label" parent="VBoxContainer"]
@@ -89,7 +89,7 @@ layout_mode = 2
 max_value = 1.0
 step = 0.01
 value = 1.0
-script = ExtResource("4_nkk7f")
+script = ExtResource("4_rgm1k")
 BusName = "SFX"
 PlaySFX = true
 

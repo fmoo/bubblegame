@@ -138,6 +138,7 @@ VillainPinJointTemplate = ExtResource("4_iqqtn")
 BubbleSprite = ExtResource("5_jnyci")
 
 [node name="Audio" type="Node" parent="." node_paths=PackedStringArray("BGM", "_Shoot", "_Pop", "_Grow", "_Shrink", "_GameOver")]
+process_mode = 3
 script = ExtResource("6_gs3if")
 BGM = NodePath("BGM")
 _Shoot = NodePath("Shoot")
@@ -147,23 +148,29 @@ _Shrink = NodePath("Shrink")
 _GameOver = NodePath("GameOver")
 
 [node name="BGM" type="AudioStreamPlayer" parent="Audio"]
+bus = &"BGM"
 script = ExtResource("7_0y6e5")
 BGMConfigs = [ExtResource("8_7kd0s")]
 
 [node name="Shoot" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("14_wtwha")
+bus = &"SFX"
 
 [node name="Pop" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("15_5kfuk")
+bus = &"SFX"
 
 [node name="Grow" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("16_85ox5")
+bus = &"SFX"
 
 [node name="Shrink" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("17_e464j")
+bus = &"SFX"
 
 [node name="GameOver" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("18_mq4pn")
+bus = &"SFX"
 
 [node name="ControlSchemes" type="Node2D" parent="."]
 
