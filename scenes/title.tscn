@@ -26,7 +26,7 @@
 [ext_resource type="LabelSettings" path="res://fonts/title.tres" id="26_am4rm"]
 [ext_resource type="LabelSettings" uid="uid://cfje14hgxm4pw" path="res://fonts/heading.tres" id="26_uggu3"]
 [ext_resource type="PackedScene" uid="uid://deesebw4q0gpi" path="res://scenes/settings_panel.tscn" id="27_a0pbe"]
-[ext_resource type="Script" path="res://scripts/RenderHighScore.cs" id="28_itbhu"]
+[ext_resource type="Script" path="res://scripts/ui/RenderHighScore.cs" id="28_itbhu"]
 [ext_resource type="LabelSettings" uid="uid://qx8cuxjoqn5t" path="res://fonts/subheading.tres" id="28_oae08"]
 [ext_resource type="LabelSettings" uid="uid://d2pua3txaholq" path="res://fonts/mono_numbers.tres" id="30_5oabt"]
 [ext_resource type="Texture2D" uid="uid://dc4kcvtvddd50" path="res://sprites/mockup2_track.png" id="34_5j8uw"]
