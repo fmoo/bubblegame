@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://borggvjowbqn2"]
+[gd_scene load_steps=74 format=3 uid="uid://borggvjowbqn2"]
 
 [ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_axaqe"]
 [ext_resource type="Resource" uid="uid://dpm2joux2uabo" path="res://gameplay/match4.tres" id="2_0lbne"]
@@ -17,7 +17,8 @@
 [ext_resource type="Script" path="res://scripts/input/initial_control_scheme.gd" id="8_5o3ur"]
 [ext_resource type="AudioStream" uid="uid://couc3qpkfeh3c" path="res://sfx/pop.wav" id="8_j1bko"]
 [ext_resource type="Script" path="res://scripts/ui/render_score.gd" id="8_n7kaq"]
-[ext_resource type="Script" path="res://scripts/BGM.cs" id="9_2gusf"]
+[ext_resource type="Script" path="res://scripts/resources/bgm_config.gd" id="8_n20ud"]
+[ext_resource type="Script" path="res://scripts/bgm.gd" id="9_2gusf"]
 [ext_resource type="AudioStream" uid="uid://cdq000tbps6w5" path="res://sfx/grow.wav" id="9_gumm6"]
 [ext_resource type="Script" path="res://scripts/input/simple_shoot.gd" id="9_nhaw1"]
 [ext_resource type="Resource" uid="uid://dh6tlvmfiu5g1" path="res://bgm/scifi/cyberpunk_2020.tres" id="10_f75s2"]
@@ -178,7 +179,7 @@ _GameOver = NodePath("GameOver")
 [node name="BGM" type="AudioStreamPlayer" parent="Audio"]
 bus = &"BGM"
 script = ExtResource("9_2gusf")
-BGMConfigs = [ExtResource("10_f75s2"), ExtResource("11_27xae"), ExtResource("12_8yg0s"), ExtResource("13_myxmb"), ExtResource("14_n3v0y"), ExtResource("15_w6lka")]
+BGMConfigs = Array[ExtResource("8_n20ud")]([ExtResource("10_f75s2"), ExtResource("11_27xae"), ExtResource("12_8yg0s"), ExtResource("13_myxmb"), ExtResource("14_n3v0y"), ExtResource("15_w6lka")])
 
 [node name="Shoot" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("7_onkte")
