@@ -14,7 +14,7 @@ extends Node2D
 
 signal OnShoot
 
-var COOLDOWN: float = 0.300
+const COOLDOWN: float = 0.300
 var cooldownTime: float = 0
 
 var Strafe: int = 0

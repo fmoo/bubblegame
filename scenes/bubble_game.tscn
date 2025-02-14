@@ -16,7 +16,7 @@
 [ext_resource type="Script" path="res://scripts/audio.gd" id="7_wso5g"]
 [ext_resource type="Script" path="res://scripts/input/initial_control_scheme.gd" id="8_5o3ur"]
 [ext_resource type="AudioStream" uid="uid://couc3qpkfeh3c" path="res://sfx/pop.wav" id="8_j1bko"]
-[ext_resource type="Script" path="res://scripts/ui/RenderScore.cs" id="8_n7kaq"]
+[ext_resource type="Script" path="res://scripts/ui/render_score.gd" id="8_n7kaq"]
 [ext_resource type="Script" path="res://scripts/BGM.cs" id="9_2gusf"]
 [ext_resource type="AudioStream" uid="uid://cdq000tbps6w5" path="res://sfx/grow.wav" id="9_gumm6"]
 [ext_resource type="Script" path="res://scripts/input/simple_shoot.gd" id="9_nhaw1"]

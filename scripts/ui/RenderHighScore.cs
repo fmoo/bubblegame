@@ -2,29 +2,29 @@ using Godot;
 using System;
 
 public partial class RenderHighScore : Label {
-	[Export] RenderScore RenderScore;
+	[Export] Label RenderScore;
 
 	public static long CurrentHighScore = 0;
 
 	public override void _Ready() {
 		base._Ready();
-		if (!FileAccess.FileExists("user://highscore.dat")) {
+		if (!FileAccess.FileExists("user://highscore2.dat")) {
 			return;
 		}
-		var file = FileAccess.Open("user://highscore.dat", FileAccess.ModeFlags.Read);
+		var file = FileAccess.Open("user://highscore2.dat", FileAccess.ModeFlags.Read);
 		CurrentHighScore = long.Parse(file.GetLine());
 		file.Close();
 	}
 
 	public static void SaveHighScore() {
-		var file = FileAccess.Open("user://highscore.dat", FileAccess.ModeFlags.Write);
+		var file = FileAccess.Open("user://highscore2.dat", FileAccess.ModeFlags.Write);
 		file.StoreLine(CurrentHighScore.ToString());
 		file.Close();
 	}
 
 	public override void _Process(double delta) {
-		if (RenderScore != null && RenderScore.displayScore > CurrentHighScore) {
-			CurrentHighScore = (long)RenderScore.displayScore;
+		if (RenderScore != null && RenderScore.Get("displayScore").AsInt64() > CurrentHighScore) {
+			CurrentHighScore = RenderScore.Get("displayScore").AsInt64();
 		}
 		Text = $"{CurrentHighScore:00000000}";
 	}
