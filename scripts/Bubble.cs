@@ -153,9 +153,9 @@ public partial class Bubble : RigidBody2D {
 		BubbleGame.Game.SpawnBubblePop(GlobalPosition, Sprite.Texture);
 	}
 
-	public BubbleConfig Config { get; private set; }
-	public void SetConfig(BubbleConfig config) {
+	public Resource Config { get; private set; }
+	public void SetConfig(Resource config) {
 		Config = config;
-		Sprite.Call("SetConfig",config);
+		Sprite.Call("SetConfig", config);
 	}
 }

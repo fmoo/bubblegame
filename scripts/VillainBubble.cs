@@ -83,10 +83,10 @@ public partial class VillainBubble : RigidBody2D {
 		}
 	}
 
-	public BubbleConfig Config { get; private set; }
-	public Tween SetConfig(BubbleConfig config) {
+	public Resource Config { get; private set; }
+	public Tween SetConfig(Resource config) {
 		var tween = GetTree().CreateTween();
-		var bubbleColor = config != null ? config.BubbleColor : new Color(1, 1, 1);
+		var bubbleColor = config != null ? config.Get("BubbleColor") : new Color(1, 1, 1);
 
 		tween.TweenProperty(Sprite, "modulate", bubbleColor, 0.15f);
 		Config = config;

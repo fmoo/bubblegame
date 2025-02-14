@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="BubbleConfig" load_steps=3 format=3 uid="uid://cxckdb2pvda1h"]
 
 [ext_resource type="Texture2D" uid="uid://bom4u37bst1wq" path="res://sprites/bubble_green.png" id="1_5t5cv"]
-[ext_resource type="Script" path="res://scripts/resources/BubbleConfig.cs" id="2_bn2p4"]
+[ext_resource type="Script" path="res://scripts/resources/bubble_config.gd" id="2_bn2p4"]
 
 [resource]
 script = ExtResource("2_bn2p4")

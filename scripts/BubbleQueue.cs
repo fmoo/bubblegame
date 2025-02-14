@@ -7,7 +7,7 @@ public partial class BubbleQueue : Node2D {
 	[Export] PathFollow2D reloadPath;
 	[Export] PathFollow2D gunPath;
 	[Export] double ejectorPathRatio = 0.0995;
-	List<BubbleConfig> colorQueue = new();
+	List<Resource> colorQueue = new();
 	public override void _Ready() {
 		base._Ready();
 		Reset();
@@ -64,7 +64,7 @@ public partial class BubbleQueue : Node2D {
 		}));
 	}
 
-	public BubbleConfig DequeueColor() {
+	public Resource DequeueColor() {
 		var result = colorQueue[0];
 		colorQueue.RemoveAt(0);
 		colorQueue.Add(BubbleGame.Game.PickColor());

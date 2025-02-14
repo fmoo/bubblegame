@@ -177,7 +177,7 @@ public partial class BubbleGame : Node2D {
 		return joint;
 	}
 
-	public BubbleConfig PickColor() {
+	public Resource PickColor() {
 		var index = GD.RandRange(0, GameplayConfig.Bubbles.Length - 1);
 		GD.Print(index);
 		return GameplayConfig.Bubbles[index];

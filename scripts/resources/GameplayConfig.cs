@@ -5,7 +5,7 @@ public partial class GameplayConfig : Resource {
     [Export] public string Name { get; private set; } = "Normal";
     [Export] public string Description { get; private set; } = "A normal way to play.";
 
-    [Export] public BubbleConfig[] Bubbles { get; private set; } = new BubbleConfig[0];
+    [Export] public Resource[] Bubbles { get; private set; } = new Resource[0];
     [Export] public bool VillainBubbleColorChanges { get; private set; } = false;
 
     [Export] public double ChainDuration { get; private set; } = 4f;
