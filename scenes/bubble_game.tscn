@@ -14,7 +14,7 @@
 [ext_resource type="Script" path="res://scripts/input/debug_mode.gd" id="7_7wqd8"]
 [ext_resource type="AudioStream" uid="uid://cb4ipcqc0bnok" path="res://sfx/shoot.wav" id="7_onkte"]
 [ext_resource type="Script" path="res://scripts/audio.gd" id="7_wso5g"]
-[ext_resource type="Script" path="res://scripts/input/InitialControlScheme.cs" id="8_5o3ur"]
+[ext_resource type="Script" path="res://scripts/input/initial_control_scheme.gd" id="8_5o3ur"]
 [ext_resource type="AudioStream" uid="uid://couc3qpkfeh3c" path="res://sfx/pop.wav" id="8_j1bko"]
 [ext_resource type="Script" path="res://scripts/ui/RenderScore.cs" id="8_n7kaq"]
 [ext_resource type="Script" path="res://scripts/BGM.cs" id="9_2gusf"]
@@ -31,7 +31,7 @@
 [ext_resource type="Resource" uid="uid://dtinh555dmhwp" path="res://bgm/scifi/size_em_up.tres" id="14_n3v0y"]
 [ext_resource type="Resource" uid="uid://bknv7h5wsytjf" path="res://bgm/scifi/waiting.tres" id="15_w6lka"]
 [ext_resource type="Texture2D" uid="uid://bxpexe12qf7nr" path="res://sprites/gun_barrel.png" id="16_0qeqh"]
-[ext_resource type="Script" path="res://scripts/input/MouseControls.cs" id="17_8g50q"]
+[ext_resource type="Script" path="res://scripts/input/mouse_controls.gd" id="17_8g50q"]
 [ext_resource type="Texture2D" uid="uid://dqedr4oxf7pei" path="res://sprites/down-arrow.png" id="18_7y84i"]
 [ext_resource type="Texture2D" uid="uid://dc4kcvtvddd50" path="res://sprites/mockup2_track.png" id="20_boehu"]
 [ext_resource type="Shader" path="res://shaders/background.gdshader" id="20_vleso"]
@@ -205,9 +205,9 @@ bus = &"SFX"
 [node name="DebugMode" type="Node2D" parent="ControlSchemes"]
 script = ExtResource("7_7wqd8")
 
-[node name="KeyboardPressStrafeAim" type="Node2D" parent="ControlSchemes" node_paths=PackedStringArray("MouseControls")]
+[node name="KeyboardPressStrafeAim" type="Node2D" parent="ControlSchemes" node_paths=PackedStringArray("_MouseControls")]
 script = ExtResource("8_5o3ur")
-MouseControls = NodePath("../MouseControls")
+_MouseControls = NodePath("../MouseControls")
 
 [node name="SimpleShoot" type="Node2D" parent="ControlSchemes"]
 script = ExtResource("9_nhaw1")
