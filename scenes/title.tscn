@@ -15,7 +15,7 @@
 [ext_resource type="AudioStream" uid="uid://b7xmnqupx3g6t" path="res://sfx/shrink.wav" id="17_e464j"]
 [ext_resource type="AudioStream" uid="uid://biib8kk4q7p7q" path="res://sfx/gameover.wav" id="18_mq4pn"]
 [ext_resource type="Script" path="res://scripts/input/DebugMode.cs" id="19_34fff"]
-[ext_resource type="Script" path="res://scripts/input/PauseGame.cs" id="20_hbopu"]
+[ext_resource type="Script" path="res://scripts/input/pause_game.gd" id="20_hbopu"]
 [ext_resource type="Script" path="res://scripts/input/InitialControlScheme.cs" id="20_xpgsf"]
 [ext_resource type="Script" path="res://scripts/input/SimpleShoot.cs" id="21_phhvv"]
 [ext_resource type="Script" path="res://scripts/input/TwinstickInstantControls.cs" id="22_eudhf"]

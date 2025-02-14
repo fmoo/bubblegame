@@ -36,7 +36,7 @@
 [ext_resource type="Texture2D" uid="uid://dc4kcvtvddd50" path="res://sprites/mockup2_track.png" id="20_boehu"]
 [ext_resource type="Shader" path="res://shaders/background.gdshader" id="20_vleso"]
 [ext_resource type="Texture2D" uid="uid://b6bc8bmh3lltv" path="res://sprites/bg.png" id="21_elrbj"]
-[ext_resource type="Script" path="res://scripts/input/PauseGame.cs" id="24_f68so"]
+[ext_resource type="Script" path="res://scripts/input/pause_game.gd" id="24_f68so"]
 [ext_resource type="Script" path="res://scripts/ContainRect.cs" id="27_fh7nl"]
 [ext_resource type="Script" path="res://scripts/PressureRect.cs" id="28_1n4ef"]
 [ext_resource type="Texture2D" uid="uid://dv7m7b346fvki" path="res://sprites/inner_bubble.png" id="28_mcajo"]
