@@ -18,7 +18,7 @@
 [ext_resource type="Script" path="res://scripts/input/pause_game.gd" id="20_hbopu"]
 [ext_resource type="Script" path="res://scripts/input/initial_control_scheme.gd" id="20_xpgsf"]
 [ext_resource type="Script" path="res://scripts/input/simple_shoot.gd" id="21_phhvv"]
-[ext_resource type="Script" path="res://scripts/input/TwinstickInstantControls.cs" id="22_eudhf"]
+[ext_resource type="Script" path="res://scripts/input/twinstick_instant_controls.gd" id="22_eudhf"]
 [ext_resource type="Script" path="res://scripts/input/mouse_controls.gd" id="23_2k0fm"]
 [ext_resource type="PackedScene" uid="uid://5tea8yn6omyn" path="res://scenes/config_button.tscn" id="23_xh822"]
 [ext_resource type="Shader" path="res://shaders/background.gdshader" id="24_gsxt1"]

@@ -22,7 +22,7 @@
 [ext_resource type="Script" path="res://scripts/input/simple_shoot.gd" id="9_nhaw1"]
 [ext_resource type="Resource" uid="uid://dh6tlvmfiu5g1" path="res://bgm/scifi/cyberpunk_2020.tres" id="10_f75s2"]
 [ext_resource type="AudioStream" uid="uid://b7xmnqupx3g6t" path="res://sfx/shrink.wav" id="10_qkbjv"]
-[ext_resource type="Script" path="res://scripts/input/TwinstickInstantControls.cs" id="10_sqvxt"]
+[ext_resource type="Script" path="res://scripts/input/twinstick_instant_controls.gd" id="10_sqvxt"]
 [ext_resource type="AudioStream" uid="uid://biib8kk4q7p7q" path="res://sfx/gameover.wav" id="11_4mftm"]
 [ext_resource type="Resource" uid="uid://d3b7g2i5sx2ds" path="res://bgm/scifi/millenium_stage.tres" id="11_27xae"]
 [ext_resource type="Resource" uid="uid://c87uawddpojxb" path="res://bgm/scifi/overworld_channel.tres" id="12_8yg0s"]

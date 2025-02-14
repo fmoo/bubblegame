@@ -8,6 +8,9 @@ extends Node2D
 func _init() -> void:
     visibility_changed.connect(_on_visibility_changed)
 
+func _ready() -> void:
+    _on_visibility_changed()
+
 func _on_visibility_changed() -> void:
     if is_visible_in_tree():
         process_mode = VisibleProcessMode
