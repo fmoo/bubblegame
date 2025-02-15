@@ -75,17 +75,17 @@ func RotateGun(direction: int, delta: float) -> bool:
 	turretSprite.rotation = clamp(turretSprite.rotation, -deg_to_rad(angleLimit), deg_to_rad(angleLimit))
 	return oldRotation != turretSprite.rotation
 
-@onready var bubbleGame = get_node("/root/BubbleGame")
+@onready var bubbleGame: BubbleGame = get_node("/root/BubbleGame")
 
 func Shoot() -> void:
 	if cooldownTime > 0:
 		return
-	bubbleGame.Audio.Shoot()
+	bubbleGame.audio.Shoot()
 	var bubble = bubbleScene.instantiate()
 	bubbleGame.RegisterBubble(bubble)
 
 	# Set the color
-	bubble.set_config(bubbleGame.BubbleQueue.DequeueColor())
+	bubble.set_config(bubbleGame.bubbleQueue.DequeueColor())
 
 	# Trajectory and position
 	bubble.global_position = turretSprite.global_position
@@ -116,7 +116,7 @@ func SetTurretAngle(InputDirection: Vector2) -> void:
 	turretSprite.global_rotation = InputDirection.angle_to(Vector2.DOWN)
 	turretSprite.rotation = clamp(turretSprite.rotation, -deg_to_rad(angleLimit), deg_to_rad(angleLimit))
 
-func Reset() -> void:
+func reset() -> void:
 	ActiveMoveTarget.visible = false
 	pathFollow.progress_ratio = 0
 	turretSprite.rotation = 0

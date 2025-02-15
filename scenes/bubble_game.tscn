@@ -1,6 +1,6 @@
 [gd_scene load_steps=74 format=3 uid="uid://borggvjowbqn2"]
 
-[ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_axaqe"]
+[ext_resource type="Script" path="res://scripts/bubble_game.gd" id="1_axaqe"]
 [ext_resource type="Resource" uid="uid://dpm2joux2uabo" path="res://gameplay/match4.tres" id="2_0lbne"]
 [ext_resource type="PackedScene" uid="uid://bpnitaatb3oe3" path="res://scenes/pin_joint.tscn" id="2_dakla"]
 [ext_resource type="Script" path="res://scripts/bubble_gun.gd" id="2_t6f7g"]
@@ -151,21 +151,23 @@ expand_margin_top = 10.0
 expand_margin_right = 10.0
 expand_margin_bottom = 10.0
 
-[node name="BubbleGame" type="Node2D" node_paths=PackedStringArray("Audio", "BubbleQueue", "Springs", "Bubbles", "VillainBubble", "Player", "renderHighScore", "GameOverPanel")]
+[node name="BubbleGame" type="Node2D" node_paths=PackedStringArray("audio", "bubbleQueue", "Springs", "Bubbles", "villainBubble", "Player", "renderHighScore", "GameOverPanel")]
 texture_filter = 1
 script = ExtResource("1_axaqe")
-Audio = NodePath("Audio")
-BubbleQueue = NodePath("Arena/BubbleQueue")
-_GameplayConfig = ExtResource("2_0lbne")
+audio = NodePath("Audio")
+bubbleQueue = NodePath("Arena/BubbleQueue")
+gameplayConfig = ExtResource("2_0lbne")
 Springs = NodePath("Arena/Springs")
 Bubbles = NodePath("Arena/Bubbles")
-VillainBubble = NodePath("Arena/VillainBubble")
+villainBubble = NodePath("Arena/VillainBubble")
 Player = NodePath("Arena/TrackPath/GunFollow2D/Gun")
+debugMode = null
+TitleMode = null
 PinJointTemplate = ExtResource("2_dakla")
 VillainPinJointTemplate = ExtResource("7_5koiv")
 renderHighScore = NodePath("CanvasLayer/RightPanel/HighScore")
+bubbleSprite = ExtResource("4_otc38")
 GameOverPanel = NodePath("CanvasLayer2/GameOverPanel")
-BubbleSprite = ExtResource("4_otc38")
 
 [node name="Audio" type="Node" parent="." node_paths=PackedStringArray("BGM", "_Shoot", "_Pop", "_Grow", "_Shrink", "_GameOver")]
 process_mode = 3
@@ -226,9 +228,9 @@ moveTargetPath = NodePath("../../Arena/TrackPath/MouseAimHover2D")
 [node name="PauseGame" type="Node2D" parent="ControlSchemes" node_paths=PackedStringArray("PausePanel")]
 process_mode = 3
 script = ExtResource("24_f68so")
-PausePanel = NodePath("../../CanvasLayer2/PausePanel")
 VisibleProcessMode = 3
 InvisibleProcessMode = 3
+PausePanel = NodePath("../../CanvasLayer2/PausePanel")
 
 [node name="BackgroundVFX" type="ColorRect" parent="."]
 z_index = -3
@@ -689,7 +691,6 @@ text = "Quit"
 [node name="SettingsPanel" parent="CanvasLayer2" instance=ExtResource("54_7msvu")]
 visible = false
 
-[connection signal="OnShoot" from="Arena/TrackPath/GunFollow2D/Gun" to="." method="_on_shoot_event"]
 [connection signal="pressed" from="CanvasLayer2/GameOverPanel/VBoxContainer/Button" to="." method="_on_play_again_pressed"]
 [connection signal="pressed" from="CanvasLayer2/GameOverPanel/VBoxContainer/Button2" to="." method="_on_main_menu_pressed"]
 [connection signal="pressed" from="CanvasLayer2/PausePanel/VBoxContainer/Button3" to="." method="_on_play_again_pressed"]

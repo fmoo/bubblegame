@@ -1,7 +1,7 @@
 class_name BubbleQueue
 extends Node2D
 
-@onready var bubbleGame = get_node("/root/BubbleGame")
+@onready var bubbleGame: BubbleGame = get_node("/root/BubbleGame")
 @export var bubbleRenders: Array[BubbleSprite]
 @export var queueEjector: Node2D
 @export var reloadPath: PathFollow2D
@@ -13,7 +13,7 @@ var colorQueue: Array[BubbleConfig] = []
 const COOLDOWN: float = 0.3
 
 func _ready() -> void:
-	Reset()
+	reset()
 
 func ShowBubbles() -> void:
 	for bubble in bubbleRenders:
@@ -54,6 +54,10 @@ func StartTween() -> void:
 	)
 
 func DequeueColor() -> BubbleConfig:
+	print("DequeueColor: BubbleQueue has ", colorQueue.size(), " colors")
+	for c in colorQueue:
+		print(c.BubbleColor)
+
 	var result = colorQueue[0]
 	colorQueue.remove_at(0)
 	colorQueue.append(bubbleGame.PickColor())
@@ -64,14 +68,18 @@ func RefreshRender() -> void:
 	for i in range(bubbleRenders.size()):
 		bubbleRenders[i].set_config(colorQueue[i])
 
-func Reset() -> void:
+func reset() -> void:
 	colorQueue.clear()
 	if bubbleGame.TitleMode:
 		for i in range(bubbleRenders.size()):
-			var color = bubbleGame._GameplayConfig.Bubbles[0]
+			var color = bubbleGame.gameplayConfig.Bubbles[0]
 			colorQueue.append(color)
 	else:
 		for i in range(bubbleRenders.size()):
 			var color = bubbleGame.PickColor()
 			colorQueue.append(color)
 	RefreshRender()
+
+	print("reset: BubbleQueue has ", colorQueue.size(), " colors")
+	for c in colorQueue:
+		print(c.BubbleColor)

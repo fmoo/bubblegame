@@ -1,7 +1,7 @@
 class_name TwinStickInstantControls
 extends ControlSchemeBase
 
-@onready var bubbleGame = get_node("/root/BubbleGame")
+@onready var bubbleGame: BubbleGame = get_node("/root/BubbleGame")
 
 func _process(_delta: float) -> void:
     var leftStick = Vector2(

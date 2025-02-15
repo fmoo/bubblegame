@@ -1,7 +1,7 @@
 class_name InitialControlScheme
 extends ControlSchemeBase
 
-@onready var bubbleGame = get_node("/root/BubbleGame")
+@onready var bubbleGame: BubbleGame = get_node("/root/BubbleGame")
 @export var _MouseControls: MouseControls
 
 func MaybeDisableMouseAim() -> void:

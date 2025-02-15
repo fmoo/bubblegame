@@ -42,7 +42,7 @@ var config: BubbleConfig
 
 func set_config(new_config: BubbleConfig) -> Tween:
 	var tween = get_tree().create_tween()
-	var bubble_color = new_config.bubble_color if new_config else Color(1, 1, 1)
+	var bubble_color = new_config.BubbleColor if new_config else Color(1, 1, 1)
 
 	tween.tween_property(sprite, "modulate", bubble_color, 0.15)
 	config = new_config

@@ -4,7 +4,7 @@ extends HSlider
 @export var BusName: String
 @export var PlaySFX: bool = false
 @onready var busIndex: int = AudioServer.get_bus_index(BusName)
-@onready var bubbleGame = get_node("/root/BubbleGame")
+@onready var bubbleGame: BubbleGame = get_node("/root/BubbleGame")
 
 var timeSinceSound: float = 10000
 const SFX_DEBOUNCE: float = 0.2
@@ -28,7 +28,7 @@ func _on_value_changed(new_value: float) -> void:
 	if PlaySFX:
 		if timeSinceSound > SFX_DEBOUNCE:
 			timeSinceSound = 0;
-			bubbleGame.Audio.Shoot();
+			bubbleGame.audio.Shoot();
 			print("Playing sound")
 		else:
 			print("Skpping sound")

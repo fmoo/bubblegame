@@ -1,13 +1,13 @@
 class_name ChainRender
 extends TextureProgressBar
 
-@onready var bubbleGame = get_node("/root/BubbleGame")
+@onready var bubbleGame: BubbleGame = get_node("/root/BubbleGame")
 @export var ChainLabel: Label
 
 func _ready() -> void:
     bubbleGame.ChainChanged.connect(_on_chain_changed)
     min_value = 0
-    max_value = bubbleGame._GameplayConfig.ChainDuration
+    max_value = bubbleGame.gameplayConfig.ChainDuration
 
 func _process(_delta: float) -> void:
     value = bubbleGame.ChainTimeRemaining

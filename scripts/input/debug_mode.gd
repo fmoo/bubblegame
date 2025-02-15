@@ -1,7 +1,7 @@
 class_name DebugMode
 extends ControlSchemeBase
 
-@onready var bubbleGame = get_node("/root/BubbleGame")
+@onready var bubbleGame: BubbleGame = get_node("/root/BubbleGame")
 
 func _ready() -> void:
 	if not EngineDebugger.is_active():
@@ -9,14 +9,14 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_released("debug_physics"):
-		bubbleGame.Audio.BGM.PlayRandom()
+		bubbleGame.audio.BGM.PlayRandom()
 	
 	if Input.is_action_just_pressed("debug_reset"):
-		# bubbleGame.Reset()
+		# bubbleGame.reset()
 		pass
 	
 	if Input.is_action_just_pressed("debug_growbubble"):
-		bubbleGame.VillainBubble.Grow()
+		bubbleGame.villainBubble.grow()
 	
 	if Input.is_action_just_pressed("debug_shrinkbubble"):
-		bubbleGame.VillainBubble.Shrink()
+		bubbleGame.villainBubble.shrink()

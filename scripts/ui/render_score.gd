@@ -1,7 +1,7 @@
 class_name RenderScore
 extends Label
 
-@onready var bubbleGame = get_node("/root/BubbleGame")
+@onready var bubbleGame: BubbleGame = get_node("/root/BubbleGame")
 var baseScore: float = 0
 var targetScore: float = 0
 var displayScore: float = 0

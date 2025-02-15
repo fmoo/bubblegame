@@ -1,7 +1,7 @@
 class_name RenderGameTime
 extends Label
 
-@onready var bubbleGame = get_node("/root/BubbleGame")
+@onready var bubbleGame: BubbleGame = get_node("/root/BubbleGame")
 
 func _ready() -> void:
     bubbleGame.TimeElapsed.connect(_on_time_elapsed)

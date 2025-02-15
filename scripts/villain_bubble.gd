@@ -1,6 +1,6 @@
 class_name VillainBubble
 extends RigidBody2D
-@onready var bubblegame = get_node("/root/BubbleGame")
+@onready var bubbleGame: BubbleGame = get_node("/root/BubbleGame")
 @export var collision_shape: CollisionShape2D
 @export var sprite: Sprite2D
 
@@ -29,15 +29,15 @@ func grow() -> void:
 	notify_contain_ratio_change()
 
 	if collision_shape.scale.x >= GAME_OVER_SCALE:
-		bubblegame.GameOver()
+		bubbleGame.GameOver()
 	else:
-		bubblegame.Audio.call("Grow")
+		bubbleGame.audio.Grow()
 
 func shrink() -> void:
 	if collision_shape.scale.x <= MINIMUM_SCALE:
 		return
 
-	for bubble_node in bubblegame.Bubbles.get_children():
+	for bubble_node in bubbleGame.Bubbles.get_children():
 		if bubble_node is Bubble:
 			var gravity_multiplier = 1.0 if bubble_node.is_anchored() else 8.0
 			bubble_node.linear_velocity = (global_position - bubble_node.global_position).normalized() * POP_FALL_FORCE * gravity_multiplier
@@ -52,7 +52,7 @@ func shrink() -> void:
 
 	collision_shape.scale -= Vector2(SIZE_CHANGE_INCREMENT, SIZE_CHANGE_INCREMENT)
 	notify_contain_ratio_change()
-	bubblegame.Audio.call("Shrink")
+	bubbleGame.audio.Shrink()
 
 func get_joints() -> Array:
 	var joints: Array = []
@@ -76,7 +76,7 @@ var config: BubbleConfig
 
 func set_config(new_config: BubbleConfig) -> Tween:
 	var tween = get_tree().create_tween()
-	var bubble_color = new_config.bubble_color if new_config else Color(1, 1, 1)
+	var bubble_color = new_config.BubbleColor if new_config else Color(1, 1, 1)
 
 	tween.tween_property(sprite, "modulate", bubble_color, 0.15)
 	config = new_config

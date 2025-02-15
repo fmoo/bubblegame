@@ -2,9 +2,7 @@ class_name Bubble
 
 extends RigidBody2D
 
-@onready var bubblegame = get_node("/root/BubbleGame")
-
-var BubbleGame = load("res://scripts/BubbleGame.cs")
+@onready var bubbleGame: BubbleGame = get_node("/root/BubbleGame")
 
 @export var collision_shape: CollisionShape2D
 @export var sprite: Sprite2D
@@ -107,14 +105,14 @@ func _on_body_entered(body: Node) -> void:
 		set_neighbor(body)
 		body.set_neighbor(self)
 
-		bubblegame.LinkBubbles(self, body)
-		bubblegame.MaybePopBubbles(self)
+		bubbleGame.LinkBubbles(self, body)
+		bubbleGame.MaybePopBubbles(self)
 
 	elif body is VillainBubble:
-		bubblegame.LinkToVillainBubblePinJoint(body, self)
+		bubbleGame.LinkToVillainBubblePinJoint(body, self)
 
 	elif body is MenuBubble:
-		bubblegame.LinkToMenuBubble(body, self)
+		bubbleGame.LinkToMenuBubble(body, self)
 
 	elif body.destructo_wall:
 		start_destroy()
@@ -126,7 +124,7 @@ func start_destroy() -> void:
 	collision_shape = null
 	linear_velocity = Vector2.ZERO
 
-	bubblegame.Audio.call("Pop")
+	bubbleGame.audio.Pop()
 
 	# Remove from neighbors
 	for neighbor in neighbors.keys():
@@ -135,7 +133,7 @@ func start_destroy() -> void:
 			neighbor.color_neighbors[self.sprite.texture].erase(self)
 	
 	queue_free()
-	bubblegame.SpawnBubblePop(global_position, sprite.texture)
+	bubbleGame.SpawnBubblePop(global_position, sprite.texture)
 
 var config: BubbleConfig
 
