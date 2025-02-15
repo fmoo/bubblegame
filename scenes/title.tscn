@@ -132,7 +132,6 @@ gameplayConfig = ExtResource("2_nm86w")
 Springs = NodePath("Springs")
 Bubbles = NodePath("Bubbles")
 Player = NodePath("TrackPath/GunFollow2D/Gun")
-debugMode = null
 TitleMode = true
 PinJointTemplate = ExtResource("3_vhoir")
 GrooveJointTemplate = ExtResource("4_5c8rd")
@@ -198,9 +197,9 @@ moveTargetPath = NodePath("../../TrackPath/MouseAimHover2D")
 [node name="PauseGame" type="Node2D" parent="ControlSchemes" node_paths=PackedStringArray("PausePanel")]
 process_mode = 3
 script = ExtResource("20_hbopu")
+PausePanel = NodePath("../../CanvasLayer2/PausePanel")
 VisibleProcessMode = 3
 InvisibleProcessMode = 3
-PausePanel = NodePath("../../CanvasLayer2/PausePanel")
 
 [node name="BackgroundVFX" type="ColorRect" parent="."]
 z_index = -3

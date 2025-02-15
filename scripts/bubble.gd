@@ -61,6 +61,8 @@ func chain_move_towards(target: Vector2) -> void:
 		if bubble in visited:
 			continue
 		visited[bubble] = true
+		if bubble.is_queued_for_deletion:
+			continue
 		bubble.linear_velocity = (target - bubble.global_position).normalized() * POP_FALL_FORCE
 		for neighbor in bubble.neighbors:
 			work.append(neighbor)

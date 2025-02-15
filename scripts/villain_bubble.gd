@@ -33,9 +33,9 @@ func grow() -> void:
 	else:
 		bubbleGame.audio.Grow()
 
-func shrink() -> void:
+func shrink() -> bool:
 	if collision_shape.scale.x <= MINIMUM_SCALE:
-		return
+		return false
 
 	for bubble_node in bubbleGame.Bubbles.get_children():
 		if bubble_node is Bubble:
@@ -53,6 +53,7 @@ func shrink() -> void:
 	collision_shape.scale -= Vector2(SIZE_CHANGE_INCREMENT, SIZE_CHANGE_INCREMENT)
 	notify_contain_ratio_change()
 	bubbleGame.audio.Shrink()
+	return true
 
 func get_joints() -> Array:
 	var joints: Array = []
