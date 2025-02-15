@@ -49,7 +49,7 @@
 [ext_resource type="Texture2D" uid="uid://dohac3g22la44" path="res://sprites/inner_bubble_fill.png" id="32_0fn8p"]
 [ext_resource type="Script" path="res://scripts/ui/chain_render.gd" id="32_15lmc"]
 [ext_resource type="Script" path="res://scripts/ui/render_game_time.gd" id="34_ntjar"]
-[ext_resource type="Script" path="res://scripts/ui/RenderHighScore.cs" id="35_b6gyq"]
+[ext_resource type="Script" path="res://scripts/ui/render_high_score.gd" id="35_b6gyq"]
 [ext_resource type="Script" path="res://scripts/villain_bubble.gd" id="45_bwva3"]
 [ext_resource type="PackedScene" uid="uid://bgsc4gwcivxfl" path="res://scenes/bubble_queue.tscn" id="48_yixq4"]
 [ext_resource type="PackedScene" uid="uid://b0ip2qtsaicl" path="res://scenes/destructo_walls.tscn" id="50_eqnjs"]
@@ -151,7 +151,7 @@ expand_margin_top = 10.0
 expand_margin_right = 10.0
 expand_margin_bottom = 10.0
 
-[node name="BubbleGame" type="Node2D" node_paths=PackedStringArray("Audio", "BubbleQueue", "Springs", "Bubbles", "VillainBubble", "Player", "GameOverPanel")]
+[node name="BubbleGame" type="Node2D" node_paths=PackedStringArray("Audio", "BubbleQueue", "Springs", "Bubbles", "VillainBubble", "Player", "renderHighScore", "GameOverPanel")]
 texture_filter = 1
 script = ExtResource("1_axaqe")
 Audio = NodePath("Audio")
@@ -163,6 +163,7 @@ VillainBubble = NodePath("Arena/VillainBubble")
 Player = NodePath("Arena/TrackPath/GunFollow2D/Gun")
 PinJointTemplate = ExtResource("2_dakla")
 VillainPinJointTemplate = ExtResource("7_5koiv")
+renderHighScore = NodePath("CanvasLayer/RightPanel/HighScore")
 GameOverPanel = NodePath("CanvasLayer2/GameOverPanel")
 BubbleSprite = ExtResource("4_otc38")
 
@@ -445,7 +446,7 @@ text = "game time"
 label_settings = ExtResource("30_qnp8l")
 horizontal_alignment = 2
 
-[node name="HighScore" type="Label" parent="CanvasLayer/RightPanel" node_paths=PackedStringArray("RenderScore")]
+[node name="HighScore" type="Label" parent="CanvasLayer/RightPanel" node_paths=PackedStringArray("_RenderScore")]
 texture_filter = 1
 layout_mode = 0
 anchor_left = 1.0
@@ -464,7 +465,7 @@ label_settings = ExtResource("6_eue5f")
 horizontal_alignment = 2
 visible_characters_behavior = 1
 script = ExtResource("35_b6gyq")
-RenderScore = NodePath("../Score")
+_RenderScore = NodePath("../Score")
 
 [node name="HighScoreLabel" type="Label" parent="CanvasLayer/RightPanel/HighScore"]
 layout_mode = 0

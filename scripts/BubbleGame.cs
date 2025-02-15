@@ -16,6 +16,7 @@ public partial class BubbleGame : Node2D {
 	[Export] PackedScene PinJointTemplate;
 	[Export] PackedScene GrooveJointTemplate;
 	[Export] PackedScene VillainPinJointTemplate;
+	[Export] Label renderHighScore;
 
 	public int Score { get; private set; } = 0;
 	[Signal] public delegate void ScoreChangedEventHandler(int score);
@@ -295,7 +296,7 @@ public partial class BubbleGame : Node2D {
 	public void GameOver() {
 		Audio.Call("GameOver");
 		GD.Print("Game Over");
-		RenderHighScore.SaveHighScore();
+		if (renderHighScore != null) renderHighScore.Call("SaveHighScore");
 		PauseWithPanel(GameOverPanel);
 	}
 
