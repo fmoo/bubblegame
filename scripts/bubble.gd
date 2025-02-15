@@ -23,12 +23,12 @@ func _ready() -> void:
 	if is_fixed_for_menu:
 		lock_position = global_position
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	sprite.global_rotation = 0.0
 	if lock_position:
 		global_position = lock_position
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	sprite.global_rotation = 0.0
 
 func is_anchored() -> bool:
@@ -116,7 +116,7 @@ func _on_body_entered(body: Node) -> void:
 	elif body is MenuBubble:
 		bubblegame.LinkToMenuBubble(body, self)
 
-	elif body.has_method("destructo_wall") and body.destructo_wall():
+	elif body.destructo_wall:
 		start_destroy()
 
 func start_destroy() -> void:
