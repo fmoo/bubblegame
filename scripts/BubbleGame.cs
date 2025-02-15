@@ -5,7 +5,7 @@ using Godot;
 
 public partial class BubbleGame : Node2D {
 	[Export] public Node Audio { get; private set; }
-	[Export] public BubbleQueue BubbleQueue { get; private set; }
+	[Export] public Node2D BubbleQueue { get; private set; }
 	[Export] public GameplayConfig GameplayConfig { get; private set; }
 	[Export] public Node2D Springs;
 	[Export] public Node2D Bubbles;
@@ -338,7 +338,7 @@ public partial class BubbleGame : Node2D {
 		}
 
 		Player.Call("Reset");
-		BubbleQueue.Reset();
+		BubbleQueue.Call("Reset");
 		Score = 0;
 		EmitSignal(SignalName.ScoreChanged, Score);
 	}

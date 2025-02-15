@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bgsc4gwcivxfl"]
 
-[ext_resource type="Script" path="res://scripts/BubbleQueue.cs" id="1_q2hq1"]
+[ext_resource type="Script" path="res://scripts/bubble_queue.gd" id="1_q2hq1"]
 [ext_resource type="PackedScene" uid="uid://b5soh8b80t7ya" path="res://scenes/bubble_sprite.tscn" id="2_4f4px"]
 
 [node name="BubbleQueue" type="Node2D" node_paths=PackedStringArray("bubbleRenders", "queueEjector")]

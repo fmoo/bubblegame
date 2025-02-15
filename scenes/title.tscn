@@ -403,6 +403,7 @@ offset = Vector2(1, -9)
 bubbleRenders = [NodePath("../TrackPath/GunFollow2D/Gun/Body/BubbleSprite"), NodePath("BubbleSprite2"), NodePath("BubbleSprite3")]
 reloadPath = NodePath("../TrackPath/Reload")
 gunPath = NodePath("../TrackPath/GunFollow2D")
+ejectorPathRatio = null
 
 [node name="Springs" type="Node2D" parent="."]
 
