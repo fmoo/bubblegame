@@ -4,7 +4,7 @@
 [ext_resource type="Resource" uid="uid://cxckdb2pvda1h" path="res://bubbles/green.tres" id="2_x4dkr"]
 [ext_resource type="Resource" uid="uid://bks3wa5u2ewtj" path="res://bubbles/orange.tres" id="3_ai7k4"]
 [ext_resource type="Resource" uid="uid://cvxxf245aptcj" path="res://bubbles/pink.tres" id="4_7g6r3"]
-[ext_resource type="Script" path="res://scripts/resources/GameplayConfig.cs" id="5_ltlgo"]
+[ext_resource type="Script" path="res://scripts/resources/gameplay_config.gd" id="5_ltlgo"]
 
 [resource]
 script = ExtResource("5_ltlgo")

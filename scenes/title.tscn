@@ -128,7 +128,7 @@ texture_filter = 1
 script = ExtResource("1_qvl6i")
 Audio = NodePath("Audio")
 BubbleQueue = NodePath("BubbleQueue")
-GameplayConfig = ExtResource("2_nm86w")
+_GameplayConfig = ExtResource("2_nm86w")
 Springs = NodePath("Springs")
 Bubbles = NodePath("Bubbles")
 Player = NodePath("TrackPath/GunFollow2D/Gun")
@@ -403,7 +403,6 @@ offset = Vector2(1, -9)
 bubbleRenders = [NodePath("../TrackPath/GunFollow2D/Gun/Body/BubbleSprite"), NodePath("BubbleSprite2"), NodePath("BubbleSprite3")]
 reloadPath = NodePath("../TrackPath/Reload")
 gunPath = NodePath("../TrackPath/GunFollow2D")
-ejectorPathRatio = null
 
 [node name="Springs" type="Node2D" parent="."]
 

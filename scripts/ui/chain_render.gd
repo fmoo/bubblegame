@@ -7,7 +7,7 @@ extends TextureProgressBar
 func _ready() -> void:
     bubbleGame.ChainChanged.connect(_on_chain_changed)
     min_value = 0
-    max_value = bubbleGame.GameplayConfig.ChainDuration
+    max_value = bubbleGame._GameplayConfig.ChainDuration
 
 func _process(_delta: float) -> void:
     value = bubbleGame.ChainTimeRemaining

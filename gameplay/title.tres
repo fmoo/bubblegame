@@ -1,13 +1,14 @@
-[gd_resource type="Resource" script_class="GameplayConfig" load_steps=3 format=3 uid="uid://cphutkik5yksw"]
+[gd_resource type="Resource" script_class="GameplayConfig" load_steps=4 format=3 uid="uid://cphutkik5yksw"]
 
 [ext_resource type="Resource" uid="uid://dbmhicl4dmeeq" path="res://bubbles/blue.tres" id="1_0fgin"]
-[ext_resource type="Script" path="res://scripts/resources/GameplayConfig.cs" id="5_2uial"]
+[ext_resource type="Script" path="res://scripts/resources/bubble_config.gd" id="1_1lbp4"]
+[ext_resource type="Script" path="res://scripts/resources/gameplay_config.gd" id="5_2uial"]
 
 [resource]
 script = ExtResource("5_2uial")
 Name = "Title Screen"
 Description = "Title Screen Queue"
-Bubbles = [ExtResource("1_0fgin")]
+Bubbles = Array[ExtResource("1_1lbp4")]([ExtResource("1_0fgin")])
 VillainBubbleColorChanges = false
 ChainDuration = 3.0
 TimerTicks = true

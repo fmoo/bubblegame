@@ -6,7 +6,7 @@ using Godot;
 public partial class BubbleGame : Node2D {
 	[Export] public Node Audio { get; private set; }
 	[Export] public Node2D BubbleQueue { get; private set; }
-	[Export] public GameplayConfig GameplayConfig { get; private set; }
+	[Export] public Resource _GameplayConfig { get; private set; }
 	[Export] public Node2D Springs;
 	[Export] public Node2D Bubbles;
 	[Export] public RigidBody2D VillainBubble { get; private set; }
@@ -47,13 +47,13 @@ public partial class BubbleGame : Node2D {
 
 	public void DestroyBubble(RigidBody2D bubble, float multiplier) {
 		bool canShrink = true;
-		if (GameplayConfig.VillainBubbleColorChanges && bubble.Get("config").Obj != VillainBubble.Get("config").Obj) {
+		if (_GameplayConfig.Get("VillainBubbleColorChanges").AsBool() && bubble.Get("config").Obj != VillainBubble.Get("config").Obj) {
 			canShrink = false;
 		}
 
 		if (bubble != null && !bubble.IsQueuedForDeletion() && canShrink) {
-			GD.Print($"Pop: Pressure decrease by {1.0 / GameplayConfig.ShrinkBubblePops}");
-			Pressure -= 1.0 * multiplier / GameplayConfig.ShrinkBubblePops;
+			GD.Print($"Pop: Pressure decrease by {1.0 / _GameplayConfig.Get("ShrinkBubblePops").AsDouble()}");
+			Pressure -= 1.0 * multiplier / _GameplayConfig.Get("ShrinkBubblePops").AsDouble();
 		}
 		GD.Print($"Destroying bubble {bubble}");
 		bubble.Call("start_destroy");
@@ -62,7 +62,7 @@ public partial class BubbleGame : Node2D {
 	void MaybePickNewVillainBubbleColor() {
 		// Pick a new color for the villain bubble
 
-		if (!GameplayConfig.VillainBubbleColorChanges) return;
+		if (!_GameplayConfig.Get("VillainBubbleColorChanges").AsBool()) return;
 		var currentColor = VillainBubble.Get("config").As<Resource>();
 		var newColor = PickColor();
 		while (newColor == currentColor) {
@@ -179,9 +179,9 @@ public partial class BubbleGame : Node2D {
 	}
 
 	public Resource PickColor() {
-		var index = GD.RandRange(0, GameplayConfig.Bubbles.Length - 1);
+		var index = GD.RandRange(0, _GameplayConfig.Get("Bubbles").AsGodotObjectArray<Resource>().Length - 1);
 		GD.Print(index);
-		return GameplayConfig.Bubbles[index];
+		return _GameplayConfig.Get("Bubbles").AsGodotObjectArray<Resource>()[index];
 	}
 
 	public double ChainTimeRemaining { get; private set; } = 0f;
@@ -191,19 +191,19 @@ public partial class BubbleGame : Node2D {
 		if (bubble.IsQueuedForDeletion()) return;
 
 		var maybePop = bubble.Call("walk_same_color_neighbors").As<Godot.Collections.Array>();
-		if (maybePop.Count() < GameplayConfig.MinMatchSize) return;
+		if (maybePop.Count() < _GameplayConfig.Get("MinMatchSize").AsInt64()) return;
 
 		if (!TitleMode) {
 			var pointsGained = 50;
 			// 10x the points for every extra bubble popped simultaneously
-			pointsGained *= (int)Math.Pow(10, maybePop.Count() - GameplayConfig.MinMatchSize);
+			pointsGained *= (int)Math.Pow(10, maybePop.Count() - _GameplayConfig.Get("MinMatchSize").AsInt64());
 			// Scale points based on the current VillainBubbleMultiplier
 			GD.Print($"Gaining Points: Base={pointsGained}  SizeMul={VillainBubble.Call("get_score_multiplier").As<float>()}  ChainMul={currentChain}  SpeedMul={DifficultyMultiplier}");
 			pointsGained = (int)(pointsGained * VillainBubble.Call("get_score_multiplier").As<float>() * currentChain * DifficultyMultiplier);
 			GainPoints(pointsGained);
 			currentChain += 1;
 			EmitSignal(SignalName.ChainChanged, currentChain);
-			ChainTimeRemaining = GameplayConfig.ChainDuration;
+			ChainTimeRemaining = _GameplayConfig.Get("ChainDuration").AsDouble();
 		}
 		Godot.Collections.Array maybeFall = new();
 
@@ -220,7 +220,7 @@ public partial class BubbleGame : Node2D {
 				AnchoredMenuBubble = p.Get("menu_button_anchor").As<RigidBody2D>();
 			}
 			//for each ball popped over min match size, multiply shrink amount
-			var ShrinkMultiplier = maybePop.Count - (GameplayConfig.MinMatchSize - 1f);
+			var ShrinkMultiplier = maybePop.Count - (_GameplayConfig.Get("MinMatchSize").AsInt64() - 1f);
 			DestroyBubble(p, ShrinkMultiplier);
 		}
 
@@ -247,7 +247,7 @@ public partial class BubbleGame : Node2D {
 	double timeElapsed = 0;
 	public double Pressure { get; private set; } = 0;
 	double currentPressureDuration = 0;
-	double DifficultyMultiplier => Mathf.Pow(2, (GameplayConfig.BasePressureDuration / currentPressureDuration) - 1);
+	double DifficultyMultiplier => Mathf.Pow(2, (_GameplayConfig.Get("BasePressureDuration").AsDouble() / currentPressureDuration) - 1);
 	// float DifficultyMultiplier => 1f;
 
 	public override void _Process(double delta) {
@@ -255,11 +255,11 @@ public partial class BubbleGame : Node2D {
 		if (TitleMode) {
 			return;
 		}
-		if (GameplayConfig.TimerTicks) {
-			if (GameplayConfig.ChainsStallPressure && currentChain > 1) {
+		if (_GameplayConfig.Get("TimerTicks").AsBool()) {
+			if (_GameplayConfig.Get("ChainsStallPressure").AsBool() && currentChain > 1) {
 
 			} else {
-				Pressure += 1f / GameplayConfig.GrowBubbleShots / currentPressureDuration * delta;
+				Pressure += 1f / _GameplayConfig.Get("GrowBubbleShots").AsDouble() / currentPressureDuration * delta;
 				// GD.Print($"Tick: Pressure increase by {1f / GameplayConfig.GrowBubbleShots / currentPressureDuration * delta} -> {Pressure}");
 
 			}
@@ -278,7 +278,7 @@ public partial class BubbleGame : Node2D {
 			GD.Print($"Pressure {Pressure} under threshold! shrinking!");
 			VillainBubble.Call("shrink");
 			Pressure += 1.0;
-			currentPressureDuration *= GameplayConfig.PressureDecayMultiplier;
+			currentPressureDuration *= _GameplayConfig.Get("PressureDecayMultiplier").AsDouble();
 			MaybePickNewVillainBubbleColor();
 		}
 
@@ -323,7 +323,7 @@ public partial class BubbleGame : Node2D {
 
 	public void Reset() {
 		timeElapsed = 0;
-		currentPressureDuration = GameplayConfig.BasePressureDuration;
+		currentPressureDuration = _GameplayConfig.Get("BasePressureDuration").AsDouble();
 		numShots = 0;
 		Pressure = 0;
 		if (!TitleMode) {
@@ -354,8 +354,8 @@ public partial class BubbleGame : Node2D {
 		if (TitleMode) {
 			return;
 		}
-		GD.Print($"Shoot: Pressure increase by {1.0 / GameplayConfig.GrowBubbleShots}");
-		Pressure += 1.0 / GameplayConfig.GrowBubbleShots;
+		GD.Print($"Shoot: Pressure increase by {1.0 / _GameplayConfig.Get("GrowBubbleShots").AsDouble()}");
+		Pressure += 1.0 / _GameplayConfig.Get("GrowBubbleShots").AsDouble();
 	}
 
 	[Export] PackedScene BubbleSprite;
