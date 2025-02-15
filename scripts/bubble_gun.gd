@@ -65,6 +65,7 @@ func _process(delta: float) -> void:
 		pathFollow.progress_ratio = (pathFollow.progress_ratio + (delta * trackSpeed))
 		while pathFollow.progress_ratio > 1:
 			pathFollow.progress_ratio -= 1
+		speedScale -= 1
 
 	animatedBody.speed_scale = speedScale
 
