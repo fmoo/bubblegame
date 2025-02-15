@@ -83,7 +83,7 @@ func set_config(new_config: BubbleConfig) -> Tween:
 	return tween
 
 func notify_contain_ratio_change() -> void:
-	emit_signal("contain_ratio_changed", get_contain_ratio())
+	contain_ratio_changed.emit(get_contain_ratio())
 
 func get_contain_ratio() -> float:
 	return (collision_shape.scale.x - MINIMUM_SCALE) / (GAME_OVER_SCALE - MINIMUM_SCALE)
