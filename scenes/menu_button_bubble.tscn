@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://cxqnqrb2rcm31"]
 
-[ext_resource type="Script" path="res://scripts/MenuBubble.cs" id="1_6wd1y"]
+[ext_resource type="Script" path="res://scripts/menu_bubble.gd" id="1_rye7l"]
 [ext_resource type="Texture2D" uid="uid://k8rfcrvg6brj" path="res://sprites/menu_button_plain.png" id="2_fjj8f"]
-[ext_resource type="Script" path="res://scripts/ScaleTweenFollower.cs" id="3_p0cey"]
+[ext_resource type="Script" path="res://scripts/scale_tween_follower.gd" id="3_p0cey"]
 [ext_resource type="Texture2D" uid="uid://bws87alr00t50" path="res://sprites/menu_button_fill.png" id="4_e6y4r"]
 [ext_resource type="Texture2D" uid="uid://cc81lbuwpavup" path="res://sprites/menu_button_highlight.png" id="5_gj0tf"]
 
@@ -13,14 +13,14 @@ absorbent = true
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yq2ku"]
 size = Vector2(99, 21)
 
-[node name="MenuButton" type="RigidBody2D" node_paths=PackedStringArray("CollisionShape", "Sprite")]
+[node name="MenuButton" type="RigidBody2D" node_paths=PackedStringArray("collision_shape", "sprite")]
 position = Vector2(247, 144)
 physics_material_override = SubResource("PhysicsMaterial_7gmt2")
 freeze = true
-script = ExtResource("1_6wd1y")
-CollisionShape = NodePath("CollisionShape2D")
-Sprite = NodePath("Border")
-GameFunction = "PlayGame"
+script = ExtResource("1_rye7l")
+collision_shape = NodePath("CollisionShape2D")
+sprite = NodePath("Border")
+game_function = "PlayGame"
 
 [node name="Border" type="Sprite2D" parent="." node_paths=PackedStringArray("Follow")]
 texture = ExtResource("2_fjj8f")

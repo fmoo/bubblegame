@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://dq2st87krvklv"]
+[gd_scene load_steps=57 format=3 uid="uid://dq2st87krvklv"]
 
 [ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_qvl6i"]
 [ext_resource type="Resource" uid="uid://cphutkik5yksw" path="res://gameplay/title.tres" id="2_nm86w"]
@@ -7,8 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://dqaenifftll1r" path="res://scenes/villain_pin_joint.tscn" id="4_iqqtn"]
 [ext_resource type="PackedScene" uid="uid://b5soh8b80t7ya" path="res://scenes/bubble_sprite.tscn" id="5_jnyci"]
 [ext_resource type="Script" path="res://scripts/audio.gd" id="6_gs3if"]
-[ext_resource type="Script" path="res://scripts/BGM.cs" id="7_0y6e5"]
+[ext_resource type="Script" path="res://scripts/bgm.gd" id="7_0y6e5"]
 [ext_resource type="Resource" uid="uid://bpmtsq37021tt" path="res://bgm/scifi/identity.tres" id="8_7kd0s"]
+[ext_resource type="Script" path="res://scripts/resources/bgm_config.gd" id="9_ybvr8"]
 [ext_resource type="AudioStream" uid="uid://cb4ipcqc0bnok" path="res://sfx/shoot.wav" id="14_wtwha"]
 [ext_resource type="AudioStream" uid="uid://couc3qpkfeh3c" path="res://sfx/pop.wav" id="15_5kfuk"]
 [ext_resource type="AudioStream" uid="uid://cdq000tbps6w5" path="res://sfx/grow.wav" id="16_85ox5"]
@@ -23,7 +24,7 @@
 [ext_resource type="PackedScene" uid="uid://5tea8yn6omyn" path="res://scenes/config_button.tscn" id="23_xh822"]
 [ext_resource type="Shader" path="res://shaders/background.gdshader" id="24_gsxt1"]
 [ext_resource type="Texture2D" uid="uid://3v0mvd20wsgm" path="res://sprites/bg_title.png" id="25_1ntpi"]
-[ext_resource type="LabelSettings" path="res://fonts/title.tres" id="26_am4rm"]
+[ext_resource type="LabelSettings" uid="uid://c44ddlfjds04k" path="res://fonts/title.tres" id="26_am4rm"]
 [ext_resource type="LabelSettings" uid="uid://cfje14hgxm4pw" path="res://fonts/heading.tres" id="26_uggu3"]
 [ext_resource type="PackedScene" uid="uid://deesebw4q0gpi" path="res://scenes/settings_panel.tscn" id="27_a0pbe"]
 [ext_resource type="Script" path="res://scripts/ui/RenderHighScore.cs" id="28_itbhu"]
@@ -150,7 +151,7 @@ _GameOver = NodePath("GameOver")
 [node name="BGM" type="AudioStreamPlayer" parent="Audio"]
 bus = &"BGM"
 script = ExtResource("7_0y6e5")
-BGMConfigs = [ExtResource("8_7kd0s")]
+BGMConfigs = Array[ExtResource("9_ybvr8")]([ExtResource("8_7kd0s")])
 
 [node name="Shoot" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("14_wtwha")
@@ -409,15 +410,12 @@ gunPath = NodePath("../TrackPath/GunFollow2D")
 
 [node name="Bubble" parent="Bubbles" instance=ExtResource("37_edn0c")]
 position = Vector2(196, 130)
-IsFixedForMenu = true
 
 [node name="Bubble2" parent="Bubbles" instance=ExtResource("37_edn0c")]
 position = Vector2(191, 141)
-IsFixedForMenu = true
 
 [node name="Bubble3" parent="Bubbles" instance=ExtResource("37_edn0c")]
 position = Vector2(194, 154)
-IsFixedForMenu = true
 
 [node name="Level2" type="Node2D" parent="."]
 

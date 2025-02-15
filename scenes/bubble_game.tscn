@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://borggvjowbqn2"]
+[gd_scene load_steps=74 format=3 uid="uid://borggvjowbqn2"]
 
 [ext_resource type="Script" path="res://scripts/BubbleGame.cs" id="1_axaqe"]
 [ext_resource type="Resource" uid="uid://dpm2joux2uabo" path="res://gameplay/match4.tres" id="2_0lbne"]
@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://scripts/bubble_gun.gd" id="2_t6f7g"]
 [ext_resource type="Texture2D" uid="uid://bom4u37bst1wq" path="res://sprites/bubble_green.png" id="3_dsvbh"]
 [ext_resource type="PackedScene" uid="uid://w1kv4tagcac8" path="res://scenes/bubble.tscn" id="3_gb0c4"]
-[ext_resource type="Script" path="res://scripts/VillainBubble.cs" id="3_mo6oh"]
 [ext_resource type="PackedScene" uid="uid://b5soh8b80t7ya" path="res://scenes/bubble_sprite.tscn" id="4_otc38"]
 [ext_resource type="PhysicsMaterial" uid="uid://5gbmiagtsmip" path="res://physics/bouncy.tres" id="6_4ubpa"]
 [ext_resource type="LabelSettings" uid="uid://d2pua3txaholq" path="res://fonts/mono_numbers.tres" id="6_eue5f"]
@@ -17,7 +16,8 @@
 [ext_resource type="Script" path="res://scripts/input/initial_control_scheme.gd" id="8_5o3ur"]
 [ext_resource type="AudioStream" uid="uid://couc3qpkfeh3c" path="res://sfx/pop.wav" id="8_j1bko"]
 [ext_resource type="Script" path="res://scripts/ui/render_score.gd" id="8_n7kaq"]
-[ext_resource type="Script" path="res://scripts/BGM.cs" id="9_2gusf"]
+[ext_resource type="Script" path="res://scripts/resources/bgm_config.gd" id="8_n20ud"]
+[ext_resource type="Script" path="res://scripts/bgm.gd" id="9_2gusf"]
 [ext_resource type="AudioStream" uid="uid://cdq000tbps6w5" path="res://sfx/grow.wav" id="9_gumm6"]
 [ext_resource type="Script" path="res://scripts/input/simple_shoot.gd" id="9_nhaw1"]
 [ext_resource type="Resource" uid="uid://dh6tlvmfiu5g1" path="res://bgm/scifi/cyberpunk_2020.tres" id="10_f75s2"]
@@ -37,12 +37,12 @@
 [ext_resource type="Shader" path="res://shaders/background.gdshader" id="20_vleso"]
 [ext_resource type="Texture2D" uid="uid://b6bc8bmh3lltv" path="res://sprites/bg.png" id="21_elrbj"]
 [ext_resource type="Script" path="res://scripts/input/pause_game.gd" id="24_f68so"]
-[ext_resource type="Script" path="res://scripts/ContainRect.cs" id="27_fh7nl"]
-[ext_resource type="Script" path="res://scripts/PressureRect.cs" id="28_1n4ef"]
+[ext_resource type="Script" path="res://scripts/ui/contain_rect.gd" id="27_fh7nl"]
+[ext_resource type="Script" path="res://scripts/ui/pressure_rect.gd" id="28_1n4ef"]
 [ext_resource type="Texture2D" uid="uid://dv7m7b346fvki" path="res://sprites/inner_bubble.png" id="28_mcajo"]
 [ext_resource type="LabelSettings" uid="uid://cfje14hgxm4pw" path="res://fonts/heading.tres" id="29_3gfu0"]
 [ext_resource type="Texture2D" uid="uid://xa38v1b4olde" path="res://sprites/inner_bubble_highlight.png" id="29_8m3lp"]
-[ext_resource type="Script" path="res://scripts/ScaleTweenFollower.cs" id="29_udvti"]
+[ext_resource type="Script" path="res://scripts/scale_tween_follower.gd" id="29_udvti"]
 [ext_resource type="Texture2D" uid="uid://0vkv8e0ryktr" path="res://sprites/combo_timer.png" id="29_yysxr"]
 [ext_resource type="LabelSettings" uid="uid://qx8cuxjoqn5t" path="res://fonts/subheading.tres" id="30_qnp8l"]
 [ext_resource type="PackedScene" uid="uid://5tea8yn6omyn" path="res://scenes/config_button.tscn" id="31_4e11d"]
@@ -50,6 +50,7 @@
 [ext_resource type="Script" path="res://scripts/ui/chain_render.gd" id="32_15lmc"]
 [ext_resource type="Script" path="res://scripts/ui/render_game_time.gd" id="34_ntjar"]
 [ext_resource type="Script" path="res://scripts/ui/RenderHighScore.cs" id="35_b6gyq"]
+[ext_resource type="Script" path="res://scripts/villain_bubble.gd" id="45_bwva3"]
 [ext_resource type="PackedScene" uid="uid://bgsc4gwcivxfl" path="res://scenes/bubble_queue.tscn" id="48_yixq4"]
 [ext_resource type="PackedScene" uid="uid://b0ip2qtsaicl" path="res://scenes/destructo_walls.tscn" id="50_eqnjs"]
 [ext_resource type="Texture2D" uid="uid://blvgh8vhmvpyg" path="res://sprites/panel.png" id="50_rkduh"]
@@ -178,7 +179,7 @@ _GameOver = NodePath("GameOver")
 [node name="BGM" type="AudioStreamPlayer" parent="Audio"]
 bus = &"BGM"
 script = ExtResource("9_2gusf")
-BGMConfigs = [ExtResource("10_f75s2"), ExtResource("11_27xae"), ExtResource("12_8yg0s"), ExtResource("13_myxmb"), ExtResource("14_n3v0y"), ExtResource("15_w6lka")]
+BGMConfigs = Array[ExtResource("8_n20ud")]([ExtResource("10_f75s2"), ExtResource("11_27xae"), ExtResource("12_8yg0s"), ExtResource("13_myxmb"), ExtResource("14_n3v0y"), ExtResource("15_w6lka")])
 
 [node name="Shoot" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("7_onkte")
@@ -533,13 +534,13 @@ offset = Vector2(1, -9)
 [node name="Reload" type="PathFollow2D" parent="Arena/TrackPath"]
 position = Vector2(244, 283)
 
-[node name="VillainBubble" type="RigidBody2D" parent="Arena" node_paths=PackedStringArray("CollisionShape", "Sprite")]
+[node name="VillainBubble" type="RigidBody2D" parent="Arena" node_paths=PackedStringArray("collision_shape", "sprite")]
 position = Vector2(247, 144)
 physics_material_override = SubResource("PhysicsMaterial_7gmt2")
 freeze = true
-script = ExtResource("3_mo6oh")
-CollisionShape = NodePath("CollisionShape2D")
-Sprite = NodePath("Border")
+script = ExtResource("45_bwva3")
+collision_shape = NodePath("CollisionShape2D")
+sprite = NodePath("Border")
 
 [node name="Border" type="Sprite2D" parent="Arena/VillainBubble" node_paths=PackedStringArray("Follow")]
 scale = Vector2(0.25, 0.25)
@@ -688,7 +689,6 @@ text = "Quit"
 visible = false
 
 [connection signal="OnShoot" from="Arena/TrackPath/GunFollow2D/Gun" to="." method="_on_shoot_event"]
-[connection signal="ContainRatioChanged" from="Arena/VillainBubble" to="CanvasLayer/LeftPanel/ContainRect2" method="_on_contain_ratio_changed"]
 [connection signal="pressed" from="CanvasLayer2/GameOverPanel/VBoxContainer/Button" to="." method="_on_play_again_pressed"]
 [connection signal="pressed" from="CanvasLayer2/GameOverPanel/VBoxContainer/Button2" to="." method="_on_main_menu_pressed"]
 [connection signal="pressed" from="CanvasLayer2/PausePanel/VBoxContainer/Button3" to="." method="_on_play_again_pressed"]
