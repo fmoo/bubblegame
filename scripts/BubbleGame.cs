@@ -9,7 +9,7 @@ public partial class BubbleGame : Node2D {
 	[Export] public GameplayConfig GameplayConfig { get; private set; }
 	[Export] public Node2D Springs;
 	[Export] public Node2D Bubbles;
-	[Export] public VillainBubble VillainBubble { get; private set; }
+	[Export] public RigidBody2D VillainBubble { get; private set; }
 	[Export] public Node2D Player { get; private set; }
 	[Export] public bool DebugMode { get; private set; } = false;
 	[Export] public bool TitleMode { get; private set; } = false;
@@ -40,13 +40,13 @@ public partial class BubbleGame : Node2D {
 		Reset();
 	}
 
-	public void RegisterBubble(Bubble bubble) {
+	public void RegisterBubble(RigidBody2D bubble) {
 		Bubbles.AddChild(bubble);
 	}
 
-	public void DestroyBubble(Bubble bubble, float multiplier) {
+	public void DestroyBubble(RigidBody2D bubble, float multiplier) {
 		bool canShrink = true;
-		if (GameplayConfig.VillainBubbleColorChanges && bubble.Config != VillainBubble.Config) {
+		if (GameplayConfig.VillainBubbleColorChanges && bubble.Get("config").Obj != VillainBubble.Get("config").Obj) {
 			canShrink = false;
 		}
 
@@ -55,25 +55,25 @@ public partial class BubbleGame : Node2D {
 			Pressure -= 1.0 * multiplier / GameplayConfig.ShrinkBubblePops;
 		}
 		GD.Print($"Destroying bubble {bubble}");
-		bubble.StartDestroy();
+		bubble.Call("start_destroy");
 	}
 
 	void MaybePickNewVillainBubbleColor() {
 		// Pick a new color for the villain bubble
 
 		if (!GameplayConfig.VillainBubbleColorChanges) return;
-		var currentColor = VillainBubble.Config;
+		var currentColor = VillainBubble.Get("config").As<Resource>();
 		var newColor = PickColor();
 		while (newColor == currentColor) {
 			newColor = PickColor();
 		}
-		VillainBubble.SetConfig(newColor);
+		VillainBubble.Call("set_config", newColor);
 	}
 
-	public void RegisterLink(Bubble bubble, Node2D join) {
+	public void RegisterLink(RigidBody2D bubble, Node2D join) {
 	}
 
-	public PinJoint2D LinkBubbles(Bubble bubble1, Bubble bubble2) {
+	public PinJoint2D LinkBubbles(RigidBody2D bubble1, RigidBody2D bubble2) {
 		var joint = PinJointTemplate.Instantiate<PinJoint2D>();
 		bubble1.AddChild(joint);
 		// Springs.AddChild(joint);
@@ -86,13 +86,13 @@ public partial class BubbleGame : Node2D {
 		joint.GlobalRotation = bubble1.GlobalPosition.AngleToPoint(bubble2.GlobalPosition);
 		return joint;
 	}
-	public RemoteTransform2D LinkToVillainBubbleRemoteTransform(VillainBubble villainBubble, Bubble bubble2) {
+	public RemoteTransform2D LinkToVillainBubbleRemoteTransform(RigidBody2D villainBubble, RigidBody2D bubble2) {
 		GD.Print($"Villain Bubble at {villainBubble.GlobalPosition} linked to Bubble at {bubble2.GlobalPosition}");
 
 		// Get the point of intersection by moving from bubble2 towards bubble1 by bubble2.Radius
 
 		var direction = (villainBubble.GlobalPosition - bubble2.GlobalPosition).Normalized();
-		var intersection = bubble2.GlobalPosition + direction * bubble2.Radius;
+		var intersection = bubble2.GlobalPosition + direction * bubble2.Call("radius").As<float>();
 
 		// Create the sync point for the bubble at the intersectionPoint,
 		// making it a child of the villainBubble.
@@ -112,9 +112,9 @@ public partial class BubbleGame : Node2D {
 		return joint;
 	}
 
-	public PinJoint2D LinkToVillainBubblePinJoint(VillainBubble villainBubble, Bubble bubble) {
+	public PinJoint2D LinkToVillainBubblePinJoint(RigidBody2D villainBubble, RigidBody2D bubble) {
 		GD.Print($"Villain Bubble at {villainBubble.GlobalPosition} linked to Bubble at {bubble.GlobalPosition}");
-		bubble.HasVillainAnchor = true;
+		bubble.Set("has_villain_anchor", true);
 
 		var joint = PinJointTemplate.Instantiate<PinJoint2D>();
 		villainBubble.AddChild(joint);
@@ -127,25 +127,25 @@ public partial class BubbleGame : Node2D {
 		return joint;
 	}
 
-	public void LinkToMenuBubble(MenuBubble menuBubble, Bubble bubble) {
+	public void LinkToMenuBubble(RigidBody2D menuBubble, RigidBody2D bubble) {
 		// If the position of the bubble is beyond the width of the bubble, use a pin joint,
 		// otherwise use a groove joint.
-		if (bubble.GlobalPosition.X > menuBubble.GlobalPosition.X + menuBubble.RectangleShape.Size.X / 2 ||
-			bubble.GlobalPosition.X < menuBubble.GlobalPosition.X - menuBubble.RectangleShape.Size.X / 2
+		if (bubble.GlobalPosition.X > menuBubble.GlobalPosition.X + menuBubble.Call("get_rectangle_shape").As<RectangleShape2D>().Size.X / 2 ||
+			bubble.GlobalPosition.X < menuBubble.GlobalPosition.X - menuBubble.Call("get_rectangle_shape").As<RectangleShape2D>().Size.X / 2
 		) {
-			bubble.LockPosition = bubble.GlobalPosition;
+			bubble.Set("lock_position", bubble.GlobalPosition);
 		} else {
 			LinkToMenuBubbleGrooveJoint(menuBubble, bubble);
 		}
-		bubble.HasVillainAnchor = true;
-		bubble.HasMenuButtonAnchor = true;
-		bubble.MenuButtonAnchor = menuBubble;
+		bubble.Set("has_villain_anchor", true);
+		bubble.Set("has_menu_button_anchor", true);
+		bubble.Set("menu_button_anchor", menuBubble);
 	}
 
-	public PinJoint2D LinkToMenuBubblePinJoint(MenuBubble menuBubble, Bubble bubble) {
+	public PinJoint2D LinkToMenuBubblePinJoint(RigidBody2D menuBubble, RigidBody2D bubble) {
 		GD.Print($"Menu Bubble at {menuBubble.GlobalPosition} linked to Bubble at {bubble.GlobalPosition}");
-		bubble.HasVillainAnchor = true;
-		bubble.HasMenuButtonAnchor = true;
+		bubble.Set("has_villain_anchor", true);
+		bubble.Set("has_menu_button_anchor", true);
 		var joint = PinJointTemplate.Instantiate<PinJoint2D>();
 		menuBubble.AddChild(joint);
 		joint.NodeA = menuBubble.GetPath();
@@ -156,21 +156,21 @@ public partial class BubbleGame : Node2D {
 		RegisterLink(bubble, joint);
 		return joint;
 	}
-	public GrooveJoint2D LinkToMenuBubbleGrooveJoint(MenuBubble menuBubble, Bubble bubble) {
+	public GrooveJoint2D LinkToMenuBubbleGrooveJoint(RigidBody2D menuBubble, RigidBody2D bubble) {
 		GD.Print($"Menu Bubble at {menuBubble.GlobalPosition} linked to Bubble at {bubble.GlobalPosition}");
-		bubble.HasVillainAnchor = true;
-		bubble.HasMenuButtonAnchor = true;
-		bubble.MenuButtonAnchor = menuBubble;
+		bubble.Set("has_villain_anchor", true);
+		bubble.Set("has_menu_button_anchor", true);
+		bubble.Set("menu_button_anchor", menuBubble);
 		var joint = GrooveJointTemplate.Instantiate<GrooveJoint2D>();
 		menuBubble.AddChild(joint);
 		joint.SetDeferred("node_a", menuBubble.GetPath());
 		joint.SetDeferred("node_b", bubble.GetPath());
 		joint.GlobalPosition = new Vector2(
-			menuBubble.GlobalPosition.X - menuBubble.RectangleShape.Size.X / 2,
+			menuBubble.GlobalPosition.X - menuBubble.Call("get_rectangle_shape").As<RectangleShape2D>().Size.X / 2,
 			bubble.GlobalPosition.Y
 		);
-		joint.Length = menuBubble.RectangleShape.Size.X;
-		joint.InitialOffset = joint.Length - (menuBubble.GlobalPosition.X - bubble.GlobalPosition.X + (menuBubble.RectangleShape.Size.X / 2));
+		joint.Length = menuBubble.Call("get_rectangle_shape").As<RectangleShape2D>().Size.X;
+		joint.InitialOffset = joint.Length - (menuBubble.GlobalPosition.X - bubble.GlobalPosition.X + (menuBubble.Call("get_rectangle_shape").As<RectangleShape2D>().Size.X / 2));
 		joint.GlobalRotationDegrees = -90;
 
 		RegisterLink(bubble, joint);
@@ -186,37 +186,37 @@ public partial class BubbleGame : Node2D {
 	public double ChainTimeRemaining { get; private set; } = 0f;
 	int currentChain = 1;
 
-	public void MaybePopBubbles(Bubble bubble) {
+	public void MaybePopBubbles(RigidBody2D bubble) {
 		if (bubble.IsQueuedForDeletion()) return;
 
-		var maybePop = bubble.WalkSameColorNeighbors();
-		if (maybePop.Count < GameplayConfig.MinMatchSize) return;
+		var maybePop = bubble.Call("walk_same_color_neighbors").As<Godot.Collections.Array>();
+		if (maybePop.Count() < GameplayConfig.MinMatchSize) return;
 
 		if (!TitleMode) {
 			var pointsGained = 50;
 			// 10x the points for every extra bubble popped simultaneously
-			pointsGained *= (int)Math.Pow(10, maybePop.Count - GameplayConfig.MinMatchSize);
+			pointsGained *= (int)Math.Pow(10, maybePop.Count() - GameplayConfig.MinMatchSize);
 			// Scale points based on the current VillainBubbleMultiplier
-			GD.Print($"Gaining Points: Base={pointsGained}  SizeMul={VillainBubble.ScoreMultiplier}  ChainMul={currentChain}  SpeedMul={DifficultyMultiplier}");
-			pointsGained = (int)(pointsGained * VillainBubble.ScoreMultiplier * currentChain * DifficultyMultiplier);
+			GD.Print($"Gaining Points: Base={pointsGained}  SizeMul={VillainBubble.Call("get_score_multiplier").As<float>()}  ChainMul={currentChain}  SpeedMul={DifficultyMultiplier}");
+			pointsGained = (int)(pointsGained * VillainBubble.Call("get_score_multiplier").As<float>() * currentChain * DifficultyMultiplier);
 			GainPoints(pointsGained);
 			currentChain += 1;
 			EmitSignal(SignalName.ChainChanged, currentChain);
 			ChainTimeRemaining = GameplayConfig.ChainDuration;
 		}
-		HashSet<Bubble> maybeFall = new();
+		Godot.Collections.Array maybeFall = new();
 
 		var WasAnchored = false;
-		var AnchoredMenuBubble = new MenuBubble();
-		foreach (var p in maybePop) {
-			foreach (var f in p.Neighbors) {
+		var AnchoredMenuBubble = new RigidBody2D();
+		foreach (RigidBody2D p in maybePop) {
+			foreach (var f in p.Get("neighbors").As<Godot.Collections.Array>()) {
 				if (!maybePop.Contains(f)) {
-					maybeFall.Add(f);
+					maybeFall.Append(f);
 				}
 			}
-			if (p.IsAnchored) {
+			if (p.Call("is_anchored").AsBool()) {
 				WasAnchored = true;
-				AnchoredMenuBubble = p.MenuButtonAnchor;
+				AnchoredMenuBubble = p.Get("menu_button_anchor").As<RigidBody2D>();
 			}
 			//for each ball popped over min match size, multiply shrink amount
 			var ShrinkMultiplier = maybePop.Count - (GameplayConfig.MinMatchSize - 1f);
@@ -225,20 +225,20 @@ public partial class BubbleGame : Node2D {
 
 		if (TitleMode) {
 			if (WasAnchored) {
-				Call(AnchoredMenuBubble.GameFunction);
+				Call(AnchoredMenuBubble.Get("game_function").AsString());
 			}
 			return;
 		}
-		foreach (var f in maybeFall) {
-			if (f.IsAnchored) continue;
-			f.ChainMoveTowards(VillainBubble.GlobalPosition);
+		foreach (RigidBody2D f in maybeFall) {
+			if (f.Call("is_anchored").AsBool()) continue;
+			f.Call("chain_move_towards", VillainBubble.GlobalPosition);
 		}
 	}
 
 	public void DebugTestFall() {
-		foreach (var bubble in Bubbles.GetChildren().Cast<Bubble>()) {
-			if (bubble.IsAnchored) continue;
-			bubble.ChainMoveTowards(VillainBubble.GlobalPosition);
+		foreach (var bubble in Bubbles.GetChildren().Cast<RigidBody2D>()) {
+			if (bubble.Call("is_anchored").AsBool()) continue;
+			bubble.Call("chain_move_towards", VillainBubble.GlobalPosition);
 		}
 	}
 
@@ -271,11 +271,11 @@ public partial class BubbleGame : Node2D {
 
 		if (Pressure > 1.0) {
 			GD.Print($"Pressure {Pressure} over threshold! Growing!");
-			VillainBubble.Grow();
+			VillainBubble.Call("grow");
 			Pressure -= 1.0;
 		} else if (Pressure < 0.0) {
 			GD.Print($"Pressure {Pressure} under threshold! shrinking!");
-			VillainBubble.Shrink();
+			VillainBubble.Call("shrink");
 			Pressure += 1.0;
 			currentPressureDuration *= GameplayConfig.PressureDecayMultiplier;
 			MaybePickNewVillainBubbleColor();
@@ -332,7 +332,7 @@ public partial class BubbleGame : Node2D {
 			foreach (var spring in Springs.GetChildren()) {
 				spring.QueueFree();
 			}
-			VillainBubble.Reset();
+			VillainBubble.Call("reset");
 			MaybePickNewVillainBubbleColor();
 		}
 

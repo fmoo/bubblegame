@@ -77,7 +77,7 @@ public partial class BubbleQueue : Node2D {
 
 	void RefreshRender() {
 		for (int i = 0; i < bubbleRenders.Length; i++) {
-			bubbleRenders[i].Call("SetConfig", colorQueue[i]);
+			bubbleRenders[i].Call("set_config", colorQueue[i]);
 		}
 	}
 

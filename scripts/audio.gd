@@ -13,28 +13,27 @@ class_name Audio
 var didPlayThisFrame = {}
 
 func MaybePlay(player: AudioStreamPlayer):
-    if player == null:
-        return
-    if didPlayThisFrame.has(player):
-        return
-    didPlayThisFrame[player] = true
-    player.play()
+	if player == null:
+		return
+	if didPlayThisFrame.has(player):
+		return
+	didPlayThisFrame[player] = true
+	player.play()
 
 func Shoot():
-    MaybePlay(_Shoot)
+	MaybePlay(_Shoot)
 
 func Pop():
-    MaybePlay(_Pop)
+	MaybePlay(_Pop)
 
 func Grow():
-    MaybePlay(_Grow)
+	MaybePlay(_Grow)
 
 func Shrink():
-    MaybePlay(_Shrink)
+	MaybePlay(_Shrink)
 
 func GameOver():
-    MaybePlay(_GameOver)
+	MaybePlay(_GameOver)
 
 func _process(_delta):
-    didPlayThisFrame = {}
-
+	didPlayThisFrame = {}

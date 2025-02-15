@@ -25,5 +25,5 @@ func PlayAnimation(animation):
 		blinkTimer = 999
 	animation_player.play(animation)
 
-func SetConfig(config):
+func set_config(config):
 	texture = config.PlayerBubbleTexture

@@ -85,7 +85,7 @@ func Shoot() -> void:
 	bubbleGame.RegisterBubble(bubble)
 
 	# Set the color
-	bubble.SetConfig(bubbleGame.BubbleQueue.DequeueColor())
+	bubble.set_config(bubbleGame.BubbleQueue.DequeueColor())
 
 	# Trajectory and position
 	bubble.global_position = turretSprite.global_position

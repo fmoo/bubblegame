@@ -2,14 +2,14 @@ using Godot;
 using System;
 
 public partial class ContainRect : TextureProgressBar {
-	double wantValue = 0;
+	float wantValue = 0;
 
-	void _on_contain_ratio_changed(double containRatio) {
+	void _on_contain_ratio_changed(float containRatio) {
 		wantValue = containRatio;
 	}
 
 	public override void _Ready() {
-		BubbleGame.Game.VillainBubble.ContainRatioChanged += _on_contain_ratio_changed;
+		BubbleGame.Game.VillainBubble.Connect("contain_ratio_changed", Callable.From<float>(_on_contain_ratio_changed));
 	}
 
 	public override void _Process(double delta) {

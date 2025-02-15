@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://w1kv4tagcac8"]
 
-[ext_resource type="Script" path="res://scripts/Bubble.cs" id="1_r8n85"]
+[ext_resource type="Script" path="res://scripts/bubble.gd" id="1_8g5qm"]
 [ext_resource type="PackedScene" uid="uid://b5soh8b80t7ya" path="res://scenes/bubble_sprite.tscn" id="2_tdhhq"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_yxj5e"]
@@ -8,7 +8,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_7envl"]
 radius = 7.0
 
-[node name="Bubble" type="RigidBody2D" node_paths=PackedStringArray("CollisionShape", "Sprite")]
+[node name="Bubble" type="RigidBody2D" node_paths=PackedStringArray("collision_shape", "sprite")]
 position = Vector2(1, 0)
 physics_material_override = SubResource("PhysicsMaterial_yxj5e")
 can_sleep = false
@@ -16,9 +16,9 @@ custom_integrator = true
 continuous_cd = 1
 contact_monitor = true
 max_contacts_reported = 7
-script = ExtResource("1_r8n85")
-CollisionShape = NodePath("CollisionShape2D")
-Sprite = NodePath("BubbleSprite")
+script = ExtResource("1_8g5qm")
+collision_shape = NodePath("CollisionShape2D")
+sprite = NodePath("BubbleSprite")
 
 [node name="BubbleSprite" parent="." instance=ExtResource("2_tdhhq")]
 
