@@ -98,8 +98,10 @@ func set_neighbor(bubble: Node) -> void:
 
 func _on_body_entered(body: Node) -> void:
 	if body is Bubble:
-		body.linear_velocity = Vector2.ZERO
-		self.linear_velocity = Vector2.ZERO
+		print("self:", name)
+		print("body that entered:", body.name)
+		#body.linear_velocity = Vector2.ZERO
+		#self.linear_velocity = Vector2.ZERO
 
 		if body in neighbors:
 			return

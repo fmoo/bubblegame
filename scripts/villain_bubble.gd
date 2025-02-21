@@ -5,7 +5,7 @@ extends RigidBody2D
 @export var sprite: Sprite2D
 
 const MINIMUM_SCALE: float = 1.0
-const SIZE_CHANGE_INCREMENT: float = 0.5
+const SIZE_CHANGE_INCREMENT: float = 0.25
 const GAME_OVER_SCALE: float = 6.5
 const POP_FALL_FORCE: float = 25.0
 

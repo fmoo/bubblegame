@@ -24,7 +24,7 @@
 [ext_resource type="PackedScene" uid="uid://5tea8yn6omyn" path="res://scenes/config_button.tscn" id="23_xh822"]
 [ext_resource type="Shader" path="res://shaders/background.gdshader" id="24_gsxt1"]
 [ext_resource type="Texture2D" uid="uid://3v0mvd20wsgm" path="res://sprites/bg_title.png" id="25_1ntpi"]
-[ext_resource type="LabelSettings" path="res://fonts/title.tres" id="26_am4rm"]
+[ext_resource type="LabelSettings" uid="uid://c44ddlfjds04k" path="res://fonts/title.tres" id="26_am4rm"]
 [ext_resource type="LabelSettings" uid="uid://cfje14hgxm4pw" path="res://fonts/heading.tres" id="26_uggu3"]
 [ext_resource type="PackedScene" uid="uid://deesebw4q0gpi" path="res://scenes/settings_panel.tscn" id="27_a0pbe"]
 [ext_resource type="Script" path="res://scripts/ui/render_high_score.gd" id="28_itbhu"]

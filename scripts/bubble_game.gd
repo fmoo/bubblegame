@@ -7,6 +7,8 @@ extends Node2D
 @export var Springs: Node2D
 @export var Bubbles: Node2D
 @export var villainBubble: VillainBubble
+@export var villainBubbleHighlight: Node2D
+@export var villainBubbleEyes: Node2D
 @export var Player: BubbleGun
 @export var debugMode: bool = false
 @export var TitleMode: bool = false
@@ -17,18 +19,20 @@ extends Node2D
 @export var bubbleSprite: PackedScene;
 
 @export var GameOverPanel: Control
-
+@export var NotificationLabel: PackedScene
 
 var Score = 0;
 signal ScoreChanged(score: int)
 signal TimeElapsed(seconds: int)
 signal ChainChanged(chain: int)
-
+signal LargeBurst(size: int)
 
 var lastSecond: int = 0
 var timeElapsed: float = 0
 var Pressure: float = 0
 var currentPressureDuration: float = 0
+var multi_shrink_wait: bool = false
+
 func GetDifficultyMultiplier() -> float:
 	return pow(2, (gameplayConfig.BasePressureDuration / currentPressureDuration) - 1)
 
@@ -40,6 +44,7 @@ func GainPoints(points: int) -> int:
 func _ready() -> void:
 	if GameOverPanel != null:
 		GameOverPanel.visible = false
+	LargeBurst.connect(on_large_burst)
 	MaybePickNewVillainBubbleColor()
 	reset()
 
@@ -164,6 +169,8 @@ func MaybePopBubbles(bubble: Bubble) -> void:
 			AnchoredMenuBubble = p.menu_button_anchor
 		# for each ball popped over min match size, multiply shrink amount
 		var ShrinkMultiplier = maybePop.size() - (gameplayConfig.MinMatchSize - 1)
+		if(ShrinkMultiplier > 1):
+			emit_signal("LargeBurst", maybePop.size())
 		DestroyBubble(p, ShrinkMultiplier)
 
 	if TitleMode:
@@ -171,9 +178,10 @@ func MaybePopBubbles(bubble: Bubble) -> void:
 			call(AnchoredMenuBubble.game_function)
 		return
 	for f in maybeFall:
-		if f.is_anchored():
-			continue
-		f.chain_move_towards(villainBubble.global_position)
+		if f != null:
+			if f.is_anchored():
+				continue
+			f.chain_move_towards(villainBubble.global_position)
 
 func DebugTestFall() -> void:
 	for bubble in Bubbles.get_children():
@@ -201,14 +209,25 @@ func _process(delta: float) -> void:
 		print("Pressure ", Pressure, " over threshold! Growing!")
 		villainBubble.grow()
 		Pressure -= 1.0
-	elif Pressure < 0.0:
+	elif Pressure < 0.0 && !multi_shrink_wait:
 		print("Pressure ", Pressure, " under threshold! shrinking!")
-		if villainBubble.shrink():
+		if villainBubble.shrink() :
 			Pressure += 1.0
+			if(Pressure < 0.0):
+				#still need to do another shrink at least
+				start_new_multi_shrink_wait()
 		else:
 			Pressure = 0.0
 		currentPressureDuration *= gameplayConfig.PressureDecayMultiplier
 		MaybePickNewVillainBubbleColor()
+		
+	# bulge bubble
+	if(Pressure >= 0.0):
+		var pressure_incs = floor(Pressure / .2)
+		var h_bulge_amt = 0.0 + pressure_incs * .06
+		var e_bulge_amt = 0.0 + pressure_incs * .2
+		villainBubbleHighlight.get_material().set_shader_parameter("bulge", h_bulge_amt)
+		villainBubbleEyes.get_material().set_shader_parameter("bulge", e_bulge_amt)
 
 	if currentChain > 1:
 		ChainTimeRemaining -= delta
@@ -217,6 +236,11 @@ func _process(delta: float) -> void:
 			ChainChanged.emit(currentChain)
 			ChainTimeRemaining = 0
 
+func start_new_multi_shrink_wait():
+	multi_shrink_wait = true
+	await get_tree().create_timer(.5).timeout
+	multi_shrink_wait = false
+	
 func GameOver() -> void:
 	audio.GameOver()
 	print("Game Over")
@@ -286,3 +310,8 @@ func Quit() -> void:
 func _on_main_menu_pressed() -> void:
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://scenes/title.tscn")
+
+func on_large_burst(size):
+	var notif = NotificationLabel.instantiate()
+	notif.position = Vector2(370,70)
+	add_child(notif)

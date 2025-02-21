@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=3 uid="uid://borggvjowbqn2"]
+[gd_scene load_steps=79 format=3 uid="uid://borggvjowbqn2"]
 
 [ext_resource type="Script" path="res://scripts/bubble_game.gd" id="1_axaqe"]
 [ext_resource type="Resource" uid="uid://dpm2joux2uabo" path="res://gameplay/match4.tres" id="2_0lbne"]
@@ -49,12 +49,15 @@
 [ext_resource type="Texture2D" uid="uid://dohac3g22la44" path="res://sprites/inner_bubble_fill.png" id="32_0fn8p"]
 [ext_resource type="Script" path="res://scripts/ui/chain_render.gd" id="32_15lmc"]
 [ext_resource type="Script" path="res://scripts/ui/render_game_time.gd" id="34_ntjar"]
+[ext_resource type="PackedScene" uid="uid://clg1nniv53h2q" path="res://scenes/notifcation_label.tscn" id="35_0v3ne"]
 [ext_resource type="Script" path="res://scripts/ui/render_high_score.gd" id="35_b6gyq"]
 [ext_resource type="Script" path="res://scripts/villain_bubble.gd" id="45_bwva3"]
 [ext_resource type="PackedScene" uid="uid://bgsc4gwcivxfl" path="res://scenes/bubble_queue.tscn" id="48_yixq4"]
+[ext_resource type="Shader" path="res://shaders/sprite_quish.gdshader" id="50_1vr6y"]
 [ext_resource type="PackedScene" uid="uid://b0ip2qtsaicl" path="res://scenes/destructo_walls.tscn" id="50_eqnjs"]
 [ext_resource type="Texture2D" uid="uid://blvgh8vhmvpyg" path="res://sprites/panel.png" id="50_rkduh"]
 [ext_resource type="FontFile" uid="uid://fht4lbhg4nde" path="res://fonts/tecno_small_thin.ttf" id="51_wb3vn"]
+[ext_resource type="Texture2D" uid="uid://b2cu7i1ibivgw" path="res://sprites/inner_bubble_eyes.png" id="52_qo6q2"]
 [ext_resource type="PackedScene" uid="uid://deesebw4q0gpi" path="res://scenes/settings_panel.tscn" id="54_7msvu"]
 [ext_resource type="Script" path="res://scripts/ui/unpause_button.gd" id="55_nk17e"]
 
@@ -126,8 +129,22 @@ animations = [{
 rough = true
 absorbent = true
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ns15b"]
+shader = ExtResource("50_1vr6y")
+shader_parameter/uv_mode = false
+shader_parameter/x_factor = 2.0
+shader_parameter/y_factor = 2.0
+shader_parameter/bulge = 4.75e-08
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_gnq0l"]
 radius = 17.0294
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l8d75"]
+shader = ExtResource("50_1vr6y")
+shader_parameter/uv_mode = false
+shader_parameter/x_factor = 2.0
+shader_parameter/y_factor = 2.0
+shader_parameter/bulge = 4.75e-08
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_bow63"]
 normal = Vector2(1, 0)
@@ -151,7 +168,7 @@ expand_margin_top = 10.0
 expand_margin_right = 10.0
 expand_margin_bottom = 10.0
 
-[node name="BubbleGame" type="Node2D" node_paths=PackedStringArray("audio", "bubbleQueue", "Springs", "Bubbles", "villainBubble", "Player", "renderHighScore", "GameOverPanel")]
+[node name="BubbleGame" type="Node2D" node_paths=PackedStringArray("audio", "bubbleQueue", "Springs", "Bubbles", "villainBubble", "villainBubbleHighlight", "villainBubbleEyes", "Player", "renderHighScore", "GameOverPanel")]
 texture_filter = 1
 script = ExtResource("1_axaqe")
 audio = NodePath("Audio")
@@ -160,12 +177,15 @@ gameplayConfig = ExtResource("2_0lbne")
 Springs = NodePath("Arena/Springs")
 Bubbles = NodePath("Arena/Bubbles")
 villainBubble = NodePath("Arena/VillainBubble")
+villainBubbleHighlight = NodePath("Arena/VillainBubble/Highlight")
+villainBubbleEyes = NodePath("Arena/VillainBubble/Eyes")
 Player = NodePath("Arena/TrackPath/GunFollow2D/Gun")
 PinJointTemplate = ExtResource("2_dakla")
 VillainPinJointTemplate = ExtResource("7_5koiv")
 renderHighScore = NodePath("CanvasLayer/RightPanel/HighScore")
 bubbleSprite = ExtResource("4_otc38")
 GameOverPanel = NodePath("CanvasLayer2/GameOverPanel")
+NotificationLabel = ExtResource("35_0v3ne")
 
 [node name="Audio" type="Node" parent="." node_paths=PackedStringArray("BGM", "_Shoot", "_Pop", "_Grow", "_Shrink", "_GameOver")]
 process_mode = 3
@@ -268,6 +288,7 @@ grow_vertical = 2
 color = Color(0.79, 0.79, 0.79, 0.639216)
 
 [node name="HeadingBubbleGrowth" type="Label" parent="CanvasLayer/LeftPanel"]
+visible = false
 layout_mode = 0
 offset_left = 12.0
 offset_top = 8.0
@@ -279,6 +300,7 @@ label_settings = ExtResource("29_3gfu0")
 horizontal_alignment = 1
 
 [node name="ContainRect2" type="TextureProgressBar" parent="CanvasLayer/LeftPanel"]
+visible = false
 layout_mode = 0
 offset_left = 14.0
 offset_top = 83.0
@@ -300,6 +322,7 @@ text = "contain"
 label_settings = ExtResource("30_qnp8l")
 
 [node name="PressureRect" type="TextureProgressBar" parent="CanvasLayer/LeftPanel"]
+visible = false
 layout_mode = 0
 offset_left = 14.0
 offset_top = 119.0
@@ -384,6 +407,9 @@ offset_bottom = 86.0
 text = "combo"
 label_settings = ExtResource("30_qnp8l")
 horizontal_alignment = 2
+
+[node name="NotifcationLabel" parent="CanvasLayer/RightPanel" instance=ExtResource("35_0v3ne")]
+layout_mode = 0
 
 [node name="ComboTimerBar" type="TextureProgressBar" parent="CanvasLayer/RightPanel" node_paths=PackedStringArray("ChainLabel")]
 layout_mode = 0
@@ -555,6 +581,7 @@ show_behind_parent = true
 texture = ExtResource("32_0fn8p")
 
 [node name="Highlight" type="Sprite2D" parent="Arena/VillainBubble" node_paths=PackedStringArray("Follow")]
+material = SubResource("ShaderMaterial_ns15b")
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("29_8m3lp")
 script = ExtResource("29_udvti")
@@ -563,6 +590,13 @@ Follow = NodePath("../CollisionShape2D")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/VillainBubble"]
 position = Vector2(1.19209e-07, -2.38419e-07)
 shape = SubResource("CircleShape2D_gnq0l")
+
+[node name="Eyes" type="Sprite2D" parent="Arena/VillainBubble" node_paths=PackedStringArray("Follow")]
+material = SubResource("ShaderMaterial_l8d75")
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("52_qo6q2")
+script = ExtResource("29_udvti")
+Follow = NodePath("../CollisionShape2D")
 
 [node name="BubbleQueue" parent="Arena" node_paths=PackedStringArray("bubbleRenders", "reloadPath", "gunPath") instance=ExtResource("48_yixq4")]
 bubbleRenders = [NodePath("../TrackPath/GunFollow2D/Gun/Body/BubbleSprite"), NodePath("BubbleSprite2"), NodePath("BubbleSprite3")]

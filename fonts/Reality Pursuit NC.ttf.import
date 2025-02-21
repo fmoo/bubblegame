@@ -1,0 +1,40 @@
+[remap]
+
+importer="font_data_dynamic"
+type="FontFile"
+uid="uid://c7bosvhpvfgp4"
+path="res://.godot/imported/Reality Pursuit NC.ttf-03f2c1639a766297dc66296b2c8358c5.fontdata"
+
+[deps]
+
+source_file="res://fonts/Reality Pursuit NC.ttf"
+dest_files=["res://.godot/imported/Reality Pursuit NC.ttf-03f2c1639a766297dc66296b2c8358c5.fontdata"]
+
+[params]
+
+Rendering=null
+antialiasing=2
+generate_mipmaps=false
+disable_embedded_bitmaps=true
+multichannel_signed_distance_field=false
+msdf_pixel_range=8
+msdf_size=48
+allow_system_fallback=true
+force_autohinter=false
+hinting=1
+subpixel_positioning=1
+oversampling=0.0
+Fallbacks=null
+fallbacks=[]
+Compress=null
+compress=true
+preload=[{
+"chars": [],
+"glyphs": [],
+"name": "New Configuration",
+"size": Vector2i(16, 0),
+"variation_embolden": 0.0
+}]
+language_support={}
+script_support={}
+opentype_features={}
