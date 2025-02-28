@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=3 uid="uid://borggvjowbqn2"]
+[gd_scene load_steps=80 format=3 uid="uid://borggvjowbqn2"]
 
 [ext_resource type="Script" path="res://scripts/bubble_game.gd" id="1_axaqe"]
 [ext_resource type="Resource" uid="uid://dpm2joux2uabo" path="res://gameplay/match4.tres" id="2_0lbne"]
@@ -60,6 +60,7 @@
 [ext_resource type="Texture2D" uid="uid://b2cu7i1ibivgw" path="res://sprites/inner_bubble_eyes.png" id="52_qo6q2"]
 [ext_resource type="PackedScene" uid="uid://deesebw4q0gpi" path="res://scenes/settings_panel.tscn" id="54_7msvu"]
 [ext_resource type="Script" path="res://scripts/ui/unpause_button.gd" id="55_nk17e"]
+[ext_resource type="PackedScene" uid="uid://cb2ybege1se8w" path="res://scenes/double_queue.tscn" id="55_vdagn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4libq"]
 shader = ExtResource("20_vleso")
@@ -599,6 +600,11 @@ script = ExtResource("29_udvti")
 Follow = NodePath("../CollisionShape2D")
 
 [node name="BubbleQueue" parent="Arena" node_paths=PackedStringArray("bubbleRenders", "reloadPath", "gunPath") instance=ExtResource("48_yixq4")]
+bubbleRenders = [NodePath("../TrackPath/GunFollow2D/Gun/Body/BubbleSprite"), NodePath("BubbleSprite2"), NodePath("BubbleSprite3")]
+reloadPath = NodePath("../TrackPath/Reload")
+gunPath = NodePath("../TrackPath/GunFollow2D")
+
+[node name="DoubleQueue" parent="Arena" node_paths=PackedStringArray("bubbleRenders", "reloadPath", "gunPath") instance=ExtResource("55_vdagn")]
 bubbleRenders = [NodePath("../TrackPath/GunFollow2D/Gun/Body/BubbleSprite"), NodePath("BubbleSprite2"), NodePath("BubbleSprite3")]
 reloadPath = NodePath("../TrackPath/Reload")
 gunPath = NodePath("../TrackPath/GunFollow2D")

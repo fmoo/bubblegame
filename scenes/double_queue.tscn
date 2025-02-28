@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://cb2ybege1se8w"]
+
+[ext_resource type="Script" path="res://scripts/bubble_queue.gd" id="1_tvly7"]
+[ext_resource type="PackedScene" uid="uid://b5soh8b80t7ya" path="res://scenes/bubble_sprite.tscn" id="2_gnpdr"]
+
+[node name="DoubleQueue" type="Node2D" node_paths=PackedStringArray("bubbleRenders", "queueEjector", "reloadPath", "gunPath")]
+position = Vector2(190, 19)
+script = ExtResource("1_tvly7")
+bubbleRenders = [NodePath(""), NodePath("BubbleSprite2"), NodePath("BubbleSprite3")]
+queueEjector = NodePath("QueueEjector")
+reloadPath = NodePath("")
+gunPath = NodePath("")
+
+[node name="BubbleSprite2" parent="." instance=ExtResource("2_gnpdr")]
+position = Vector2(-50, 251)
+
+[node name="BubbleSprite3" parent="." instance=ExtResource("2_gnpdr")]
+position = Vector2(-85, 216)
+
+[node name="QueueEjector" type="Node2D" parent="."]
+position = Vector2(-27, 231)
