@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BubbleConfig" load_steps=3 format=3 uid="uid://c7ky2vbeen7ex"]
+
+[ext_resource type="Texture2D" uid="uid://cuvfi00jrltir" path="res://sprites/bubble_double_pink.png" id="1_jnrjy"]
+[ext_resource type="Script" path="res://scripts/resources/bubble_config.gd" id="2_deq0u"]
+
+[resource]
+script = ExtResource("2_deq0u")
+is_double = true
+BubbleColor = Color(0.952941, 0.380392, 1, 1)
+BubbleColor2 = Color(0.952941, 0.380392, 1, 1)
+PlayerBubbleTexture = ExtResource("1_jnrjy")

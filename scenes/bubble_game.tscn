@@ -169,11 +169,12 @@ expand_margin_top = 10.0
 expand_margin_right = 10.0
 expand_margin_bottom = 10.0
 
-[node name="BubbleGame" type="Node2D" node_paths=PackedStringArray("audio", "bubbleQueue", "Springs", "Bubbles", "villainBubble", "villainBubbleHighlight", "villainBubbleEyes", "Player", "renderHighScore", "GameOverPanel")]
+[node name="BubbleGame" type="Node2D" node_paths=PackedStringArray("audio", "bubbleQueue", "double_queue", "Springs", "Bubbles", "villainBubble", "villainBubbleHighlight", "villainBubbleEyes", "Player", "renderHighScore", "GameOverPanel")]
 texture_filter = 1
 script = ExtResource("1_axaqe")
 audio = NodePath("Audio")
 bubbleQueue = NodePath("Arena/BubbleQueue")
+double_queue = NodePath("Arena/DoubleQueue")
 gameplayConfig = ExtResource("2_0lbne")
 Springs = NodePath("Arena/Springs")
 Bubbles = NodePath("Arena/Bubbles")
@@ -604,8 +605,7 @@ bubbleRenders = [NodePath("../TrackPath/GunFollow2D/Gun/Body/BubbleSprite"), Nod
 reloadPath = NodePath("../TrackPath/Reload")
 gunPath = NodePath("../TrackPath/GunFollow2D")
 
-[node name="DoubleQueue" parent="Arena" node_paths=PackedStringArray("bubbleRenders", "reloadPath", "gunPath") instance=ExtResource("55_vdagn")]
-bubbleRenders = [NodePath("../TrackPath/GunFollow2D/Gun/Body/BubbleSprite"), NodePath("BubbleSprite2"), NodePath("BubbleSprite3")]
+[node name="DoubleQueue" parent="Arena" node_paths=PackedStringArray("reloadPath", "gunPath") instance=ExtResource("55_vdagn")]
 reloadPath = NodePath("../TrackPath/Reload")
 gunPath = NodePath("../TrackPath/GunFollow2D")
 

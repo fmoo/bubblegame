@@ -3,6 +3,7 @@ extends Node2D
 
 @export var audio: Audio
 @export var bubbleQueue: BubbleQueue
+@export var double_queue: BubbleQueue
 @export var gameplayConfig: GameplayConfig
 @export var Springs: Node2D
 @export var Bubbles: Node2D
@@ -25,6 +26,7 @@ var Score = 0;
 signal ScoreChanged(score: int)
 signal TimeElapsed(seconds: int)
 signal ChainChanged(chain: int)
+signal ChainTimerOut(chain: int)
 signal LargeBurst(size: int)
 
 var lastSecond: int = 0
@@ -45,6 +47,7 @@ func _ready() -> void:
 	if GameOverPanel != null:
 		GameOverPanel.visible = false
 	LargeBurst.connect(on_large_burst)
+	ChainTimerOut.connect(on_chain_timer_out)
 	MaybePickNewVillainBubbleColor()
 	reset()
 
@@ -133,8 +136,12 @@ func PickColor() -> BubbleConfig:
 	var index = randi() % gameplayConfig.Bubbles.size()
 	return gameplayConfig.Bubbles[index]
 
+func pick_random_double():
+	var index = randi() % gameplayConfig.Doubles.size()
+	return gameplayConfig.Doubles[index]
+	
 var ChainTimeRemaining: float = 0
-var currentChain: int = 1
+var currentChain: int = 0
 
 
 func MaybePopBubbles(bubble: Bubble) -> void:
@@ -229,10 +236,11 @@ func _process(delta: float) -> void:
 		villainBubbleHighlight.get_material().set_shader_parameter("bulge", h_bulge_amt)
 		villainBubbleEyes.get_material().set_shader_parameter("bulge", e_bulge_amt)
 
-	if currentChain > 1:
+	if currentChain >= 1:
 		ChainTimeRemaining -= delta
 		if ChainTimeRemaining <= 0:
-			currentChain = 1
+			ChainTimerOut.emit(currentChain)
+			currentChain = 0
 			ChainChanged.emit(currentChain)
 			ChainTimeRemaining = 0
 
@@ -314,4 +322,17 @@ func _on_main_menu_pressed() -> void:
 func on_large_burst(size):
 	var notif = NotificationLabel.instantiate()
 	notif.position = Vector2(370,70)
+	var end_pos = notif.position + Vector2(250 * notif.tween_dir.x,0)
 	add_child(notif)
+	notif.move_in(end_pos)
+
+func on_chain_timer_out(chain: int):
+	if(chain < 2 || double_queue.colorQueue.size() >= 3):
+		return
+	var notif = NotificationLabel.instantiate()
+	notif.position = Vector2(-200,220)
+	notif.text = "Chain Bonus!\nDouble Ball!"
+	notif.tween_dir = Vector2(1,0)
+	var end_pos = notif.position + Vector2(250 * notif.tween_dir.x,0)
+	add_child(notif)
+	notif.move_in(end_pos)

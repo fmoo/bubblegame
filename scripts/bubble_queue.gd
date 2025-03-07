@@ -7,14 +7,20 @@ extends Node2D
 @export var reloadPath: PathFollow2D
 @export var gunPath: PathFollow2D
 @export var ejectorPathRatio: float = 0.0995
+@export var is_double_queue: bool
+@export var empty_bubble_config: BubbleConfig
 
 var colorQueue: Array[BubbleConfig] = []
 
 const COOLDOWN: float = 0.3
 
 func _ready() -> void:
-	reset()
-
+	bubbleGame.ChainTimerOut.connect(on_chain_timer_out)
+	if(!is_double_queue):
+		reset()
+	else:
+		RefreshRender()
+		
 func ShowBubbles() -> void:
 	for bubble in bubbleRenders:
 		bubble.show()
@@ -64,9 +70,16 @@ func DequeueColor() -> BubbleConfig:
 	StartTween()
 	return result
 
+func add_random_double():
+	colorQueue.append(bubbleGame.pick_random_double())
+	RefreshRender()
+	
 func RefreshRender() -> void:
 	for i in range(bubbleRenders.size()):
-		bubbleRenders[i].set_config(colorQueue[i])
+		if(colorQueue.size() > i):
+			bubbleRenders[i].set_config(colorQueue[i])
+		else:
+			bubbleRenders[i].set_config(empty_bubble_config)
 
 func reset() -> void:
 	colorQueue.clear()
@@ -83,3 +96,9 @@ func reset() -> void:
 	print("reset: BubbleQueue has ", colorQueue.size(), " colors")
 	for c in colorQueue:
 		print(c.BubbleColor)
+
+func on_chain_timer_out(chain: int):
+	if(chain < 2):
+		return
+	if(is_double_queue && colorQueue.size() < 3):
+		add_random_double()

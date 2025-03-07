@@ -1,21 +1,38 @@
-[gd_scene load_steps=3 format=3 uid="uid://cb2ybege1se8w"]
+[gd_scene load_steps=6 format=3 uid="uid://cb2ybege1se8w"]
 
 [ext_resource type="Script" path="res://scripts/bubble_queue.gd" id="1_tvly7"]
+[ext_resource type="Resource" uid="uid://cf0apr5qsrspf" path="res://bubbles/empty.tres" id="2_64oqk"]
 [ext_resource type="PackedScene" uid="uid://b5soh8b80t7ya" path="res://scenes/bubble_sprite.tscn" id="2_gnpdr"]
+[ext_resource type="Texture2D" uid="uid://skture0uhbpg" path="res://sprites/double_loader_default.png" id="4_ymemm"]
+[ext_resource type="Texture2D" uid="uid://40s0n4ejrsag" path="res://sprites/double_loader_hover.png" id="5_wbinv"]
 
-[node name="DoubleQueue" type="Node2D" node_paths=PackedStringArray("bubbleRenders", "queueEjector", "reloadPath", "gunPath")]
+[node name="DoubleQueue" type="Node2D" node_paths=PackedStringArray("bubbleRenders", "queueEjector")]
 position = Vector2(190, 19)
 script = ExtResource("1_tvly7")
-bubbleRenders = [NodePath(""), NodePath("BubbleSprite2"), NodePath("BubbleSprite3")]
+bubbleRenders = [NodePath("BubbleSprite0"), NodePath("BubbleSprite1"), NodePath("BubbleSprite2")]
 queueEjector = NodePath("QueueEjector")
-reloadPath = NodePath("")
-gunPath = NodePath("")
+is_double_queue = true
+empty_bubble_config = ExtResource("2_64oqk")
 
-[node name="BubbleSprite2" parent="." instance=ExtResource("2_gnpdr")]
+[node name="BubbleSprite0" parent="." instance=ExtResource("2_gnpdr")]
+z_index = 1
 position = Vector2(-50, 251)
 
-[node name="BubbleSprite3" parent="." instance=ExtResource("2_gnpdr")]
+[node name="BubbleSprite1" parent="." instance=ExtResource("2_gnpdr")]
+z_index = 1
 position = Vector2(-85, 216)
+
+[node name="BubbleSprite2" parent="." instance=ExtResource("2_gnpdr")]
+z_index = 1
+position = Vector2(-106, 179)
 
 [node name="QueueEjector" type="Node2D" parent="."]
 position = Vector2(-27, 231)
+
+[node name="LoadButton" type="TextureButton" parent="."]
+offset_left = -73.0
+offset_top = 237.0
+offset_right = -25.0
+offset_bottom = 277.0
+texture_normal = ExtResource("4_ymemm")
+texture_hover = ExtResource("5_wbinv")

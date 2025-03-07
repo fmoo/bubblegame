@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="GameplayConfig" load_steps=7 format=3 uid="uid://dpm2joux2uabo"]
+[gd_resource type="Resource" script_class="GameplayConfig" load_steps=11 format=3 uid="uid://dpm2joux2uabo"]
 
 [ext_resource type="Script" path="res://scripts/resources/gameplay_config.gd" id="1_0ons5"]
 [ext_resource type="Resource" uid="uid://dbmhicl4dmeeq" path="res://bubbles/blue.tres" id="1_160dr"]
@@ -6,12 +6,17 @@
 [ext_resource type="Resource" uid="uid://cxckdb2pvda1h" path="res://bubbles/green.tres" id="2_d4kya"]
 [ext_resource type="Resource" uid="uid://bks3wa5u2ewtj" path="res://bubbles/orange.tres" id="3_3j0t2"]
 [ext_resource type="Resource" uid="uid://cvxxf245aptcj" path="res://bubbles/pink.tres" id="4_717mi"]
+[ext_resource type="Resource" uid="uid://q5wuduhidhwt" path="res://bubbles/double_blue.tres" id="6_iu0gl"]
+[ext_resource type="Resource" uid="uid://25s11ar1f10l" path="res://bubbles/double_green.tres" id="7_krmdk"]
+[ext_resource type="Resource" uid="uid://baqp47bsytote" path="res://bubbles/double_orange.tres" id="8_mwxsw"]
+[ext_resource type="Resource" uid="uid://c7ky2vbeen7ex" path="res://bubbles/double_pink.tres" id="9_6sl55"]
 
 [resource]
 script = ExtResource("1_0ons5")
 Name = "Normal 4"
 Description = "A basic match-4 type bubble game"
 Bubbles = Array[ExtResource("1_lvxhd")]([ExtResource("1_160dr"), ExtResource("2_d4kya"), ExtResource("3_3j0t2"), ExtResource("4_717mi")])
+Doubles = Array[ExtResource("1_lvxhd")]([ExtResource("6_iu0gl"), ExtResource("7_krmdk"), ExtResource("8_mwxsw"), ExtResource("9_6sl55")])
 VillainBubbleColorChanges = false
 ChainDuration = 3.0
 TimerTicks = true

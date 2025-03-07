@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="BubbleConfig" load_steps=2 format=3 uid="uid://cf0apr5qsrspf"]
+
+[ext_resource type="Script" path="res://scripts/resources/bubble_config.gd" id="2_qnrv5"]
+
+[resource]
+script = ExtResource("2_qnrv5")
+is_double = false
+BubbleColor = Color(0.952941, 1, 1, 1)
+BubbleColor2 = Color(1, 1, 1, 1)

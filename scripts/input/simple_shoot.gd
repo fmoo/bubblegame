@@ -4,5 +4,5 @@ extends ControlSchemeBase
 @onready var bubbleGame: BubbleGame = get_node("/root/BubbleGame")
 
 func _process(_delta: float) -> void:
-    if Input.is_action_just_pressed("ui_select"):
-        bubbleGame.Player.Shoot()
+	if Input.is_action_just_pressed("ui_select"):
+		bubbleGame.Player.Shoot()

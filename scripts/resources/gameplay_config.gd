@@ -4,6 +4,7 @@ extends Resource
 @export var Name: String = "Normal"
 @export var Description: String = "A normal way to play."
 @export var Bubbles: Array[BubbleConfig] = []
+@export var Doubles: Array[BubbleConfig] = []
 @export var VillainBubbleColorChanges: bool = false
 @export var ChainDuration: float = 4
 @export var TimerTicks: bool = true;
