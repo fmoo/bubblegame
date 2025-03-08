@@ -34,6 +34,7 @@ var timeElapsed: float = 0
 var Pressure: float = 0
 var currentPressureDuration: float = 0
 var multi_shrink_wait: bool = false
+var double_load_hovered: bool = false
 
 func GetDifficultyMultiplier() -> float:
 	return pow(2, (gameplayConfig.BasePressureDuration / currentPressureDuration) - 1)
@@ -300,11 +301,15 @@ func PlayGame() -> void:
 	get_tree().change_scene_to_file("res://scenes/bubble_game.tscn")
 
 func _on_shoot_event() -> void:
-	if TitleMode:
+	if TitleMode || double_load_hovered:
 		return
 	print("Shoot: Pressure increase by ", 1.0 / gameplayConfig.GrowBubbleShots)
 	Pressure += 1.0 / gameplayConfig.GrowBubbleShots
 
+func swap_for_double_ball(bubble_config: BubbleConfig):
+	bubbleQueue.swap_config(bubble_config,0)
+	
+	
 func SpawnBubblePop(globalPosition: Vector2, texture: Texture2D) -> void:
 	var bubblePop = bubbleSprite.instantiate() as BubbleSprite
 	add_child(bubblePop)

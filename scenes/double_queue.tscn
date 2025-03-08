@@ -36,3 +36,7 @@ offset_right = -25.0
 offset_bottom = 277.0
 texture_normal = ExtResource("4_ymemm")
 texture_hover = ExtResource("5_wbinv")
+
+[connection signal="button_up" from="LoadButton" to="." method="_on_doubleball_load_button_up"]
+[connection signal="mouse_entered" from="LoadButton" to="." method="_on_doubleball_load_button_mouse_entered"]
+[connection signal="mouse_exited" from="LoadButton" to="." method="_on_doubleball_load_button_mouse_exited"]

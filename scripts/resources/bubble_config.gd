@@ -5,3 +5,4 @@ extends Resource
 @export var BubbleColor: Color = Color.WHITE
 @export var BubbleColor2: Color = Color.WHITE
 @export var PlayerBubbleTexture: Texture2D
+@export var sub_configs: Array[BubbleConfig]

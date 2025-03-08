@@ -73,6 +73,10 @@ func DequeueColor() -> BubbleConfig:
 func add_random_double():
 	colorQueue.append(bubbleGame.pick_random_double())
 	RefreshRender()
+
+func swap_config(new_config, position):
+	colorQueue[position] = new_config
+	RefreshRender()
 	
 func RefreshRender() -> void:
 	for i in range(bubbleRenders.size()):
@@ -102,3 +106,15 @@ func on_chain_timer_out(chain: int):
 		return
 	if(is_double_queue && colorQueue.size() < 3):
 		add_random_double()
+
+
+func _on_doubleball_load_button_up() -> void:
+	if(colorQueue.size() > 0):
+		bubbleGame.swap_for_double_ball(colorQueue[0])
+
+
+func _on_doubleball_load_button_mouse_entered() -> void:
+	bubbleGame.double_load_hovered = true
+
+func _on_doubleball_load_button_mouse_exited() -> void:
+	bubbleGame.double_load_hovered = false

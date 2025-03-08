@@ -16,7 +16,7 @@ func _input(event: InputEvent) -> void:
 
 	# Left click means SetStrafePosition
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-		if event.is_pressed():
+		if event.is_pressed() && !bubbleGame.double_load_hovered:
 			moveMouseDown = true
 			var InputDirection = get_local_mouse_position()
 			bubbleGame.Player.SetTrackDestination(InputDirection)

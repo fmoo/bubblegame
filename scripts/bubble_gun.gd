@@ -79,21 +79,33 @@ func RotateGun(direction: int, delta: float) -> bool:
 @onready var bubbleGame: BubbleGame = get_node("/root/BubbleGame")
 
 func Shoot() -> void:
-	if cooldownTime > 0:
+	if cooldownTime > 0 || bubbleGame.double_load_hovered:
 		return
+	var bubble_config = bubbleGame.bubbleQueue.DequeueColor()
+	if(bubble_config.is_double):
+		var rv = Vector2(-4,0).rotated(turretSprite.global_rotation)
+		var pos = turretSprite.global_position + rv
+		instance_shot_bubble(pos,bubble_config.sub_configs[0])
+		rv = Vector2(4,0).rotated(turretSprite.global_rotation)
+		pos = turretSprite.global_position + rv
+		instance_shot_bubble(pos,bubble_config.sub_configs[1])
+	else:
+		instance_shot_bubble(turretSprite.global_position,bubble_config)
+		
 	bubbleGame.audio.Shoot()
+	cooldownTime = COOLDOWN
+	OnShoot.emit();
+
+func instance_shot_bubble(pos, config):
 	var bubble = bubbleScene.instantiate()
 	bubbleGame.RegisterBubble(bubble)
 
 	# Set the color
-	bubble.set_config(bubbleGame.bubbleQueue.DequeueColor())
+	bubble.set_config(config)
 
 	# Trajectory and position
-	bubble.global_position = turretSprite.global_position
+	bubble.global_position = pos
 	bubble.linear_velocity = Vector2(0, -1).rotated(turretSprite.global_rotation) * bubbleSpeed
-	cooldownTime = COOLDOWN
-	OnShoot.emit();
-
 
 func SetTrackDestination(InputDirection: Vector2) -> void:
 	var TargetRatio = (InputDirection.angle_to(Vector2.UP) - PI) / TAU + 1

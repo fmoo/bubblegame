@@ -410,9 +410,6 @@ text = "combo"
 label_settings = ExtResource("30_qnp8l")
 horizontal_alignment = 2
 
-[node name="NotifcationLabel" parent="CanvasLayer/RightPanel" instance=ExtResource("35_0v3ne")]
-layout_mode = 0
-
 [node name="ComboTimerBar" type="TextureProgressBar" parent="CanvasLayer/RightPanel" node_paths=PackedStringArray("ChainLabel")]
 layout_mode = 0
 offset_left = 22.0
