@@ -111,6 +111,15 @@ func on_chain_timer_out(chain: int):
 func _on_doubleball_load_button_up() -> void:
 	if(colorQueue.size() > 0):
 		bubbleGame.swap_for_double_ball(colorQueue[0])
+		if(colorQueue.size() == 1):
+			colorQueue.remove_at(0)
+		else:
+			for i in range(0,colorQueue.size()):
+				if(i+1 < colorQueue.size()):
+					colorQueue[i] = colorQueue[i+1]
+			colorQueue.remove_at(colorQueue.size()-1)
+		RefreshRender()
+			
 
 
 func _on_doubleball_load_button_mouse_entered() -> void:
