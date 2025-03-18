@@ -14,6 +14,10 @@ signal contain_ratio_changed(contain_ratio: float)
 func _ready() -> void:
 	notify_contain_ratio_change()
 
+func pop_in():
+	var tween = get_tree().create_tween()
+	tween.tween_property(self, "scale", Vector2(1,1), 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+	
 func get_score_multiplier() -> float:
 	return collision_shape.scale.x / MINIMUM_SCALE
 

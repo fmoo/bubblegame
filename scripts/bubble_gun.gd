@@ -68,7 +68,7 @@ func _process(delta: float) -> void:
 		speedScale -= 1
 
 	animatedBody.speed_scale = speedScale
-
+	$mouseicon.global_rotation_degrees = 0.0
 
 func RotateGun(direction: int, delta: float) -> bool:
 	var oldRotation = turretSprite.rotation
@@ -91,6 +91,9 @@ func Shoot() -> void:
 		instance_shot_bubble(pos,bubble_config.sub_configs[1])
 	else:
 		instance_shot_bubble(turretSprite.global_position,bubble_config)
+	#hide tutorial mouse icon
+	if($mouseicon.visible):
+		$mouseicon.visible = false
 		
 	bubbleGame.audio.Shoot()
 	cooldownTime = COOLDOWN
@@ -133,3 +136,8 @@ func reset() -> void:
 	ActiveMoveTarget.visible = false
 	pathFollow.progress_ratio = 0
 	turretSprite.rotation = 0
+
+
+func _on_mouse_icon_timer_timeout() -> void:
+	$mouseicon.visible = true
+	$mouseicon.play("default")

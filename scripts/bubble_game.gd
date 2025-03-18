@@ -51,7 +51,16 @@ func _ready() -> void:
 	ChainTimerOut.connect(on_chain_timer_out)
 	MaybePickNewVillainBubbleColor()
 	reset()
+	
+	if(!TitleMode):
+		var bg = $CanvasLayer
+		var tween_bg = get_tree().create_tween()
+		tween_bg.tween_property(bg, "offset", Vector2(0,0), 1.0).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_LINEAR)
+		tween_bg.tween_callback(start_game)
 
+func start_game():
+	villainBubble.pop_in()
+	
 func RegisterBubble(bubble: Bubble) -> void:
 	Bubbles.add_child(bubble)
 
@@ -296,10 +305,32 @@ func reset() -> void:
 	ScoreChanged.emit(Score)
 
 func PlayGame() -> void:
-	# Wait for 1 second
-	await get_tree().create_timer(1.0).timeout
-	get_tree().change_scene_to_file("res://scenes/bubble_game.tscn")
+	#var title = $CanvasLayer/LeftPanel/Title
+	#var tween = get_tree().create_tween()
+	#tween.tween_property(title, "position", title.position+Vector2(-512,0), 1.0).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_LINEAR)
+	#
+	#var config = $CanvasLayer/LeftPanel/ConfigButton
+	#var tween_c = get_tree().create_tween()
+	#tween_c.tween_property(config, "position", config.position+Vector2(-512,0), 1.0).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_LINEAR)
+	#
+	#var high_score = $CanvasLayer/RightPanel/HighScore
+	#var tween_hs = get_tree().create_tween()
+	#tween_hs.tween_property(high_score, "position", high_score.position+Vector2(-512,0), 1.0).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_LINEAR)
+	#
+	#var play = $CanvasLayer/MenuButtons/Play
+	#var tween_play = get_tree().create_tween()
+	#tween_play.tween_property(play, "position", play.position+Vector2(-512,0), 1.0).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_LINEAR)
+	#
+	var bg_sprite = $CanvasLayer
+	var tween_bg = get_tree().create_tween()
+	tween_bg.tween_property(bg_sprite, "offset", Vector2(-512,0), 1.0).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_LINEAR)
+	tween_bg.tween_callback(switch_to_game_scene)
 
+func switch_to_game_scene():
+	# Wait for 1 second
+	# await get_tree().create_timer(1.0).timeout
+	get_tree().change_scene_to_file("res://scenes/bubble_game.tscn")
+	
 func _on_shoot_event() -> void:
 	if TitleMode || double_load_hovered:
 		return

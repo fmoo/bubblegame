@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Boogie Pop"
 run/main_scene="res://scenes/title.tscn"
-config/features=PackedStringArray("4.3", "C#", "GL Compatibility")
+config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.png"
 
 [audio]
@@ -29,6 +29,10 @@ window/stretch/mode="canvas_items"
 [dotnet]
 
 project/assembly_name="bubblegame"
+
+[editor]
+
+movie_writer/movie_file="C:/Users/Mark/Documents/Godot/Promo/Poplix/rawfootage1.avi"
 
 [input]
 
