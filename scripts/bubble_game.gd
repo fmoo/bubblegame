@@ -285,6 +285,7 @@ func Unpause() -> void:
 
 func _on_play_again_pressed() -> void:
 	reset()
+	start_game()
 	Unpause()
 
 func reset() -> void:
