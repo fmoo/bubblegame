@@ -9,8 +9,11 @@ extends Node2D
 @export var ejectorPathRatio: float = 0.0995
 @export var is_double_queue: bool
 @export var empty_bubble_config: BubbleConfig
+@export var track_image: Node2D
 
 var colorQueue: Array[BubbleConfig] = []
+
+var colorQueueDouble: Array[BubbleConfig] = [null,null,null]
 
 const COOLDOWN: float = 0.3
 
@@ -79,11 +82,17 @@ func swap_config(new_config, position):
 	RefreshRender()
 	
 func RefreshRender() -> void:
-	for i in range(bubbleRenders.size()):
-		if(colorQueue.size() > i):
-			bubbleRenders[i].set_config(colorQueue[i])
-		else:
-			bubbleRenders[i].set_config(empty_bubble_config)
+	if(is_double_queue):
+		for i in range(bubbleRenders.size()):
+			bubbleRenders[i].set_config(colorQueueDouble[i])
+	else:
+		for i in range(bubbleRenders.size()):
+			if(colorQueue.size() > i):
+				bubbleRenders[i].set_config(colorQueue[i])
+			else:
+				bubbleRenders[i].set_config(empty_bubble_config)
+	
+	
 
 func reset() -> void:
 	colorQueue.clear()
@@ -91,7 +100,7 @@ func reset() -> void:
 		for i in range(bubbleRenders.size()):
 			var color = bubbleGame.gameplayConfig.Bubbles[0]
 			colorQueue.append(color)
-	else:
+	elif !is_double_queue:
 		for i in range(bubbleRenders.size()):
 			var color = bubbleGame.PickColor()
 			colorQueue.append(color)
@@ -104,9 +113,42 @@ func reset() -> void:
 func on_chain_timer_out(chain: int):
 	if(chain < 2):
 		return
-	if(is_double_queue && colorQueue.size() < 3):
-		add_random_double()
+	if(is_double_queue):# && colorQueue.size() < 3):
+		#add_random_double()
+		add_doubleball(first_empty_double_pos())
 
+func first_empty_double_pos():
+	for i in range(0,colorQueueDouble.size()):
+		print("checking i = ", i)
+		if colorQueueDouble[i] == null:
+			print("adding double at ", i)
+			return i
+	print("no empty spot")
+	return -1
+	
+func add_doubleball(pos):
+	if pos == -1:
+		return
+	colorQueueDouble[pos] = bubbleGame.pick_random_double()
+	RefreshRender()
+
+func start_doubleball_move(pos):
+	if(colorQueueDouble[pos] != null):
+		get_child(pos).move_towards_gun = true
+		track_image.play(str(pos))
+
+func stop_doubleball_move(pos):
+	get_child(pos).move_towards_gun = false
+	get_child(pos).offset = get_child(pos).start_offset
+	get_child(pos).offset_progress = 0.0
+	track_image.play("default")
+		
+func swap_in_doubleball(pos):
+	if(colorQueueDouble[pos] != null):
+		print("swapping in from pos ", pos)
+		bubbleGame.swap_for_double_ball(colorQueueDouble[pos])
+		colorQueueDouble[pos] = null
+		RefreshRender()
 
 func _on_doubleball_load_button_up() -> void:
 	if(colorQueue.size() > 0):

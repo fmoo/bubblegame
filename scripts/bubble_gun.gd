@@ -141,3 +141,16 @@ func reset() -> void:
 func _on_mouse_icon_timer_timeout() -> void:
 	$mouseicon.visible = true
 	$mouseicon.play("default")
+
+
+func _on_collision_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
+	if(area.is_in_group("doubleball_trigger")):
+		var pos = area.get_parent().get_index()
+		area.get_parent().get_parent().start_doubleball_move(pos)
+		#area.get_parent().get_parent().swap_in_doubleball(pos)
+
+
+func _on_collision_area_shape_exited(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
+	if(area.is_in_group("doubleball_trigger")):
+		var pos = area.get_parent().get_index()
+		area.get_parent().get_parent().stop_doubleball_move(pos)

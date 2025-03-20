@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cb2ybege1se8w"]
+[gd_scene load_steps=7 format=3 uid="uid://cb2ybege1se8w"]
 
 [ext_resource type="Script" path="res://scripts/bubble_queue.gd" id="1_tvly7"]
 [ext_resource type="Resource" uid="uid://cf0apr5qsrspf" path="res://bubbles/empty.tres" id="2_64oqk"]
@@ -6,42 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://skture0uhbpg" path="res://sprites/double_loader_default.png" id="4_ymemm"]
 [ext_resource type="Texture2D" uid="uid://40s0n4ejrsag" path="res://sprites/double_loader_hover.png" id="5_wbinv"]
 
-[sub_resource type="Animation" id="Animation_wdh55"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_2vcxc"]
-resource_name = "flash"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(1.5, 1.5), Vector2(1, 1)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_74vos"]
-_data = {
-"RESET": SubResource("Animation_wdh55"),
-"flash": SubResource("Animation_2vcxc")
-}
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_48r25"]
+size = Vector2(32, 20)
 
 [node name="DoubleQueue" type="Node2D" node_paths=PackedStringArray("bubbleRenders", "queueEjector")]
 position = Vector2(190, 19)
@@ -53,26 +19,45 @@ empty_bubble_config = ExtResource("2_64oqk")
 
 [node name="BubbleSprite0" parent="." instance=ExtResource("2_gnpdr")]
 z_index = 1
-position = Vector2(-50, 251)
+position = Vector2(-106, 63)
+texture = null
 
-[node name="AnimationPlayer2" type="AnimationPlayer" parent="BubbleSprite0"]
-libraries = {
-"": SubResource("AnimationLibrary_74vos")
-}
-autoplay = "flash"
+[node name="Trigger" type="Area2D" parent="BubbleSprite0" groups=["doubleball_trigger"]]
+position = Vector2(40, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BubbleSprite0/Trigger"]
+rotation = -0.921534
+shape = SubResource("RectangleShape2D_48r25")
 
 [node name="BubbleSprite1" parent="." instance=ExtResource("2_gnpdr")]
 z_index = 1
-position = Vector2(-85, 216)
+position = Vector2(222, 63)
+texture = null
+
+[node name="Trigger" type="Area2D" parent="BubbleSprite1" groups=["doubleball_trigger"]]
+position = Vector2(-50, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BubbleSprite1/Trigger"]
+rotation = 0.989602
+shape = SubResource("RectangleShape2D_48r25")
 
 [node name="BubbleSprite2" parent="." instance=ExtResource("2_gnpdr")]
 z_index = 1
-position = Vector2(-106, 179)
+position = Vector2(-50, 250)
+texture = null
+
+[node name="Trigger" type="Area2D" parent="BubbleSprite2" groups=["doubleball_trigger"]]
+position = Vector2(50, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BubbleSprite2/Trigger"]
+rotation = 0.523599
+shape = SubResource("RectangleShape2D_48r25")
 
 [node name="QueueEjector" type="Node2D" parent="."]
 position = Vector2(-27, 231)
 
 [node name="LoadButton" type="TextureButton" parent="."]
+visible = false
 offset_left = -73.0
 offset_top = 237.0
 offset_right = -25.0
@@ -80,6 +65,5 @@ offset_bottom = 277.0
 texture_normal = ExtResource("4_ymemm")
 texture_hover = ExtResource("5_wbinv")
 
-[connection signal="button_up" from="LoadButton" to="." method="_on_doubleball_load_button_up"]
 [connection signal="mouse_entered" from="LoadButton" to="." method="_on_doubleball_load_button_mouse_entered"]
 [connection signal="mouse_exited" from="LoadButton" to="." method="_on_doubleball_load_button_mouse_exited"]

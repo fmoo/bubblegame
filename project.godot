@@ -25,6 +25,8 @@ window/size/viewport_width=512
 window/size/viewport_height=288
 window/size/mode=2
 window/stretch/mode="canvas_items"
+mouse_cursor/custom_image="res://sprites/reticle_2x.png"
+mouse_cursor/custom_image_hotspot=Vector2(32, 32)
 
 [dotnet]
 
@@ -33,6 +35,10 @@ project/assembly_name="bubblegame"
 [editor]
 
 movie_writer/movie_file="C:/Users/Mark/Documents/Godot/Promo/Poplix/rawfootage1.avi"
+
+[global_group]
+
+doubleball_trigger=""
 
 [input]
 

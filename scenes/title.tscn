@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://dq2st87krvklv"]
+[gd_scene load_steps=63 format=3 uid="uid://dq2st87krvklv"]
 
 [ext_resource type="Script" path="res://scripts/bubble_game.gd" id="1_qvl6i"]
 [ext_resource type="Resource" uid="uid://cphutkik5yksw" path="res://gameplay/title.tres" id="2_nm86w"]
@@ -30,8 +30,9 @@
 [ext_resource type="Script" path="res://scripts/ui/render_high_score.gd" id="28_itbhu"]
 [ext_resource type="LabelSettings" uid="uid://qx8cuxjoqn5t" path="res://fonts/subheading.tres" id="28_oae08"]
 [ext_resource type="LabelSettings" uid="uid://d2pua3txaholq" path="res://fonts/mono_numbers.tres" id="30_5oabt"]
-[ext_resource type="Texture2D" uid="uid://62xrp1lfl6oe" path="res://sprites/down-arrow-large.png" id="31_j4b6g"]
-[ext_resource type="Texture2D" uid="uid://dc4kcvtvddd50" path="res://sprites/mockup2_track.png" id="34_5j8uw"]
+[ext_resource type="Texture2D" uid="uid://2xhbf3o8ujqb" path="res://sprites/mockup3_track.png" id="30_dcvm7"]
+[ext_resource type="Texture2D" uid="uid://ce33x081n5io6" path="res://sprites/gun_only.png" id="31_4ntxn"]
+[ext_resource type="Texture2D" uid="uid://r1sf4861834j" path="res://sprites/gun_only_highlight.png" id="32_mvlt3"]
 [ext_resource type="PackedScene" uid="uid://bgsc4gwcivxfl" path="res://scenes/bubble_queue.tscn" id="34_ctyse"]
 [ext_resource type="Script" path="res://scripts/bubble_gun.gd" id="36_yenmr"]
 [ext_resource type="Texture2D" uid="uid://geifc7xneuu6" path="res://sprites/mouse_icon.png" id="37_2g6sy"]
@@ -365,7 +366,7 @@ horizontal_alignment = 1
 
 [node name="TrackImage" type="Sprite2D" parent="."]
 z_index = -2
-texture = ExtResource("34_5j8uw")
+texture = ExtResource("30_dcvm7")
 centered = false
 
 [node name="TrackPath" type="Path2D" parent="."]
@@ -382,7 +383,7 @@ position = Vector2(244, 283)
 [node name="HoverCursor" type="Sprite2D" parent="TrackPath/MouseAimHover2D"]
 modulate = Color(1, 1, 1, 0.552941)
 position = Vector2(0, -23)
-texture = ExtResource("31_j4b6g")
+texture = ExtResource("31_4ntxn")
 
 [node name="MouseAimClicked2D" type="PathFollow2D" parent="TrackPath"]
 visible = false
@@ -390,7 +391,7 @@ position = Vector2(244, 283)
 
 [node name="ClickedCursor" type="Sprite2D" parent="TrackPath/MouseAimClicked2D"]
 position = Vector2(0, -23)
-texture = ExtResource("31_j4b6g")
+texture = ExtResource("32_mvlt3")
 
 [node name="GunFollow2D" type="PathFollow2D" parent="TrackPath"]
 position = Vector2(244, 283)

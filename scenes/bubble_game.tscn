@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=3 uid="uid://borggvjowbqn2"]
+[gd_scene load_steps=89 format=3 uid="uid://borggvjowbqn2"]
 
 [ext_resource type="Script" path="res://scripts/bubble_game.gd" id="1_axaqe"]
 [ext_resource type="Resource" uid="uid://dpm2joux2uabo" path="res://gameplay/match4.tres" id="2_0lbne"]
@@ -32,7 +32,6 @@
 [ext_resource type="Resource" uid="uid://bknv7h5wsytjf" path="res://bgm/scifi/waiting.tres" id="15_w6lka"]
 [ext_resource type="Texture2D" uid="uid://bxpexe12qf7nr" path="res://sprites/gun_barrel.png" id="16_0qeqh"]
 [ext_resource type="Script" path="res://scripts/input/mouse_controls.gd" id="17_8g50q"]
-[ext_resource type="Texture2D" uid="uid://dc4kcvtvddd50" path="res://sprites/mockup2_track.png" id="20_boehu"]
 [ext_resource type="Shader" path="res://shaders/background.gdshader" id="20_vleso"]
 [ext_resource type="Texture2D" uid="uid://b6bc8bmh3lltv" path="res://sprites/bg.png" id="21_elrbj"]
 [ext_resource type="Script" path="res://scripts/input/pause_game.gd" id="24_f68so"]
@@ -50,7 +49,10 @@
 [ext_resource type="Script" path="res://scripts/ui/render_game_time.gd" id="34_ntjar"]
 [ext_resource type="PackedScene" uid="uid://clg1nniv53h2q" path="res://scenes/notifcation_label.tscn" id="35_0v3ne"]
 [ext_resource type="Script" path="res://scripts/ui/render_high_score.gd" id="35_b6gyq"]
-[ext_resource type="Texture2D" uid="uid://62xrp1lfl6oe" path="res://sprites/down-arrow-large.png" id="41_oq4mn"]
+[ext_resource type="Texture2D" uid="uid://2xhbf3o8ujqb" path="res://sprites/mockup3_track.png" id="40_n4u5s"]
+[ext_resource type="Texture2D" uid="uid://vl7g4q2bckck" path="res://sprites/mockup3_track-sheet.png" id="40_rynhf"]
+[ext_resource type="Texture2D" uid="uid://ce33x081n5io6" path="res://sprites/gun_only.png" id="41_du8ej"]
+[ext_resource type="Texture2D" uid="uid://r1sf4861834j" path="res://sprites/gun_only_highlight.png" id="42_rdenl"]
 [ext_resource type="Script" path="res://scripts/villain_bubble.gd" id="45_bwva3"]
 [ext_resource type="PackedScene" uid="uid://bh3m0703dwknn" path="res://scenes/shot_cursor.tscn" id="47_r2psq"]
 [ext_resource type="PackedScene" uid="uid://bgsc4gwcivxfl" path="res://scenes/bubble_queue.tscn" id="48_yixq4"]
@@ -84,6 +86,57 @@ colors = PackedColorArray(0, 0.490135, 9.62615e-08, 1, 0.00682261, 0.486791, 9.5
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_m4ot6"]
 gradient = SubResource("Gradient_3d7je")
 width = 52
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uq86d"]
+atlas = ExtResource("40_rynhf")
+region = Rect2(512, 0, 512, 288)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s16i3"]
+atlas = ExtResource("40_rynhf")
+region = Rect2(1024, 0, 512, 288)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fw1t4"]
+atlas = ExtResource("40_rynhf")
+region = Rect2(1536, 0, 512, 288)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_62n5v"]
+atlas = ExtResource("40_n4u5s")
+region = Rect2(0, 0, 512, 288)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_56c1j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uq86d")
+}],
+"loop": true,
+"name": &"0",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s16i3")
+}],
+"loop": true,
+"name": &"1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fw1t4")
+}],
+"loop": true,
+"name": &"2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_62n5v")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="Curve2D" id="Curve2D_lbhqn"]
 _data = {
@@ -126,6 +179,9 @@ animations = [{
 "name": &"default",
 "speed": 10.0
 }]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ndixp"]
+size = Vector2(8, 20)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7gmt2"]
 rough = true
@@ -508,9 +564,10 @@ horizontal_alignment = 2
 
 [node name="Arena" type="Node2D" parent="."]
 
-[node name="TrackImage" type="Sprite2D" parent="Arena"]
+[node name="TrackImage" type="AnimatedSprite2D" parent="Arena"]
 z_index = -2
-texture = ExtResource("20_boehu")
+sprite_frames = SubResource("SpriteFrames_56c1j")
+animation = &"0"
 centered = false
 
 [node name="TrackPath" type="Path2D" parent="Arena"]
@@ -522,7 +579,7 @@ position = Vector2(244, 283)
 [node name="HoverCursor" type="Sprite2D" parent="Arena/TrackPath/MouseAimHover2D"]
 modulate = Color(1, 1, 1, 0.552941)
 position = Vector2(0, -23)
-texture = ExtResource("41_oq4mn")
+texture = ExtResource("41_du8ej")
 
 [node name="MouseAimClicked2D" type="PathFollow2D" parent="Arena/TrackPath"]
 visible = false
@@ -530,7 +587,7 @@ position = Vector2(244, 283)
 
 [node name="ClickedCursor" type="Sprite2D" parent="Arena/TrackPath/MouseAimClicked2D"]
 position = Vector2(0, -23)
-texture = ExtResource("41_oq4mn")
+texture = ExtResource("42_rdenl")
 
 [node name="GunFollow2D" type="PathFollow2D" parent="Arena/TrackPath"]
 position = Vector2(244, 283)
@@ -564,6 +621,12 @@ offset = Vector2(1, -9)
 [node name="ShotCursor" parent="Arena/TrackPath/GunFollow2D/Gun/Turret" instance=ExtResource("47_r2psq")]
 
 [node name="mouseicon" type="AnimatedSprite2D" parent="Arena/TrackPath/GunFollow2D/Gun"]
+
+[node name="Collision" type="Area2D" parent="Arena/TrackPath/GunFollow2D/Gun"]
+position = Vector2(0, -8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/TrackPath/GunFollow2D/Gun/Collision"]
+shape = SubResource("RectangleShape2D_ndixp")
 
 [node name="Reload" type="PathFollow2D" parent="Arena/TrackPath"]
 position = Vector2(244, 283)
@@ -611,9 +674,13 @@ bubbleRenders = [NodePath("../TrackPath/GunFollow2D/Gun/Body/BubbleSprite"), Nod
 reloadPath = NodePath("../TrackPath/Reload")
 gunPath = NodePath("../TrackPath/GunFollow2D")
 
-[node name="DoubleQueue" parent="Arena" node_paths=PackedStringArray("reloadPath", "gunPath") instance=ExtResource("55_vdagn")]
+[node name="DoubleQueue" parent="Arena" node_paths=PackedStringArray("reloadPath", "gunPath", "track_image") instance=ExtResource("55_vdagn")]
 reloadPath = NodePath("../TrackPath/Reload")
 gunPath = NodePath("../TrackPath/GunFollow2D")
+track_image = NodePath("../TrackImage")
+
+[node name="positioning_tester" type="Node2D" parent="Arena/DoubleQueue"]
+position = Vector2(-106, 63)
 
 [node name="Springs" type="Node2D" parent="Arena"]
 
@@ -736,6 +803,8 @@ text = "Quit"
 visible = false
 
 [connection signal="OnShoot" from="Arena/TrackPath/GunFollow2D/Gun" to="." method="_on_shoot_event"]
+[connection signal="area_shape_entered" from="Arena/TrackPath/GunFollow2D/Gun/Collision" to="Arena/TrackPath/GunFollow2D/Gun" method="_on_collision_area_shape_entered"]
+[connection signal="area_shape_exited" from="Arena/TrackPath/GunFollow2D/Gun/Collision" to="Arena/TrackPath/GunFollow2D/Gun" method="_on_collision_area_shape_exited"]
 [connection signal="pressed" from="CanvasLayer2/GameOverPanel/VBoxContainer/Button" to="." method="_on_play_again_pressed"]
 [connection signal="pressed" from="CanvasLayer2/GameOverPanel/VBoxContainer/Button2" to="." method="_on_main_menu_pressed"]
 [connection signal="pressed" from="CanvasLayer2/PausePanel/VBoxContainer/Button3" to="." method="_on_play_again_pressed"]

@@ -357,6 +357,8 @@ func _on_main_menu_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/title.tscn")
 
 func on_large_burst(size):
+	if(TitleMode):
+		return
 	var notif = NotificationLabel.instantiate()
 	notif.position = Vector2(370,70)
 	var end_pos = notif.position + Vector2(250 * notif.tween_dir.x,0)
