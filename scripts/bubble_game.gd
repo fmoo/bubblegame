@@ -155,13 +155,14 @@ var currentChain: int = 0
 
 
 func MaybePopBubbles(bubble: Bubble) -> void:
+	print("maybe pop")
 	if bubble.is_queued_for_deletion():
 		return
-
+	print("not queued for delettion")
 	var maybePop = bubble.walk_same_color_neighbors()
 	if maybePop.size() < gameplayConfig.MinMatchSize:
 		return
-
+	print("good size")
 	if not TitleMode:
 		var pointsGained = 50
 		# 10x the points for every extra bubble popped simultaneously

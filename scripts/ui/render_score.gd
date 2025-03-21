@@ -24,7 +24,7 @@ func _on_score_changed(score: int):
 		scoreTweenProgress = 0
 		targetScore = score
 		Refresh()
-	# print($"baseScore: {baseScore} displayScore: {displayScore} targetScore: {targetScore}")
+	print($"baseScore: {baseScore} displayScore: {displayScore} targetScore: {targetScore}")
 
 func Refresh() -> void:
 	displayScore = lerp(baseScore, targetScore, clamp(scoreTweenProgress, 0, 1))

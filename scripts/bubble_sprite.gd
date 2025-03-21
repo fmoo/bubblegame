@@ -14,7 +14,7 @@ var offset_progress
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	ResetTimer()
-	if($Trigger != null):
+	if(get_parent().name == "DoubleQueue"):
 		start_offset = Vector2(0,0)
 		load_offset = $Trigger.global_position - global_position
 		offset_progress = 0.0
