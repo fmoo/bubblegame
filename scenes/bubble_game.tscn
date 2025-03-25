@@ -289,6 +289,8 @@ script = ExtResource("7_7wqd8")
 [node name="KeyboardPressStrafeAim" type="Node2D" parent="ControlSchemes" node_paths=PackedStringArray("_MouseControls")]
 script = ExtResource("8_5o3ur")
 _MouseControls = NodePath("../MouseControls")
+VisibleProcessMode = null
+InvisibleProcessMode = null
 
 [node name="SimpleShoot" type="Node2D" parent="ControlSchemes"]
 script = ExtResource("9_nhaw1")

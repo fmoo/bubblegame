@@ -1,5 +1,5 @@
 class_name PauseGame
-extends ControlSchemeBase
+extends "res://scripts/input/ControlSchemeBase.gd"
 
 @export var PausePanel: Control
 @onready var bubbleGame: BubbleGame = get_node("/root/BubbleGame")

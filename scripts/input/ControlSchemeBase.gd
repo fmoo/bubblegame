@@ -19,5 +19,5 @@ func _on_visibility_changed() -> void:
 
 	if is_visible_in_tree():
 		for Scheme in ConflictingSchemes:
-			if Scheme.IsVisibleInTree():
-				Scheme.Hide();
+			if Scheme.is_visible_in_tree():
+				Scheme.hide();

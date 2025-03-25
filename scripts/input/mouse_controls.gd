@@ -1,5 +1,5 @@
 class_name MouseControls
-extends ControlSchemeBase
+extends "res://scripts/input/ControlSchemeBase.gd"
 
 @onready var bubbleGame: BubbleGame = get_node("/root/BubbleGame")
 @export var moveTargetPath: PathFollow2D

@@ -1,5 +1,5 @@
 class_name InitialControlScheme
-extends ControlSchemeBase
+extends "res://scripts/input/ControlSchemeBase.gd"
 
 @onready var bubbleGame: BubbleGame = get_node("/root/BubbleGame")
 @export var _MouseControls: MouseControls
