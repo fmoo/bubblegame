@@ -48,6 +48,7 @@ func StartTween() -> void:
 				if targetRatio > ejectorPathRatio + 0.5:
 					targetRatio -= 1.0
 				reloadPath.progress_ratio = lerp(ejectorPathRatio, targetRatio, value)
+				#BUG - bubbleClone can be nil on some condition somehow
 				bubbleClone.global_position = reloadPath.global_position
 			, 0.0, 1.0, COOLDOWN * 3.0 / 4.0)
 		else:
