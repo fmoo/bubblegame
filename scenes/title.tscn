@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://dq2st87krvklv"]
+[gd_scene load_steps=69 format=3 uid="uid://dq2st87krvklv"]
 
 [ext_resource type="Script" path="res://scripts/bubble_game.gd" id="1_qvl6i"]
 [ext_resource type="Resource" uid="uid://cphutkik5yksw" path="res://gameplay/title.tres" id="2_nm86w"]
@@ -22,8 +22,12 @@
 [ext_resource type="Shader" path="res://shaders/circles.gdshader" id="22_6miks"]
 [ext_resource type="Script" path="res://scripts/input/twinstick_instant_controls.gd" id="22_eudhf"]
 [ext_resource type="Script" path="res://scripts/input/mouse_controls.gd" id="23_2k0fm"]
+[ext_resource type="Shader" path="res://shaders/title_bg.gdshader" id="23_htdeh"]
 [ext_resource type="PackedScene" uid="uid://5tea8yn6omyn" path="res://scenes/config_button.tscn" id="23_xh822"]
+[ext_resource type="Texture2D" uid="uid://be45kvuq747y4" path="res://sprites/bg_test1_circles.png" id="24_blf3s"]
 [ext_resource type="Texture2D" uid="uid://3v0mvd20wsgm" path="res://sprites/bg_title.png" id="25_1ntpi"]
+[ext_resource type="Texture2D" uid="uid://dl5xmkfy0rp5x" path="res://sprites/bg_test1_white.png" id="25_3em48"]
+[ext_resource type="Script" path="res://scripts/bg_texture_rect_test.gd" id="25_orhh5"]
 [ext_resource type="LabelSettings" uid="uid://c44ddlfjds04k" path="res://fonts/title.tres" id="26_am4rm"]
 [ext_resource type="LabelSettings" uid="uid://cfje14hgxm4pw" path="res://fonts/heading.tres" id="26_uggu3"]
 [ext_resource type="PackedScene" uid="uid://deesebw4q0gpi" path="res://scenes/settings_panel.tscn" id="27_a0pbe"]
@@ -48,6 +52,11 @@
 [ext_resource type="Script" path="res://scripts/ui/unpause_button.gd" id="43_qb3s4"]
 [ext_resource type="PhysicsMaterial" uid="uid://5gbmiagtsmip" path="res://physics/bouncy.tres" id="47_26ptm"]
 [ext_resource type="PackedScene" uid="uid://hjw5k3jwfgsg" path="res://scenes/bg_circles.tscn" id="48_g6kev"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wevki"]
+shader = ExtResource("23_htdeh")
+shader_parameter/dir = Vector2(-0.5, 0.5)
+shader_parameter/speed = 0.1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gu2bo"]
 shader = ExtResource("22_6miks")
@@ -224,9 +233,28 @@ script = ExtResource("20_hbopu")
 PausePanel = NodePath("../../CanvasLayer2/PausePanel")
 
 [node name="BG_Circles" parent="." instance=ExtResource("48_g6kev")]
+visible = false
 z_index = -3
 
+[node name="BGTextureRect" type="TextureRect" parent="."]
+z_index = -3
+texture_repeat = 2
+material = SubResource("ShaderMaterial_wevki")
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("24_blf3s")
+
+[node name="BGTextureRect2" type="TextureRect" parent="."]
+modulate = Color(0.88, 0.863867, 0.7832, 1)
+z_index = -4
+texture_repeat = 2
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("25_3em48")
+script = ExtResource("25_orhh5")
+
 [node name="BackgroundVFX" type="ColorRect" parent="."]
+visible = false
 z_index = -4
 material = SubResource("ShaderMaterial_gu2bo")
 offset_right = 512.0
