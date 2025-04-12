@@ -148,9 +148,14 @@ func _on_collision_area_shape_entered(area_rid: RID, area: Area2D, area_shape_in
 		var pos = area.get_parent().get_index()
 		area.get_parent().get_parent().start_doubleball_move(pos)
 		#area.get_parent().get_parent().swap_in_doubleball(pos)
-
+	elif(area.is_in_group("title_menu_button")):
+		var pos = area.get_index()
+		area.get_parent().show_menu_button(pos)
 
 func _on_collision_area_shape_exited(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
 	if(area.is_in_group("doubleball_trigger")):
 		var pos = area.get_parent().get_index()
 		area.get_parent().get_parent().stop_doubleball_move(pos)
+	elif(area.is_in_group("title_menu_button")):
+		var pos = area.get_index()
+		area.get_parent().hide_menu_button(pos)

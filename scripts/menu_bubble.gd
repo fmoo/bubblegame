@@ -30,8 +30,8 @@ func get_joints() -> Array:
 func reset() -> void:
 	var tween = set_config(null)
 	tween.custom_step(999.0)
-	collision_shape.scale = Vector2(MINIMUM_SCALE, MINIMUM_SCALE)
-	notify_contain_ratio_change()
+	#collision_shape.scale = Vector2(MINIMUM_SCALE, MINIMUM_SCALE)
+	#notify_contain_ratio_change()
 
 	# Delete all children that are joints
 	for child in get_children():
@@ -47,6 +47,18 @@ func set_config(new_config: BubbleConfig) -> Tween:
 	tween.tween_property(sprite, "modulate", bubble_color, 0.15)
 	config = new_config
 	return tween
+
+func pop_in():
+	var tween = get_tree().create_tween()
+	tween.tween_property($Border, "scale", Vector2(1,1), 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+	var tween2 = get_tree().create_tween()
+	tween2.tween_property($Highlight, "scale", Vector2(1,1), 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+
+func pop_out():
+	var tween = get_tree().create_tween()
+	tween.tween_property($Border, "scale", Vector2(0,0), 1.0).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_ELASTIC)
+	var tween2 = get_tree().create_tween()
+	tween2.tween_property($Highlight, "scale", Vector2(0,0), 1.0).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_ELASTIC)
 
 func notify_contain_ratio_change() -> void:
 	contain_ratio_changed.emit(get_contain_ratio())

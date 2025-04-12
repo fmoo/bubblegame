@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://dq2st87krvklv"]
+[gd_scene load_steps=76 format=3 uid="uid://dq2st87krvklv"]
 
 [ext_resource type="Script" path="res://scripts/bubble_game.gd" id="1_qvl6i"]
 [ext_resource type="Resource" uid="uid://cphutkik5yksw" path="res://gameplay/title.tres" id="2_nm86w"]
@@ -34,10 +34,11 @@
 [ext_resource type="Script" path="res://scripts/ui/render_high_score.gd" id="28_itbhu"]
 [ext_resource type="LabelSettings" uid="uid://qx8cuxjoqn5t" path="res://fonts/subheading.tres" id="28_oae08"]
 [ext_resource type="LabelSettings" uid="uid://d2pua3txaholq" path="res://fonts/mono_numbers.tres" id="30_5oabt"]
-[ext_resource type="Texture2D" uid="uid://2xhbf3o8ujqb" path="res://sprites/mockup3_track.png" id="30_dcvm7"]
 [ext_resource type="Texture2D" uid="uid://ce33x081n5io6" path="res://sprites/gun_only.png" id="31_4ntxn"]
 [ext_resource type="Texture2D" uid="uid://r1sf4861834j" path="res://sprites/gun_only_highlight.png" id="32_mvlt3"]
 [ext_resource type="PackedScene" uid="uid://bgsc4gwcivxfl" path="res://scenes/bubble_queue.tscn" id="34_ctyse"]
+[ext_resource type="Texture2D" uid="uid://bcdueljvgkvgs" path="res://sprites/track_title.png" id="35_3qkpc"]
+[ext_resource type="Script" path="res://scripts/ui/title_menu.gd" id="36_rekb4"]
 [ext_resource type="Script" path="res://scripts/bubble_gun.gd" id="36_yenmr"]
 [ext_resource type="Texture2D" uid="uid://geifc7xneuu6" path="res://sprites/mouse_icon.png" id="37_2g6sy"]
 [ext_resource type="PackedScene" uid="uid://w1kv4tagcac8" path="res://scenes/bubble.tscn" id="37_edn0c"]
@@ -70,11 +71,44 @@ shader_parameter/origin_to_change = null
 shader_parameter/time_passed = null
 shader_parameter/rate = 1.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_fdbq8"]
+atlas = ExtResource("35_3qkpc")
+region = Rect2(512, 0, 512, 288)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xw7xs"]
+atlas = ExtResource("35_3qkpc")
+region = Rect2(0, 0, 512, 288)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5xdmn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fdbq8")
+}],
+"loop": true,
+"name": &"0",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xw7xs")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nwh7c"]
+size = Vector2(20, 30)
+
 [sub_resource type="Curve2D" id="Curve2D_lbhqn"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 244, 283, 0, 0, 0, 0, 245, 283, 0, 0, 0, 0, 274, 280, 0, 0, 0, 0, 301, 271, 0, 0, 0, 0, 324, 257, 0, 0, 0, 0, 343, 240, 0, 0, 0, 0, 358, 223, 0, 0, 0, 0, 372, 201, 0, 0, 0, 0, 380, 174, 0, 0, 0, 0, 383, 146, 0, 0, 0, 0, 383, 145, 0, 0, 0, 0, 383, 144, 0, 0, 0, 0, 380, 116, 0, 0, 0, 0, 372, 89, 0, 0, 0, 0, 359, 68, 0, 0, 0, 0, 344, 51, 0, 0, 0, 0, 324, 33, 0, 0, 0, 0, 301, 19, 0, 0, 0, 0, 274, 10, 0, 0, 0, 0, 245, 5, 0, 0, 0, 0, 244, 5, 0, 0, 0, 0, 243, 5, 0, 0, 0, 0, 214, 10, 0, 0, 0, 0, 187, 19, 0, 0, 0, 0, 164, 33, 0, 0, 0, 0, 144, 51, 0, 0, 0, 0, 130, 67, 0, 0, 0, 0, 116, 89, 0, 0, 0, 0, 108, 116, 0, 0, 0, 0, 105, 144, 0, 0, 0, 0, 105, 145, 0, 0, 0, 0, 105, 146, 0, 0, 0, 0, 108, 174, 0, 0, 0, 0, 116, 201, 0, 0, 0, 0, 129, 222, 0, 0, 0, 0, 144, 239, 0, 0, 0, 0, 164, 257, 0, 0, 0, 0, 187, 271, 0, 0, 0, 0, 214, 280, 0, 0, 0, 0, 243, 283, 0, 0, 0, 0, 244, 283)
 }
 point_count = 41
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jkpwo"]
+size = Vector2(8, 20)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b0upr"]
 atlas = ExtResource("38_j3lii")
@@ -133,6 +167,9 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_altpo"]
+size = Vector2(8, 20)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_bow63"]
 normal = Vector2(1, 0)
@@ -266,6 +303,7 @@ layer = 0
 follow_viewport_enabled = true
 
 [node name="BGChrome2" type="TextureRect" parent="CanvasLayer"]
+visible = false
 z_index = -1
 anchors_preset = 15
 anchor_right = 1.0
@@ -283,6 +321,7 @@ offset_right = 81.0
 grow_vertical = 2
 
 [node name="Underlay" type="ColorRect" parent="CanvasLayer/LeftPanel"]
+visible = false
 z_index = -10
 layout_mode = 1
 anchors_preset = 15
@@ -293,6 +332,7 @@ grow_vertical = 2
 color = Color(0.79, 0.79, 0.79, 0.639216)
 
 [node name="Title" type="Label" parent="CanvasLayer/LeftPanel"]
+visible = false
 modulate = Color(0, 0.921569, 0.921569, 1)
 layout_mode = 0
 offset_left = -8.0
@@ -339,6 +379,7 @@ grow_horizontal = 0
 grow_vertical = 2
 
 [node name="Underlay2" type="ColorRect" parent="CanvasLayer/RightPanel"]
+visible = false
 z_index = -10
 layout_mode = 1
 anchors_preset = 15
@@ -385,6 +426,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Play" type="Label" parent="CanvasLayer/MenuButtons"]
+visible = false
 modulate = Color(0, 0.921569, 0.921569, 1)
 layout_mode = 0
 offset_left = 216.0
@@ -395,10 +437,41 @@ text = "Play"
 label_settings = ExtResource("26_uggu3")
 horizontal_alignment = 1
 
-[node name="TrackImage" type="Sprite2D" parent="."]
+[node name="RingButtons" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Play" type="Label" parent="CanvasLayer/RingButtons"]
+visible = false
+modulate = Color(0, 0.921569, 0.921569, 1)
+layout_mode = 0
+offset_left = 59.0
+offset_top = 72.0
+offset_right = 119.0
+offset_bottom = 107.0
+text = "Play"
+label_settings = ExtResource("26_uggu3")
+horizontal_alignment = 1
+
+[node name="TrackImage" type="AnimatedSprite2D" parent="."]
 z_index = -2
-texture = ExtResource("30_dcvm7")
+sprite_frames = SubResource("SpriteFrames_5xdmn")
 centered = false
+
+[node name="MenuCollisions" type="Node2D" parent="TrackImage" node_paths=PackedStringArray("button_texts", "menu_bubble", "bubbles_groups")]
+script = ExtResource("36_rekb4")
+button_texts = NodePath("../../CanvasLayer/MenuButtons")
+menu_bubble = NodePath("../../MenuButtonBubble")
+bubbles_groups = NodePath("../../Bubbles")
+
+[node name="Play" type="Area2D" parent="TrackImage/MenuCollisions" groups=["title_menu_button"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TrackImage/MenuCollisions/Play"]
+position = Vector2(124, 85)
+rotation = 0.417134
+shape = SubResource("RectangleShape2D_nwh7c")
 
 [node name="TrackPath" type="Path2D" parent="."]
 curve = SubResource("Curve2D_lbhqn")
@@ -415,6 +488,12 @@ position = Vector2(244, 283)
 modulate = Color(1, 1, 1, 0.552941)
 position = Vector2(0, -23)
 texture = ExtResource("31_4ntxn")
+
+[node name="Area2D" type="Area2D" parent="TrackPath/MouseAimHover2D"]
+position = Vector2(0, -8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TrackPath/MouseAimHover2D/Area2D"]
+shape = SubResource("RectangleShape2D_jkpwo")
 
 [node name="MouseAimClicked2D" type="PathFollow2D" parent="TrackPath"]
 visible = false
@@ -466,6 +545,12 @@ wait_time = 30.0
 one_shot = true
 autostart = true
 
+[node name="Collision" type="Area2D" parent="TrackPath/GunFollow2D/Gun"]
+position = Vector2(0, -8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TrackPath/GunFollow2D/Gun/Collision"]
+shape = SubResource("RectangleShape2D_altpo")
+
 [node name="MenuButtonBubble" parent="." instance=ExtResource("39_nrdsn")]
 
 [node name="BubbleQueue" parent="." node_paths=PackedStringArray("bubbleRenders", "reloadPath", "gunPath") instance=ExtResource("34_ctyse")]
@@ -477,22 +562,25 @@ gunPath = NodePath("../TrackPath/GunFollow2D")
 
 [node name="Bubbles" type="Node2D" parent="."]
 
-[node name="Bubble" parent="Bubbles" instance=ExtResource("37_edn0c")]
+[node name="Blues" type="Node2D" parent="Bubbles"]
+visible = false
+
+[node name="Bubble" parent="Bubbles/Blues" instance=ExtResource("37_edn0c")]
 position = Vector2(196, 130)
 
-[node name="Bubble2" parent="Bubbles" instance=ExtResource("37_edn0c")]
+[node name="Bubble2" parent="Bubbles/Blues" instance=ExtResource("37_edn0c")]
 position = Vector2(191, 141)
 
-[node name="Bubble3" parent="Bubbles" instance=ExtResource("37_edn0c")]
+[node name="Bubble3" parent="Bubbles/Blues" instance=ExtResource("37_edn0c")]
 position = Vector2(194, 154)
 
-[node name="Bubble4" parent="Bubbles" instance=ExtResource("37_edn0c")]
+[node name="Bubble4" parent="Bubbles/Blues" instance=ExtResource("37_edn0c")]
 position = Vector2(296, 130)
 
-[node name="Bubble5" parent="Bubbles" instance=ExtResource("37_edn0c")]
+[node name="Bubble5" parent="Bubbles/Blues" instance=ExtResource("37_edn0c")]
 position = Vector2(298, 140)
 
-[node name="Bubble6" parent="Bubbles" instance=ExtResource("37_edn0c")]
+[node name="Bubble6" parent="Bubbles/Blues" instance=ExtResource("37_edn0c")]
 position = Vector2(296, 152)
 
 [node name="Level2" type="Node2D" parent="."]
@@ -568,5 +656,9 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("42_6po13")
 text = "Quit"
 
+[connection signal="area_shape_entered" from="TrackPath/MouseAimHover2D/Area2D" to="TrackImage/MenuCollisions" method="_on_mouseaimhover2d_area_shape_entered"]
+[connection signal="area_shape_exited" from="TrackPath/MouseAimHover2D/Area2D" to="TrackImage/MenuCollisions" method="_on_mouseaimhover2d_area_shape_exited"]
 [connection signal="timeout" from="TrackPath/GunFollow2D/Gun/MouseIconTimer" to="TrackPath/GunFollow2D/Gun" method="_on_mouse_icon_timer_timeout"]
+[connection signal="area_shape_entered" from="TrackPath/GunFollow2D/Gun/Collision" to="TrackPath/GunFollow2D/Gun" method="_on_collision_area_shape_entered"]
+[connection signal="area_shape_exited" from="TrackPath/GunFollow2D/Gun/Collision" to="TrackPath/GunFollow2D/Gun" method="_on_collision_area_shape_exited"]
 [connection signal="pressed" from="CanvasLayer2/PausePanel/VBoxContainer/QuitButton" to="." method="Quit"]
