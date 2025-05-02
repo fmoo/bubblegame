@@ -105,7 +105,9 @@ func instance_shot_bubble(pos, config):
 
 	# Set the color
 	bubble.set_config(config)
-
+	# Set collision
+	bubble.set_collision(true)
+	
 	# Trajectory and position
 	bubble.global_position = pos
 	bubble.linear_velocity = Vector2(0, -1).rotated(turretSprite.global_rotation) * bubbleSpeed

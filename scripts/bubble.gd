@@ -139,6 +139,11 @@ func start_destroy() -> void:
 	queue_free()
 	bubbleGame.SpawnBubblePop(global_position, sprite.texture)
 
+func set_collision(state):
+	#$CollisionShape2D.disabled = state
+	set_collision_layer_value(1,state)
+	set_collision_mask_value(1,state)
+	
 var config: BubbleConfig
 
 func set_config(new_config: BubbleConfig) -> void:

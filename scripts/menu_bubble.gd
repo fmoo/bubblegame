@@ -38,6 +38,13 @@ func reset() -> void:
 		if child is PinJoint2D:
 			child.queue_free()
 
+func set_collision_disabled(state):
+	$CollisionShape2D.disabled = state
+
+func set_collision(state):
+	set_collision_layer_value(1,state)
+	set_collision_mask_value(1,state)
+	
 var config: BubbleConfig
 
 func set_config(new_config: BubbleConfig) -> Tween:
@@ -53,7 +60,7 @@ func pop_in():
 	tween.tween_property($Border, "scale", Vector2(1,1), 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
 	var tween2 = get_tree().create_tween()
 	tween2.tween_property($Highlight, "scale", Vector2(1,1), 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
-
+	
 func pop_out():
 	var tween = get_tree().create_tween()
 	tween.tween_property($Border, "scale", Vector2(0,0), 1.0).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_ELASTIC)

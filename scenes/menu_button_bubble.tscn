@@ -14,6 +14,8 @@ size = Vector2(99, 21)
 
 [node name="MenuButton" type="RigidBody2D" node_paths=PackedStringArray("collision_shape", "sprite")]
 position = Vector2(247, 144)
+collision_layer = 0
+collision_mask = 0
 physics_material_override = SubResource("PhysicsMaterial_7gmt2")
 freeze = true
 script = ExtResource("1_rye7l")

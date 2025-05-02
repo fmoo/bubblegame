@@ -1,8 +1,11 @@
 extends Node2D
 
+@onready var bubble_game: BubbleGame = get_node("/root/BubbleGame")
+
 @export var button_texts: Node
 @export var menu_bubble: Node2D
 @export var bubbles_groups: Node
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -14,12 +17,21 @@ func _process(delta: float) -> void:
 	pass
 
 func show_menu_button(pos):
+	if(bubble_game.game_state != "Title"):
+		return
 	menu_bubble.pop_in()
+	menu_bubble.set_collision(true)
 	#await get_tree().create_timer(1.0).timeout
 	button_texts.get_child(pos).visible = true
-	bubbles_groups.get_child(pos).visible = true
+	var bubble_group = bubbles_groups.get_child(pos)
+	bubble_group.visible = true
+	for bubb in bubble_group.get_children():
+		bubb.set_collision(true)
+	
 	
 func hide_menu_button(pos):
+	if(bubble_game.game_state != "Title"):
+		return
 	button_texts.get_child(pos).visible = false
 	bubbles_groups.get_child(pos).visible = false
 	menu_bubble.pop_out()

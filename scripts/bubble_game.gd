@@ -22,6 +22,7 @@ extends Node2D
 @export var GameOverPanel: Control
 @export var NotificationLabel: PackedScene
 
+var game_state = "Title"
 var Score = 0;
 signal ScoreChanged(score: int)
 signal TimeElapsed(seconds: int)
@@ -323,6 +324,7 @@ func PlayGame() -> void:
 	#var tween_play = get_tree().create_tween()
 	#tween_play.tween_property(play, "position", play.position+Vector2(-512,0), 1.0).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_LINEAR)
 	#
+	game_state = "Transition_To_Play"
 	var bg_sprite = $CanvasLayer
 	var tween_bg = get_tree().create_tween()
 	tween_bg.tween_property(bg_sprite, "offset", Vector2(-512,0), 1.0).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_LINEAR)
