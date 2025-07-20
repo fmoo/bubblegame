@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://ty2ahm0w4ftq"]
+
+[ext_resource type="Shader" path="res://shaders/fireworks.gdshader" id="1_3i01f"]
+[ext_resource type="Texture2D" uid="uid://b2ugy3f1nbdlh" path="res://sprites/full_square_white.png" id="2_s60sr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m3wm8"]
+shader = ExtResource("1_3i01f")
+shader_parameter/s11 = 0.808
+shader_parameter/s33 = 0.0
+shader_parameter/s55 = 0.656
+shader_parameter/s77 = 10.0
+shader_parameter/s99 = 1.5
+shader_parameter/Praticle_num = 37
+shader_parameter/Range = 0.1
+shader_parameter/speed = 0.5
+shader_parameter/gravity = 0.1
+shader_parameter/TimeStep = 1
+shader_parameter/ShneyMagnitude = 0.01
+
+[node name="ExplodeTest" type="Node2D"]
+position = Vector2(256, 144)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_m3wm8")
+texture = ExtResource("2_s60sr")
